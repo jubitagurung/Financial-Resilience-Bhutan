@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Budget Bhutan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">SBB</span>
+  <a onclick="showSection('home')" id="nav-home" class="active-link">Home</a>
+  <a onclick="showSection('dashboard')" id="nav-dashboard">Dashboard</a>
+  <a onclick="showSection('budget')" id="nav-budget">Budget</a>
+  <a onclick="showSection('saving')" id="nav-saving">Saving</a>
+  <a onclick="showSection('quiz')" id="nav-quiz">Quiz</a>
+  <a onclick="showSection('about')" id="nav-about">About</a>
+  <a onclick="toggleChat()" id="nav-chat">Ask AI</a>
+</nav>
+
+<!-- ══ HOME ══ -->
+<div class="overlay active" id="home">
+  <h1>Smart Budget Bhutan</h1>
+  <p class="subtitle">Financial Resilience at the Household Level</p>
+  <p class="home-description">
+    I am currently an intern at <strong>Bhutan Data Scientist Pvt. Ltd. (BDS)</strong>, working on a project focused on financial resilience at the household level in urban Bhutan. This website presents key insights from my research analyzing income, expenses, and saving patterns among Bhutanese families and offers practical, data-driven recommendations to help strengthen long-term financial stability.
+  </p>
+  <div class="home-stats">
+    <div class="stat-pill">Real Household Data</div>
+    <div class="stat-pill">🇧🇹 Urban Bhutan Focus</div>
+    <div class="stat-pill">Actionable Insights</div>
+  </div>
+  <button class="btn-primary" onclick="showSection('dashboard')">Explore the Dashboard</button>
+</div>
+
+<!-- ══ DASHBOARD ══ -->
+<section id="dashboard">
+  <h2>Financial Resilience Dashboard</h2>
+  <p class="section-tagline">Interactive Tableau Visualization</p>
+  <div class="dashboard-desc">
+    This dashboard visualizes real household financial data collected from urban Bhutanese families. It explores
+    <strong>income distribution</strong>, <strong>monthly expense breakdowns</strong>, and <strong>savings behaviour</strong>
+    across different income brackets. Use it to identify patterns, stress points, and opportunities for financial improvement
+    in Bhutanese households. Filter by income group or expense category to drill deeper into the data.
+  </div>
+  <div class="tableau-container">
+    <iframe src="https://public.tableau.com/views/FinancialResilienceattheHouseholdLevelinUrbanBhutan/IntroducingSmartBudgetBhutan2?:showVizHome=no&:embed=true" width="100%" height="550"></iframe>
+  </div>
+  <p class="dashboard-note"> Tip: Click on chart elements to filter and explore specific segments of the data.</p>
+</section>
+
+<!-- ══ BUDGET ══ -->
+<section id="budget">
+  <h2>Budget Examples</h2>
+  <p class="section-tagline">Monthly Household Budgets in Bhutan</p>
+  <p class="budget-intro">
+    These sample budgets are based on real urban Bhutanese household data. Each plan follows the
+    recommended <strong>50/30/20 rule</strong> — 50% needs, 30% wants, 20% savings — adapted for local income levels and costs of living.
+  </p>
+  <div class="budget-rule">Recommended Framework: 50% Needs · 30% Wants · 20% Savings</div>
+  <div class="budget-container">
+    <div class="budget-card low">
+      <h3>Low Income</h3>
+      <div class="budget-row"><span class="label">Monthly Income</span><span class="value">Nu. 20,000</span></div>
+      <div class="budget-row"><span class="label">Needs (Rent, Food)</span><span class="value">Nu. 10,000</span></div>
+      <div class="budget-row"><span class="label">Utilities & Transport</span><span class="value">Nu. 4,000</span></div>
+      <div class="budget-row"><span class="label">Personal & Misc.</span><span class="value">Nu. 4,000</span></div>
+      <div class="budget-row saving"><span class="label">Savings Target</span><span class="value">Nu. 2,000</span></div>
+      <div class="budget-bar-wrap">
+        <p>Savings Rate: 10%</p>
+        <div class="budget-bar"><div class="budget-bar-fill" style="width:10%"></div></div>
+      </div>
+    </div>
+    <div class="budget-card mid">
+      <h3>Middle Income</h3>
+      <div class="budget-row"><span class="label">Monthly Income</span><span class="value">Nu. 40,000</span></div>
+      <div class="budget-row"><span class="label">Needs (Rent, Food)</span><span class="value">Nu. 18,000</span></div>
+      <div class="budget-row"><span class="label">Utilities & Transport</span><span class="value">Nu. 8,000</span></div>
+      <div class="budget-row"><span class="label">Personal & Misc.</span><span class="value">Nu. 8,000</span></div>
+      <div class="budget-row saving"><span class="label">Savings Target</span><span class="value">Nu. 6,000</span></div>
+      <div class="budget-bar-wrap">
+        <p>Savings Rate: 15%</p>
+        <div class="budget-bar"><div class="budget-bar-fill" style="width:15%"></div></div>
+      </div>
+    </div>
+    <div class="budget-card high">
+      <h3>High Income</h3>
+      <div class="budget-row"><span class="label">Monthly Income</span><span class="value">Nu. 80,000</span></div>
+      <div class="budget-row"><span class="label">Needs (Rent, Food)</span><span class="value">Nu. 32,000</span></div>
+      <div class="budget-row"><span class="label">Utilities & Transport</span><span class="value">Nu. 14,000</span></div>
+      <div class="budget-row"><span class="label">Personal & Misc.</span><span class="value">Nu. 20,000</span></div>
+      <div class="budget-row saving"><span class="label">Savings Target</span><span class="value">Nu. 14,000</span></div>
+      <div class="budget-bar-wrap">
+        <p>Savings Rate: 17.5%</p>
+        <div class="budget-bar"><div class="budget-bar-fill" style="width:17.5%"></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="budget-tips-wrap">
+    <h3>Budgeting Principles</h3>
+    <div class="tips-grid">
+      <div class="tip-mini"><strong>Pay Yourself First</strong>Transfer savings immediately when you receive your salary — treat it like a non-negotiable bill.</div>
+      <div class="tip-mini"><strong>Track Every Ngultrum</strong>Small daily expenses like tea and snacks add up. Log them weekly to spot leaks.</div>
+      <div class="tip-mini"><strong>Avoid Lifestyle Creep</strong>When income rises, maintain your current lifestyle and increase savings rate instead.</div>
+      <div class="tip-mini"><strong>Separate Accounts</strong>Keep savings in a separate account to reduce temptation to spend it.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SAVING ══ -->
+<section id="saving">
+  <h2>Saving Tips</h2>
+  <p class="section-tagline">Practical Strategies for Bhutanese Households</p>
+  <p class="saving-intro">
+    Building savings is not about how much you earn — it's about habits and discipline. These strategies are tailored to the realities of urban Bhutanese households and can be started immediately, regardless of income level.
+  </p>
+  <div class="tips-container">
+    <div class="tip-card"><div class="tip-icon"></div><h3>Track Your Spending</h3><p>Write down every purchase for 30 days. Most people discover they spend 15–25% on non-essentials without realising it. Use a notebook, spreadsheet, or a budgeting app.</p></div>
+    <div class="tip-card"><div class="tip-icon"></div><h3>Save Before You Spend</h3><p>On payday, transfer your savings target first — before paying for anything else. Even Nu. 500/month builds a meaningful cushion over a year (Nu. 6,000+).</p></div>
+    <div class="tip-card"><div class="tip-icon"></div><h3>Build an Emergency Fund</h3><p>Aim to save 3–6 months of living expenses. This protects you from unexpected medical bills, job loss, or urgent repairs without taking on debt.</p></div>
+    <div class="tip-card"><div class="tip-icon"></div><h3>Set Clear Goals</h3><p>Vague savings rarely stick. Write specific goals: "Save Nu. 30,000 by December for a laptop." Having a target keeps you motivated and on track.</p></div>
+    <div class="tip-card"><div class="tip-icon"></div><h3>Reduce Food Costs</h3><p>Cooking at home instead of eating out 3× per week can save Nu. 1,500–3,000/month for a family. Plan weekly meals to reduce waste and impulse spending.</p></div>
+    <div class="tip-card"><div class="tip-icon"></div><h3>Review Subscriptions</h3><p>Cancel unused streaming services, data plans, or memberships. Redirect that money to savings. Even Nu. 300/month saved = Nu. 3,600/year.</p></div>
+  </div>
+  <div class="saving-steps">
+    <h3>Your 5-Step Savings Starter Plan</h3>
+    <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Calculate your real income and total monthly expenses</strong><p>List every income source and every expense — fixed (rent, EMI) and variable (food, transport, entertainment).</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Set a savings target (aim for at least 10%)</strong><p>Even if it feels small, 10% of Nu. 20,000 = Nu. 2,000/month = Nu. 24,000/year. Consistency beats amount.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Open a dedicated savings account</strong><p>Keep savings physically separate from your spending account. Out of sight = out of temptation.</p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Identify and cut your top 2 unnecessary expenses</strong><p>Review last month's spending. Find 2 areas to reduce and redirect that money directly to savings.</p></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Review your progress every month</strong><p>At the end of each month, check your savings balance and adjust. Celebrate small wins — they build momentum.</p></div></div>
+  </div>
+</section>
+
+<!-- ══ QUIZ ══ -->
+<section id="quiz">
+  <h2>Financial Literacy Quiz</h2>
+  <p class="quiz-tagline">Test Your Knowledge · Get AI-Powered Feedback</p>
+
+  <!-- START SCREEN -->
+  <div id="quiz-start">
+    <div class="quiz-start-card">
+      <p>How well do you know household budgeting and saving in Bhutan? Take this <strong style="color:var(--text)">8-question quiz</strong> to test your financial literacy and receive personalized AI feedback on your results.</p>
+      <div class="quiz-meta-pills">
+        <span class="quiz-meta-pill">8 Questions</span>
+        <span class="quiz-meta-pill">Multiple Choice</span>
+        <span class="quiz-meta-pill">AI Feedback</span>
+        <span class="quiz-meta-pill">~3 Minutes</span>
+      </div>
+      <button class="btn-primary" onclick="startQuiz()">Begin Quiz</button>
+    </div>
+  </div>
+
+  <!-- QUESTION SCREEN -->
+  <div id="quiz-question">
+    <div class="quiz-progress-bar-wrap">
+      <div class="quiz-progress-label">
+        <span id="q-counter">Question 1 of 8</span>
+        <span id="q-score-live">Score: 0</span>
+      </div>
+      <div class="quiz-progress-track">
+        <div class="quiz-progress-fill" id="q-progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="quiz-q-card fade-in" id="quiz-q-card">
+      <div class="quiz-q-number" id="q-number">QUESTION 1</div>
+      <div class="quiz-q-text" id="q-text"></div>
+      <div class="quiz-options" id="q-options"></div>
+      <div class="quiz-feedback" id="q-feedback"></div>
+      <button class="quiz-next-btn" id="q-next-btn" onclick="nextQuestion()">Next Question →</button>
+    </div>
+  </div>
+
+  <!-- RESULTS SCREEN -->
+  <div id="quiz-results">
+    <div class="quiz-score-ring-wrap">
+      <div class="quiz-score-circle">
+        <div class="quiz-score-number" id="result-score">0/8</div>
+        <div class="quiz-score-label">CORRECT</div>
+      </div>
+      <div class="quiz-result-title" id="result-title"></div>
+      <div class="quiz-result-subtitle" id="result-subtitle"></div>
+    </div>
+
+    <div class="quiz-ai-feedback-box" id="ai-feedback-box">
+      <h4>AI Financial Coach Feedback</h4>
+      <div class="quiz-ai-feedback-text" id="ai-feedback-text">
+        <div class="ai-loading"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+
+    <div class="quiz-result-breakdown" id="result-breakdown">
+      <h4> Question Breakdown</h4>
+      <div id="breakdown-list"></div>
+    </div>
+
+    <div style="text-align:center; margin-top: 8px;">
+      <button class="quiz-retry-btn" onclick="resetQuiz()">Try Again</button>
+      <button class="btn-primary" onclick="showSection('saving')">Saving Tips →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <h2>About This Project</h2>
+  <p class="section-tagline">Research · Data · Impact</p>
+  <div class="about-container">
+    <div class="about-card">
+      <h3>Project Background</h3>
+      <p>I am an intern at <strong style="color:var(--text)">Bhutan Data Scientist Pvt. Ltd. (BDS)</strong>, working on financial resilience at the household level in urban Bhutan.</p>
+      <p>This project analyzes real household data to understand income, expenses, savings behaviour, and financial stress points among Bhutanese families — with the goal of making insights accessible and actionable.</p>
+    </div>
+    <div class="about-card">
+      <h3>Objectives</h3>
+      <ul>
+        <li>Identify key financial challenges in urban Bhutanese households</li>
+        <li>Visualize income, expense, and saving patterns clearly</li>
+        <li>Provide practical, data-informed budgeting recommendations</li>
+        <li>Promote long-term financial stability and resilience</li>
+        <li>Make complex financial insights accessible to everyone</li>
+      </ul>
+    </div>
+    <div class="about-card">
+      <h3>Tools & Technology</h3>
+      <p style="margin-bottom:14px">This project uses a modern data-to-web pipeline to turn raw household data into clear, actionable insights.</p>
+      <p style="color:var(--text); font-size:13px; margin-bottom:8px">Data & Visualization</p>
+      <div class="tech-row" style="margin-bottom:14px">
+        <span class="tech-tag">Tableau</span>
+        <span class="tech-tag">Data Analysis</span>
+      </div>
+      <p style="color:var(--text); font-size:13px; margin-bottom:8px">Website</p>
+      <div class="tech-row">
+        <span class="tech-tag">HTML</span>
+        <span class="tech-tag">CSS</span>
+        <span class="tech-tag">JavaScript</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CHATBOT WIDGET ══ -->
+<div id="chat-widget" style="display:none;position:fixed;bottom:24px;right:24px;z-index:9999;width:380px;max-width:calc(100vw - 32px);font-family:'Lato',sans-serif;">
+  <div style="background:linear-gradient(135deg,#1a1305,#2a1f08);border:1px solid rgba(201,168,76,0.35);border-bottom:none;border-radius:14px 14px 0 0;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:38px;height:38px;border-radius:50%;background:rgba(201,168,76,0.15);border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:18px;">🪙</div>
+      <div>
+        <div style="font-family:'Cinzel',serif;color:var(--gold);font-size:13px;letter-spacing:1px;">SBB Assistant</div>
+        <div style="font-size:11px;color:var(--green);letter-spacing:0.5px;">● Online</div>
+      </div>
+    </div>
+    <button onclick="toggleChat()" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1;padding:4px;">✕</button>
+  </div>
+  <div id="chat-messages" style="background:rgba(10,8,2,0.97);border-left:1px solid rgba(201,168,76,0.2);border-right:1px solid rgba(201,168,76,0.2);height:360px;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth;"></div>
+  <div id="chat-suggestions" style="background:rgba(10,8,2,0.97);border-left:1px solid rgba(201,168,76,0.2);border-right:1px solid rgba(201,168,76,0.2);padding:10px 12px;display:flex;flex-wrap:wrap;gap:7px;">
+    <button onclick="sendSuggestion(this)" style="font-size:11.5px;padding:5px 12px;border-radius:20px;border:1px solid rgba(201,168,76,0.3);background:rgba(201,168,76,0.07);color:var(--gold);cursor:pointer;font-family:'Lato',sans-serif;">What is the 50/30/20 rule?</button>
+    <button onclick="sendSuggestion(this)" style="font-size:11.5px;padding:5px 12px;border-radius:20px;border:1px solid rgba(201,168,76,0.3);background:rgba(201,168,76,0.07);color:var(--gold);cursor:pointer;font-family:'Lato',sans-serif;">How to start saving?</button>
+    <button onclick="sendSuggestion(this)" style="font-size:11.5px;padding:5px 12px;border-radius:20px;border:1px solid rgba(201,168,76,0.3);background:rgba(201,168,76,0.07);color:var(--gold);cursor:pointer;font-family:'Lato',sans-serif;">Emergency fund tips</button>
+    <button onclick="sendSuggestion(this)" style="font-size:11.5px;padding:5px 12px;border-radius:20px;border:1px solid rgba(201,168,76,0.3);background:rgba(201,168,76,0.07);color:var(--gold);cursor:pointer;font-family:'Lato',sans-serif;">Budget for Nu. 30,000</button>
+  </div>
+  <div style="background:rgba(10,8,2,0.97);border:1px solid rgba(201,168,76,0.35);border-top:1px solid rgba(201,168,76,0.15);border-radius:0 0 14px 14px;padding:12px 14px;display:flex;gap:10px;align-items:flex-end;">
+    <textarea id="chat-input" placeholder="Ask about budgeting in Bhutan..." rows="1" onkeydown="chatKeyDown(event)" oninput="autoResize(this)" style="flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:10px 13px;color:var(--text);font-size:13.5px;font-family:'Lato',sans-serif;resize:none;outline:none;line-height:1.5;max-height:100px;overflow-y:auto;"></textarea>
+    <button id="chat-send-btn" onclick="sendChatMessage()" style="width:40px;height:40px;min-width:40px;border-radius:8px;border:none;background:var(--gold);color:var(--deep);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:opacity 0.2s;">➤</button>
+  </div>
+</div>
+
+<button id="chat-fab" onclick="toggleChat()" style="position:fixed;bottom:24px;right:24px;z-index:9998;width:58px;height:58px;border-radius:50%;border:2px solid var(--gold);background:rgba(10,8,2,0.95);color:var(--gold);font-size:24px;cursor:pointer;box-shadow:0 4px 24px rgba(0,0,0,0.6);transition:transform 0.2s;display:flex;align-items:center;justify-content:center;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🪙</button>
+
+<footer>
+  <p>© 2026 <span>Smart Budget Bhutan</span> · Bhutan Data Scientist Pvt. Ltd. · All rights reserved</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
