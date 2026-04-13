@@ -15,3 +15,5 @@ https://aesthetic-florentine-cd71f0.netlify.app/
 
 ## Author
 Jubita Gurung
+Developed during an internship at Bhutan Data Scientist Pvt. Ltd. (BDS)
+Focus: Financial resilience at the household level in urban Bhutan
