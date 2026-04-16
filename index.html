@@ -17,7 +17,6 @@
   <a onclick="showSection('planner')" id="nav-planner">Budget Planner</a>
   <a onclick="showSection('quiz')" id="nav-quiz">Quiz</a>
   <a onclick="showSection('about')" id="nav-about">About</a>
-  <a onclick="toggleChat()" id="nav-chat">Ask AI</a>
 </nav>
 
 <!-- ══ HOME ══ -->
@@ -29,7 +28,7 @@
 
     <!-- INTRO -->
     <div class="huf-intro">
-      <p>I am currently an intern at Bhutan Data Scientist Pvt. Ltd. (BDS), working on a project focused on financial resilience at the household level in urban Bhutan. This website presents key insights from my research analyzing income, expenses, and saving patterns among Bhutanese families and offers practical, data-driven recommendations to help strengthen long-term financial stability.</p>
+      <p>I am currently a <strong>3rd-year, 2nd-semester student of Gedu College of Business Studies</strong>, working as an intern at <strong>Bhutan Data Scientist Pvt. Ltd. (BDS)</strong>. I am working on a project focused on financial resilience at the household level in urban Bhutan. This website presents key insights from my research analyzing income, expenses, and saving patterns among Bhutanese families, and offers practical, data-driven recommendations to help strengthen long-term financial stability.</p>
       <div class="home-stats">
         <div class="stat-pill">Real Household Data</div>
         <div class="stat-pill">🇧🇹 Urban Bhutan Focus</div>
@@ -49,13 +48,13 @@
       <h2 class="story-title">Why I Built SmartBudget Bhutan</h2>
 
       <div class="huf-story-body">
-        <p>Growing up and studying in Bhutan, I personally experienced both the importance and the challenge of managing money wisely at a young age. As students, most of us do not have a regular source of income. We rely on pocket money from our parents and a small monthly stipend of around Nu. 3,000 provided by the college to manage our daily expenses.</p>
+        <p>Growing up and studying in Bhutan, I personally experienced both the importance and the challenges of managing money wisely at a young age. As students, most of us do not have a regular source of income. We rely on pocket money from our parents and a small monthly stipend of around <strong style="color:var(--gold)">Nu. 3,000</strong> provided by the college to manage our daily expenses.</p>
 
         <p>Like many others, I often found myself running out of money in the middle of the month. Even small needs of Nu. 100 or Nu. 200 became difficult to manage when my bank balance reached zero. At times when I needed help, I realized that many of my friends were facing similar financial situations.</p>
 
-        <p>This made me realize that, although financial resources may be limited, managing them effectively requires awareness, planning, and discipline skills that many of us are still learning and improving over time.</p>
+        <p>This made me realize that although financial resources may be limited, managing them effectively requires awareness, planning, and discipline — skills that many of us are still learning and improving over time.</p>
 
-        <p>As part of my internship project, this experience inspired me to create <strong style="color:var(--gold)">SmartBudget Bhutan</strong>, a platform designed to help students, employees, and individuals build stronger financial habits and make better financial decisions.</p>
+        <p>This experience inspired me to create <strong style="color:var(--gold)">SmartBudget Bhutan</strong>, a platform designed to help students, employees, and individuals build stronger financial habits and make better financial decisions.</p>
 
         <p>Through this website, I aim to promote financial awareness by providing practical tools such as budget planner templates, basic budgeting methods, interactive quizzes, and other simple learning resources.</p>
 
@@ -63,7 +62,7 @@
       </div>
 
       <div class="huf-closing">
-        Financial resilience is not about how much you earn<br>
+        Financial resilience is not about how much you earn —<br>
         <span style="color:var(--gold); font-style:italic;">it is about how well you manage what you have.</span>
       </div>
     </div>
@@ -504,34 +503,6 @@
   </div>
 </div>
 </section>
-
-<!-- ══ CHATBOT WIDGET ══ -->
-<div id="chat-widget" style="display:none;position:fixed;bottom:24px;right:24px;z-index:9999;width:380px;max-width:calc(100vw - 32px);font-family:'Lato',sans-serif;">
-  <div style="background:linear-gradient(135deg,#1a1305,#2a1f08);border:1px solid rgba(201,168,76,0.35);border-bottom:none;border-radius:14px 14px 0 0;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
-    <div style="display:flex;align-items:center;gap:12px;">
-      <div style="width:38px;height:38px;border-radius:50%;background:rgba(201,168,76,0.15);border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:18px;"></div>
-      <div>
-        <div style="font-family:'Cinzel',serif;color:var(--gold);font-size:13px;letter-spacing:1px;">SBB Assistant</div>
-        <div style="font-size:11px;color:var(--green);letter-spacing:0.5px;">● Online</div>
-      </div>
-    </div>
-    <button onclick="toggleChat()" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1;padding:4px;">✕</button>
-  </div>
-  <div id="chat-messages" style="background:rgba(10,8,2,0.97);border-left:1px solid rgba(201,168,76,0.2);border-right:1px solid rgba(201,168,76,0.2);height:360px;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth;"></div>
-  <div id="chat-suggestions" style="background:rgba(10,8,2,0.97);border-left:1px solid rgba(201,168,76,0.2);border-right:1px solid rgba(201,168,76,0.2);padding:10px 12px;display:flex;flex-wrap:wrap;gap:7px;">
-    <button onclick="sendSuggestion(this)" style="font-size:11.5px;padding:5px 12px;border-radius:20px;border:1px solid rgba(201,168,76,0.3);background:rgba(201,168,76,0.07);color:var(--gold);cursor:pointer;font-family:'Lato',sans-serif;">What is the 50/30/20 rule?</button>
-    <button onclick="sendSuggestion(this)" style="font-size:11.5px;padding:5px 12px;border-radius:20px;border:1px solid rgba(201,168,76,0.3);background:rgba(201,168,76,0.07);color:var(--gold);cursor:pointer;font-family:'Lato',sans-serif;">How to start saving?</button>
-    <button onclick="sendSuggestion(this)" style="font-size:11.5px;padding:5px 12px;border-radius:20px;border:1px solid rgba(201,168,76,0.3);background:rgba(201,168,76,0.07);color:var(--gold);cursor:pointer;font-family:'Lato',sans-serif;">Emergency fund tips</button>
-    <button onclick="sendSuggestion(this)" style="font-size:11.5px;padding:5px 12px;border-radius:20px;border:1px solid rgba(201,168,76,0.3);background:rgba(201,168,76,0.07);color:var(--gold);cursor:pointer;font-family:'Lato',sans-serif;">Budget for Nu. 30,000</button>
-  </div>
-  <div style="background:rgba(10,8,2,0.97);border:1px solid rgba(201,168,76,0.35);border-top:1px solid rgba(201,168,76,0.15);border-radius:0 0 14px 14px;padding:12px 14px;display:flex;gap:10px;align-items:flex-end;">
-    <textarea id="chat-input" placeholder="Ask about budgeting in Bhutan..." rows="1" onkeydown="chatKeyDown(event)" oninput="autoResize(this)" style="flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:10px 13px;color:var(--text);font-size:13.5px;font-family:'Lato',sans-serif;resize:none;outline:none;line-height:1.5;max-height:100px;overflow-y:auto;"></textarea>
-    <button id="chat-send-btn" onclick="sendChatMessage()" style="width:40px;height:40px;min-width:40px;border-radius:8px;border:none;background:var(--gold);color:var(--deep);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:opacity 0.2s;">➤</button>
-  </div>
-</div>
-
-<button id="chat-fab" onclick="toggleChat()" style="position:fixed;bottom:24px;right:24px;z-index:9998;width:58px;height:58px;border-radius:50%;border:2px solid var(--gold);background:rgba(10,8,2,0.95);color:var(--gold);font-size:24px;cursor:pointer;box-shadow:0 4px 24px rgba(0,0,0,0.6);transition:transform 0.2s;display:flex;align-items:center;justify-content:center;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🪙</button>
-
 <footer>
   <p>© 2026 <span>Smart Budget Bhutan</span> · Bhutan Data Scientist Pvt. Ltd. · All rights reserved</p>
 </footer>
