@@ -2957,17 +2957,19 @@ footer span { color: var(--gold); }
 }
 
 .huf-story-body {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  text-align: justify;
+  line-height:1.78;
   margin-bottom: 28px;
 }
 
 .huf-story-body p {
-  font-size: 14.5px;
+  margin-bottom: 15px;
+  font-size: 14.8px;
   color: var(--muted);
-  line-height: 1.85;
-  text-align: left;
+}
+
+.huf-story-body p:last-child {
+    margin-bottom: 0;              /* No extra space after last paragraph */
 }
 
 .huf-story-body strong {
