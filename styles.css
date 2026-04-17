@@ -1775,7 +1775,7 @@ section, .overlay { display: none; }
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-  background: linear-gradient(rgba(0,0,0,0.68), rgba(0,0,0,0.78)), #0d0a04;
+ background: linear-gradient(rgba(0,0,0,0.68), rgba(0,0,0,0.78)), url("https://www.publicdomainpictures.net/pictures/270000/velka/flag-of-bhutan-bhutan-flag-nation.jpg") center/cover fixed;
 }
 
 #quiz h2 {
@@ -2270,7 +2270,7 @@ footer span { color: var(--gold); }
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-  background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.75)), #0d0a04;
+  background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.75)), url("https://www.publicdomainpictures.net/pictures/270000/velka/flag-of-bhutan-bhutan-flag-nation.jpg") center/cover fixed;
 }
 
 #planner h2 {
