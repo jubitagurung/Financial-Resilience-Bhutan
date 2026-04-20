@@ -9,14 +9,23 @@
 </head>
 <body>
 
-<nav>
+<nav id="main-nav">
   <span class="nav-brand">SBB</span>
+
+  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <span class="hamburger-bar"></span>
+    <span class="hamburger-bar"></span>
+    <span class="hamburger-bar"></span>
+  </button>
+
+<div class="nav-menu" id="nav-menu"></div>
   <a onclick="showSection('home')" id="nav-home" class="active-link">Home</a>
   <a onclick="showSection('dashboard')" id="nav-dashboard">Dashboard</a>
   <a onclick="showSection('budget')" id="nav-budget">Budget</a>
   <a onclick="showSection('planner')" id="nav-planner">Budget Planner</a>
   <a onclick="showSection('quiz')" id="nav-quiz">Quiz</a>
   <a onclick="showSection('about')" id="nav-about">About</a>
+</div>
 </nav>
 
 <!-- ══ HOME ══ -->
