@@ -1,22 +1,51 @@
 // ── SECTION NAVIGATION ──
 function showSection(id) {
-  document.querySelectorAll("section, .overlay").forEach(el => {
-    el.classList.remove("active");
-    el.style.display = "none";
+  document.querySelectorAll('section, .overlay').forEach(el => {
+    el.classList.remove('active');
+    el.style.display = 'none';
   });
   const target = document.getElementById(id);
-  if (target) { target.style.display = "flex"; target.classList.add("active"); }
-  document.querySelectorAll("nav a").forEach(a => a.classList.remove("active-link"));
-  const navLink = document.getElementById("nav-" + id);
-  if (navLink) navLink.classList.add("active-link");
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  if (target) { target.style.display = 'flex'; target.classList.add('active'); }
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active-link'));
+  const navLink = document.getElementById('nav-' + id);
+  if (navLink) navLink.classList.add('active-link');
+
+  // close mobile menu
+  document.getElementById('nav-menu')?.classList.remove('open');
+  const t = document.getElementById('nav-toggle');
+  if (t) { t.classList.remove('open'); t.setAttribute('aria-expanded','false'); }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("section").forEach(el => el.style.display = "none");
-  const home = document.getElementById("home");
-  if (home) { home.style.display = "flex"; home.classList.add("active"); }
-});
+// hamburger toggle
+(function () {
+  const toggle = document.getElementById('nav-toggle');
+  const menu   = document.getElementById('nav-menu');
+  if (!toggle || !menu) return;
+
+  toggle.addEventListener('click', () => {
+    const isOpen = menu.classList.toggle('open');
+    toggle.classList.toggle('open', isOpen);
+    toggle.setAttribute('aria-expanded', isOpen);
+  });
+
+  document.addEventListener('click', e => {
+    if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+      menu.classList.remove('open');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      menu.classList.remove('open');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();
 
 // ══════════════════════════════════════════════
 // ── QUIZ ENGINE ──
