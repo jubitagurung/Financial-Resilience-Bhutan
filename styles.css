@@ -382,7 +382,7 @@ section, .overlay { display: none; }
 
 .budget-row:last-child { border-bottom: none; }
 .budget-row .label { color: var(--muted); }
-.budget-row .value { color: var(--text); font-weight: 700; }
+.budget-row .value { color: var(--muted); font-weight: 700; }
 .budget-row.saving .value { color: var(--green); }
 .budget-row.saving .label { color: var(--green); }
 
@@ -1039,7 +1039,7 @@ footer span { color: var(--gold); }
 .planner-story {
   max-width: 860px;
   width: 100%;
-  background: rgba(226,95,14,0.1);
+  background:  rgba(77, 77, 79, 0.85);
   border: 1px solid rgba(226,95,14,0.3);
   border-left: 4px solid var(--accent);
   border-radius: 8px;
