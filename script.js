@@ -1,19 +1,26 @@
 // ── SECTION NAVIGATION ──
 function showSection(id) {
+  // Hide all sections cleanly
   document.querySelectorAll('section, .overlay').forEach(el => {
     el.classList.remove('active');
-    el.style.display = 'none';
+    el.style.display = '';          // ← clear inline style, let CSS class control it
   });
+
+  // Show target
   const target = document.getElementById(id);
-  if (target) { target.style.display = 'flex'; target.classList.add('active'); }
+  if (target) {
+    target.classList.add('active'); // ← CSS .active { display: flex } handles it
+  }
+
+  // Update nav active link
   document.querySelectorAll('nav a').forEach(a => a.classList.remove('active-link'));
   const navLink = document.getElementById('nav-' + id);
   if (navLink) navLink.classList.add('active-link');
 
-  // close mobile menu
+  // Close mobile menu
   document.getElementById('nav-menu')?.classList.remove('open');
   const t = document.getElementById('nav-toggle');
-  if (t) { t.classList.remove('open'); t.setAttribute('aria-expanded','false'); }
+  if (t) { t.classList.remove('open'); t.setAttribute('aria-expanded', 'false'); }
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
