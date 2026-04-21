@@ -33,25 +33,48 @@
   <h1>Smart Budget Bhutan</h1>
   <p class="subtitle">Financial Resilience at the Household Level</p>
 
+  <!-- QUIZ INVITE TOAST -->
+  <div class="quiz-toast" id="quiz-toast">
+    <button class="toast-dismiss" onclick="dismissToast()" aria-label="Dismiss">✕</button>
+    <div class="toast-badge"><div class="toast-dot"></div> QUIZ</div>
+    <div class="toast-title">Test Your Financial Knowledge</div>
+    <div class="toast-body">Ready? Take our 8-question financial literacy quiz and get AI-powered feedback.</div>
+    <button class="toast-btn" onclick="showSection('quiz'); dismissToast();">Start the Challenge →</button>
+  </div>
+
+  <!-- CONFETTI -->
+  <div class="confetti-wrap" id="confetti-wrap" style="display:none;"></div>
+
+  <!-- JOURNEY GAMIFICATION BAR -->
+  <div class="journey-gamify-bar">
+    <div class="jg-step active-step">
+      <div class="jg-num">1</div>
+      <div class="jg-lbl">Learn</div>
+    </div>
+    <div class="jg-line"></div>
+    <div class="jg-step">
+      <div class="jg-num">2</div>
+      <div class="jg-lbl">Quiz</div>
+    </div>
+    <div class="jg-line"></div>
+    <div class="jg-step">
+      <div class="jg-num">3</div>
+      <div class="jg-lbl">Plan</div>
+    </div>
+  </div>
+
   <div class="home-unified-frame">
 
     <div class="huf-intro">
-      <h2 class="story-title">Why I Built SmartBudget Bhutan</h2>
-
+      
+    <h2 class="story-title">Why I Built SmartBudget Bhutan</h2>
       <div class="huf-story-body">
-        <p>I am currently a 3rd-year, 2nd-semester student of Gedu College of Business Studies, working as an intern at Bhutan Data Scientist Pvt. Ltd. (BDS). I am working on a project focused on financial resilience at the household level in urban Bhutan. This website presents key insights from my research analyzing income, expenses, and saving patterns among Bhutanese families, and offers practical, data-driven recommendations to help strengthen long-term financial stability.</p>
-
-        <p>Growing up and studying in Bhutan, I personally experienced both the importance and the challenges of managing money wisely at a young age. As students, most of us do not have a regular source of income. We rely on pocket money from our parents and a small monthly stipend of around Nu. 3,000 provided by the college to manage our daily expenses.</p>
-
-        <p>Like many others, I often found myself running out of money in the middle of the month. Even small needs of Nu. 100 or Nu. 200 became difficult to manage when my bank balance reached zero. At times when I needed help, I realized that many of my friends were facing similar financial situations.</p>
-
-        <p>This made me realize that although financial resources may be limited, managing them effectively requires awareness, planning, and discipline skills that many of us are still learning and improving over time.</p>
-
-        <p>This experience inspired me to create SmartBudget Bhutan, a platform designed to help students, employees, and individuals build stronger financial habits and make better financial decisions.</p>
-
-        <p>Through this website, I aim to promote financial awareness by providing practical tools such as budget planner templates, basic budgeting methods, interactive quizzes, and other simple learning resources.</p>
-
-        <p>My goal is to help people develop financial discipline in their daily lives, no matter how small their income may be.</p>
+        <p>I am currently a 3rd-year, 2nd-semester student of Gedu College of Business Studies, working as an intern at Bhutan Data Scientist Pvt. Ltd. (BDS). I am working on a project focused on financial resilience at the household level in urban Bhutan.</p>
+        <p>Growing up and studying in Bhutan, I personally experienced both the importance and the challenges of managing money wisely at a young age. As students, most of us do not have a regular source of income. We rely on pocket money from our parents and a small monthly stipend of around Nu. 3,000.</p>
+        <p>Like many others, I often found myself running out of money in the middle of the month. Even small needs of Nu. 100 or Nu. 200 became difficult to manage when my bank balance reached zero.</p>
+        <p>This experience inspired me to create SmartBudget Bhutan — a platform to help students, employees, and individuals build stronger financial habits and make better financial decisions.</p>
+        <p>Through this website, I am to promote financial awareness by providing practical tools such as budget planner templates, basic budgeting methods, interactive quizzes, and other simple learning resources.</p>
+      
       </div>
 
       <div class="huf-closing">
@@ -59,15 +82,26 @@
         <span style="color:var(--gold); font-style:italic;">it is about how well you manage what you have.</span>
       </div>
 
-      <div class="home-stats">
-        <div class="stat-pill">Real Household Data</div>
-        <div class="stat-pill">🇧🇹 Urban Bhutan Focus</div>
-        <div class="stat-pill">Actionable Insights</div>
+      <!-- HOME CTA BLOCK -->
+      <div class="home-cta-block">
+        <div class="home-pills">
+          <div class="stat-pill">🇧🇹 Urban Bhutan Focus</div>
+          <div class="stat-pill">AI-Powered Feedback</div>
+          <div class="stat-pill">Free Budget Planner</div>
+        </div>
+        <button class="cta-primary-btn" onclick="showSection('quiz')">
+          Take the Challenge
+        </button>
+        <button class="cta-secondary-link" onclick="showSection('planner')">
+          Skip to Budget Planner →
+        </button>
       </div>
+
     </div>
 
   </div>
 </div>
+
 <!-- ══ DASHBOARD ══ -->
 <section id="dashboard">
   <h2>Financial Resilience Dashboard</h2>
@@ -90,7 +124,7 @@
   <p class="dashboard-note">
     Tip: Click on chart elements to filter and explore specific segments of the data.
   </p>
- 
+
 </section>
 
 <!-- ══ BUDGET ══ -->
@@ -155,6 +189,11 @@
 <section id="planner">
   <h2>Budget Planner</h2>
   <p class="section-tagline">SmartBudget Planner, Interactive Sample & Free Download</p>
+
+  <!-- PERSONALIZED WELCOME BANNER — shown after quiz -->
+<div class="planner-welcome-banner" id="planner-welcome-banner" style="display:none;">
+  <span id="planner-banner-text">Well done completing the quiz! Now let's turn your knowledge into action.</span>
+</div>
 
   <!-- DOWNLOAD CARD -->
   <div class="planner-download-card">
@@ -348,10 +387,26 @@
       <div id="breakdown-list"></div>
     </div>
 
-    <div style="text-align:center; margin-top: 8px;">
-      <button class="quiz-retry-btn" onclick="resetQuiz()">Try Again</button>
-      <button class="btn-primary" onclick="showSection('planner')">Budget Planner →</button>
-    </div>
+<!-- DYNAMIC PLANNER PUSH BLOCK (injected by JS after quiz) -->
+<div class="planner-push-block" id="planner-push-block">
+  <div class="ppb-badge">Step 3 of 3 — Final Step</div>
+  <div class="ppb-title" id="ppb-title">Now Put Your Knowledge to Work</div>
+  <div class="ppb-desc" id="ppb-desc">Use the SmartBudget Planner to apply what you've learned.</div>
+  <div class="ppb-features">
+    <span class="ppb-feat">50/30/20 Template</span>
+    <span class="ppb-feat">Expense Tracker</span>
+    <span class="ppb-feat">Savings Goals</span>
+    <span class="ppb-feat">Free Download</span>
+  </div>
+  <button class="ppb-btn" onclick="showSection('planner')">
+    Explore Budget Planner →
+  </button>
+</div>
+
+<div style="text-align:center; margin-top: 12px;">
+  <button class="quiz-retry-btn" onclick="resetQuiz()">Try Again</button>
+</div>
+    
   </div>
 </section>
 
