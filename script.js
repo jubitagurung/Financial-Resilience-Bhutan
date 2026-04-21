@@ -54,6 +54,100 @@ function showSection(id) {
   });
 })();
 
+// ══ TOAST ══
+function dismissToast() {
+  const t = document.getElementById('quiz-toast');
+  if (!t) return;
+  t.style.transition = 'opacity 0.3s, transform 0.3s';
+  t.style.opacity = '0';
+  t.style.transform = 'translateX(60px)';
+  setTimeout(() => { t.style.display = 'none'; }, 300);
+}
+
+// Show toast on home load
+function showToastOnHome() {
+  const t = document.getElementById('quiz-toast');
+  if (!t) return;
+  t.style.display = 'block';
+  // auto-dismiss after 12 seconds
+  setTimeout(() => dismissToast(), 12000);
+}
+
+// ══ JOURNEY BAR — update step highlights ══
+function updateJourneyBar(activeStep) {
+  // activeStep: 1 = home, 2 = quiz, 3 = planner
+  const steps = document.querySelectorAll('.jg-step');
+  steps.forEach((s, i) => {
+    s.classList.remove('active-step', 'done-step');
+    if (i + 1 < activeStep) s.classList.add('done-step');
+    else if (i + 1 === activeStep) s.classList.add('active-step');
+  });
+}
+
+// ══ CONFETTI ══
+function launchConfetti() {
+  const wrap = document.getElementById('confetti-wrap');
+  if (!wrap) return;
+  wrap.style.display = 'block';
+  wrap.innerHTML = '';
+  const colors = ['#c9a84c','#4caf82','#e25f0e','#f0ead6','#5cb8e4'];
+  for (let i = 0; i < 70; i++) {
+    const c = document.createElement('div');
+    c.className = 'conf';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDuration = (1.8 + Math.random() * 2.2) + 's';
+    c.style.animationDelay = (Math.random() * 0.8) + 's';
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    wrap.appendChild(c);
+  }
+  setTimeout(() => { wrap.style.display = 'none'; }, 5000);
+}
+
+// ══ PLANNER PUSH BLOCK — set dynamic message based on score ══
+function setPlannnerPush(score, total) {
+  const pct = Math.round(score / total * 100);
+  const titleEl = document.getElementById('ppb-title');
+  const descEl  = document.getElementById('ppb-desc');
+  if (!titleEl || !descEl) return;
+
+  if (pct === 100) {
+    titleEl.textContent = 'Perfect Score! Put Your Expert Knowledge Into Action';
+    descEl.textContent  = 'You aced the quiz! Challenge yourself further — build a real budget with the SmartBudget Planner and watch your savings grow.';
+    launchConfetti();
+  } else if (pct >= 75) {
+    titleEl.textContent = 'Great Job! Now Apply It in Real Life';
+    descEl.textContent  = 'Your strong quiz score shows you understand the principles. Use the Budget Planner to put the 50/30/20 rule to work with your real income.';
+  } else if (pct >= 50) {
+    titleEl.textContent = 'Good Start! Strengthen Your Habits With a Real Budget';
+    descEl.textContent  = 'You\'ve got a solid foundation. The SmartBudget Planner will help you practice these principles daily and build lasting financial resilience.';
+  } else {
+    titleEl.textContent = 'Improve Your Financial Habits — Start With the Planner';
+    descEl.textContent  = 'The best way to grow financially is hands-on practice. The Budget Planner guides you step by step, no matter where you\'re starting from.';
+  }
+}
+
+// ══ PLANNER WELCOME BANNER — set message ══
+function setPlannerBanner(score, total) {
+  const banner = document.getElementById('planner-welcome-banner');
+  const text   = document.getElementById('planner-banner-text');
+  if (!banner || !text) return;
+  const pct = total > 0 ? Math.round(score / total * 100) : -1;
+
+  if (pct === 100) {
+    text.innerHTML = '🏆 Perfect score on the quiz! You\'re a financial expert — now build a budget that matches your knowledge.';
+  } else if (pct >= 75) {
+    text.innerHTML = '⭐ Great quiz result! Now apply what you know with the SmartBudget Planner.';
+  } else if (pct >= 50) {
+    text.innerHTML = '📈 Good effort on the quiz! The Budget Planner is the perfect next step to build real habits.';
+  } else if (pct >= 0) {
+    text.innerHTML = '💡 The best way to improve is to practise — the Budget Planner will guide you step by step.';
+  } else {
+    text.innerHTML = '👋 Welcome! The SmartBudget Planner will help you take control of your finances.';
+  }
+  banner.style.display = 'block';
+}
+
 // ══════════════════════════════════════════════
 // ── QUIZ ENGINE ──
 // ══════════════════════════════════════════════
