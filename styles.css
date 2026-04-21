@@ -3342,3 +3342,8 @@ footer span { color: var(--gold); }
   to   { transform: translateY(110vh) rotate(720deg); opacity: 0; }
 }
 
+.jg-step:hover .jg-num {
+  background: rgba(201,168,76,0.3);
+  border-color: var(--gold);
+  color: var(--gold);
+}
