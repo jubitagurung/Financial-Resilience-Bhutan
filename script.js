@@ -213,6 +213,14 @@ function showResults() {
 
   const pct = Math.round((score / QUESTIONS.length) * 100);
   document.getElementById("result-score").textContent = `${score}/${QUESTIONS.length}`;
+    //
+  const resultData = {
+  score: score,
+  total: QUESTIONS.length,
+  percent: pct,
+  date: new Date().toLocaleDateString('en-BT', { day:'numeric', month:'short', year:'numeric' })
+};
+localStorage.setItem('sbb_last_quiz', JSON.stringify(resultData));
 
   let title, subtitle;
   if (pct === 100) { title = "Financial Expert!"; subtitle = "Perfect score — you are ready to teach others!"; }
@@ -277,3 +285,39 @@ function resetQuiz() {
   document.getElementById("quiz-start").style.display = "block";
   currentQ = 0; score = 0; answers = [];
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('sbb_last_quiz');
+  if (!saved) return;
+
+  const r = JSON.parse(saved);
+  const banner = document.createElement('div');
+  banner.id = 'prev-score-banner';
+  banner.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+      <span style="color:#c9a84c; font-family:'Cinzel',serif; font-size:12px; letter-spacing:1px;">LAST QUIZ RESULT</span>
+      <button onclick="document.getElementById('prev-score-banner').remove()" style="background:transparent; border:none; color:#a89e84; cursor:pointer; font-size:14px; padding:0;">✕</button>
+    </div>
+    <div>Score: <strong style="color:#c9a84c">${r.score}/${r.total} (${r.percent}%)</strong></div>
+    <div style="font-size:11px;">${r.date}</div>
+  `;
+  banner.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(10,8,2,0.95);
+    border: 1px solid rgba(201,168,76,0.4);
+    border-left: 4px solid #c9a84c;
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: #a89e84;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    max-width: 320px;
+  `;
+  document.body.appendChild(banner);
+});
