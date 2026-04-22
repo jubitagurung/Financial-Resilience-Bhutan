@@ -65,49 +65,42 @@
 
   <div class="home-unified-frame">
 
-    <div class="huf-intro">
-      
-    <h2 class="story-title">Why I Built SmartBudget Bhutan</h2>
-      <div class="huf-story-body">
-        <p>I am currently a 3rd-year, 2nd-semester student of Gedu College of Business Studies, working as an intern at Bhutan Data Scientist Pvt. Ltd. (BDS). I am working on a project focused on financial resilience at the household level in urban Bhutan.</p>
-        <p>Growing up and studying in Bhutan, I personally experienced both the importance and the challenges of managing money wisely at a young age. As students, most of us do not have a regular source of income. We rely on pocket money from our parents and a small monthly stipend of around Nu. 3,000.</p>
-        <p>Like many others, I often found myself running out of money in the middle of the month. Even small needs of Nu. 100 or Nu. 200 became difficult to manage when my bank balance reached zero.</p>
-        <p>This experience inspired me to create SmartBudget Bhutan — a platform to help students, employees, and individuals build stronger financial habits and make better financial decisions.</p>
-        <p>Through this website, I am to promote financial awareness by providing practical tools such as budget planner templates, basic budgeting methods, interactive quizzes, and other simple learning resources.</p>
-      
-      </div>
+   <div class="huf-intro">
+  <h2 class="story-title">Why I Built SmartBudget Bhutan</h2>
 
-      <div class="huf-closing">
-        Financial resilience is not about how much you earn<br>
-        <span style="color:var(--gold); font-style:italic;">it is about how well you manage what you have.</span>
-      </div>
+  <div class="huf-quote-box">
+    Financial resilience is not about how much you earn: 
+    <span style="color:var(--gold); font-style:italic;">it is about how well you manage what you have.</span>
+  </div>
 
-      <!-- HOME CTA BLOCK -->
-      <div class="home-cta-block">
-        <div class="home-pills">
-          <div class="stat-pill">🇧🇹 Urban Bhutan Focus</div>
-          <div class="stat-pill">AI-Powered Feedback</div>
-          <div class="stat-pill">Free Budget Planner</div>
-        </div>
-        <button class="cta-primary-btn" onclick="showSection('quiz')">
-          Take the Challenge
-        </button>
-        <button class="cta-secondary-link" onclick="showSection('planner')">
-          Skip to Budget Planner →
-        </button>
-      </div>
+  <div class="huf-story-body">
+    <p>I am 3rd year  student at Gedu College of Business Studies, did  my internship at Bhutan Data Scientist Pvt. Ltd. (BDS). During this time, I worked on a project focused on financial resilience at the household level in urban Bhutan.</p>
+    <p>Growing up and studying in Bhutan, I had personally experienced both the importance and the challenges of managing money wisely at a young age. As students, most of us did not have a regular source of income and relied on pocket money from our parents along with a small monthly stipend of around Nu. 3,000.</p>
+    <p>Like many others, I often ran out of money in the middle of the month. Even small needs of Nu. 100 or Nu. 200 became difficult to manage when my bank balance reached zero.</p>
+    <p>This experience inspired me to create SmartBudget Bhutan, a platform designed to help students, employees, and individuals build stronger financial habits and make better financial decisions.</p>
+    <p>Through this website, I aimed to promote financial awareness by providing practical tools such as budget planner templates, basic budgeting methods, interactive quizzes, and simple learning resources.</p>
 
-    </div>
 
+  </div>
+
+  <!-- HOME CTA BLOCK -->
+    <button class="cta-primary-btn" onclick="showSection('quiz')">
+      Take the Quiz
+    </button>
+    <button class="cta-secondary-link" onclick="showSection('planner')">
+      Skip to Budget Planner →
+    </button>
+  </div>
+</div>
   </div>
 </div>
 
-<!-- ══ DASHBOARD ══ -->
+<!--DASHBOARD -->
 <section id="dashboard">
   <h2>Financial Resilience Dashboard</h2>
   <p class="section-tagline">Interactive Tableau Visualization</p>
   <div class="dashboard-desc">
-    This dashboard visualizes real household financial data collected from urban Bhutanese families. It explores
+   This dashboard visualizes real household financial data collected from urban Bhutanese families. It explores
    income distribution, monthly expense breakdowns, and savings behaviour across different income brackets. Use it to identify patterns, stress points, and opportunities for financial improvement
    in Bhutanese households. Filter by income group or expense category to drill deeper into the data.
   </div>
@@ -137,7 +130,7 @@
   </p>
   <div class="budget-rule">Recommended Framework: 50% Needs · 30% Wants · 20% Savings</div>
   <div class="budget-container">
-    <div class="budget-card low">
+    <div class="budget-card low" onclick="showSection('planner')" style="cursor:pointer;" title="Open Budget Planner">
       <h3>Low Income</h3>
       <div class="budget-row"><span class="label">Monthly Income</span><span class="value">Nu. 20,000</span></div>
       <div class="budget-row"><span class="label">Needs (Rent, Food)</span><span class="value">Nu. 10,000</span></div>
@@ -149,7 +142,7 @@
         <div class="budget-bar"><div class="budget-bar-fill" style="width:10%"></div></div>
       </div>
     </div>
-    <div class="budget-card mid">
+    <div class="budget-card mid" onclick="showSection('planner')" style="cursor:pointer;" title="Open Budget Planner">
       <h3>Middle Income</h3>
       <div class="budget-row"><span class="label">Monthly Income</span><span class="value">Nu. 40,000</span></div>
       <div class="budget-row"><span class="label">Needs (Rent, Food)</span><span class="value">Nu. 18,000</span></div>
@@ -161,7 +154,7 @@
         <div class="budget-bar"><div class="budget-bar-fill" style="width:15%"></div></div>
       </div>
     </div>
-    <div class="budget-card high">
+   <div class="budget-card high" onclick="showSection('planner')" style="cursor:pointer;" title="Open Budget Planner">
       <h3>High Income</h3>
       <div class="budget-row"><span class="label">Monthly Income</span><span class="value">Nu. 80,000</span></div>
       <div class="budget-row"><span class="label">Needs (Rent, Food)</span><span class="value">Nu. 32,000</span></div>
@@ -189,6 +182,9 @@
 <section id="planner">
   <h2>Budget Planner</h2>
   <p class="section-tagline">SmartBudget Planner, Interactive Sample & Free Download</p>
+  <div class="page-story-strip">
+  Running out of money before month-end was something I personally experienced as a student. I built this planner so no one in Bhutan has to face that same stress.It is free, practical, and designed for real Bhutanese incomes.
+</div>
 
   <!-- PERSONALIZED WELCOME BANNER — shown after quiz -->
 <div class="planner-welcome-banner" id="planner-welcome-banner" style="display:none;">
@@ -328,11 +324,11 @@
 <!-- ══ QUIZ ══ -->
 <section id="quiz">
   <h2>Financial Literacy Quiz</h2>
-  <p class="quiz-tagline">Test Your Knowledge · Get AI-Powered Feedback</p>
+  <p class="quiz-tagline">Based on Real Survey Data from Urban Bhutanese Households</p>
   <!-- START SCREEN -->
   <div id="quiz-start">
     <div class="quiz-start-card">
-      <p>How well do you know household budgeting and saving in Bhutan? Take this 8-question quiz to test your financial literacy and receive personalized AI feedback on your results.</p>
+      <p>During my internship, I surveyed real urban Bhutanese households and uncovered some surprising patterns in how families manage money. These 8 questions are drawn directly from those findings and see how your financial knowledge stacks up against real local data.</p>
       <div class="quiz-meta-pills">
         <span class="quiz-meta-pill">8 Questions</span>
         <span class="quiz-meta-pill">Multiple Choice</span>
@@ -389,7 +385,7 @@
 
 <!-- DYNAMIC PLANNER PUSH BLOCK (injected by JS after quiz) -->
 <div class="planner-push-block" id="planner-push-block">
-  <div class="ppb-badge">Step 3 of 3 — Final Step</div>
+  <div class="ppb-badge">Step 3 of 3: Final Step</div>
   <div class="ppb-title" id="ppb-title">Now Put Your Knowledge to Work</div>
   <div class="ppb-desc" id="ppb-desc">Use the SmartBudget Planner to apply what you've learned.</div>
   <div class="ppb-features">
@@ -415,12 +411,12 @@
   <h2>About This Project</h2>
   <p class="section-tagline">Research · Data · Impact</p>
   <div class="about-container">
-    <div class="about-card">
+    <div class="about-card" onclick="showSection('dashboard')" style="cursor:pointer;" title="View Dashboard">
       <h3>Project Background</h3>
       <p>I am an intern at Bhutan Data Scientist Pvt. Ltd. (BDS), working on financial resilience at the household level in urban Bhutan.</p>
       <p>This project analyzes real household data to understand income, expenses, savings behaviour, and financial stress points among Bhutanese families with the goal of making insights accessible and actionable.</p>
     </div>
-    <div class="about-card">
+   <div class="about-card" onclick="showSection('dashboard')" style="cursor:pointer;" title="View Dashboard">
       <h3>Objectives</h3>
       <ul>
         <li>Identify key financial challenges in urban Bhutanese households</li>
@@ -430,7 +426,7 @@
         <li>Make complex financial insights accessible to everyone</li>
       </ul>
     </div>
-    <div class="about-card">
+    <div class="about-card" onclick="showSection('dashboard')" style="cursor:pointer;" title="View Dashboard">
       <h3>Tools & Technology</h3>
       <p style="margin-bottom:14px">This project uses a modern data-to-web pipeline to turn raw household data into clear, actionable insights.</p>
       <p style="color:var(--text); font-size:13px; margin-bottom:8px">Data & Visualization</p>

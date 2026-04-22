@@ -3347,3 +3347,48 @@ footer span { color: var(--gold); }
   border-color: var(--gold);
   color: var(--gold);
 }
+
+.page-story-strip {
+  max-width: 640px;
+  width: 100%;
+  background: rgba(226,95,14,0.08);
+  border: 1px solid rgba(226,95,14,0.25);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  padding: 13px 20px;
+  font-size: 13.5px;
+  color: #c9b99a;
+  line-height: 1.7;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* ── READABILITY OVERRIDES ── */
+.huf-story-body p,
+.planner-story,
+.about-card p,
+.about-card li,
+.dashboard-desc,
+.budget-intro,
+.quiz-start-card p,
+.quiz-ai-feedback-text,
+.breakdown-q,
+.planner-dl-desc,
+.planner-step,
+.sonam-step,
+.platform-desc,
+.planner-cta-sub {
+  color: #c9b99a;
+}
+
+.quiz-q-text {
+  color: #f5efe0;
+}
+
+.quiz-option {
+  color: #c9b99a;
+}
+
+.budget-row .label {
+  color: #b8ae96;
+}
