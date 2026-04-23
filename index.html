@@ -235,12 +235,11 @@
     </div>
 
     <!-- SONAM STORY -->
-    <div class="planner-story">
-      <span class="planner-story-quote">"Why can't I save anything?"</span>
-      <span class="planner-story-text"> — Sonam Choden, 27, Thimphu. She used this planner and saved <strong>Nu. 18,000
-          in 3 months.</strong></span>
-    </div>
-
+<div class="planner-story" id="sonam-story-trigger" onclick="openSonamModal()" style="cursor:pointer;" title="Click to read Sonam's full story">
+    <span class="planner-story-quote">"Why can't I save anything?"</span>
+    <span class="planner-story-text"> — Sonam Choden, 27, Thimphu. She used this planner and saved <strong>Nu. 18,000 in 3 months.</strong></span>
+    <span style="display:inline-block; margin-left:10px; color:var(--gold); font-family:'Cinzel',serif; font-size:12px; letter-spacing:1px; border-bottom: 1px solid var(--gold);">Read her story →</span>
+</div>
     <!-- HOW TO USE -->
     <div class="planner-how-wrap">
       <h3>How to Use This Workbook</h3>
@@ -620,6 +619,91 @@
   <footer>
     <p>© 2026 <span>Smart Budget Bhutan</span> · Bhutan Data Scientist Pvt. Ltd. · All rights reserved</p>
   </footer>
+  
+  <!-- SONAM STORY MODAL -->
+<div id="sonam-modal-overlay" onclick="closeSonamModal()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.82); z-index:10000; overflow-y:auto; padding:40px 20px;">
+  <div id="sonam-modal" onclick="event.stopPropagation()" style="
+    max-width:660px; margin:0 auto;
+    background:rgba(14,10,2,0.98);
+    border:1px solid rgba(201,168,76,0.35);
+    border-top:4px solid #c9a84c;
+    border-radius:16px;
+    padding:40px 40px 36px;
+    position:relative;
+  ">
+    <button onclick="closeSonamModal()" style="
+      position:absolute; top:16px; right:20px;
+      background:transparent; border:none;
+      color:#a89e84; font-size:20px; cursor:pointer;
+      line-height:1;
+    ">✕</button>
+
+    <div style="font-size:11px; letter-spacing:3px; color:#e25f0e; font-family:'Cinzel',serif; text-transform:uppercase; margin-bottom:12px;">Sonam's Story</div>
+
+    <h3 style="font-family:'Cinzel',serif; color:#c9a84c; font-size:20px; letter-spacing:1.5px; margin-bottom:24px; line-height:1.3;">
+      "Why can't I save anything?"<br>
+      <span style="font-size:13px; color:#a89e84; letter-spacing:1px;">— Sonam Choden, 27, Thimphu</span>
+    </h3>
+
+    <div style="display:flex; flex-direction:column; gap:16px; font-size:14.5px; color:#c9b99a; line-height:1.85;">
+
+      <p>Sonam Choden is a 27-year-old government employee living in Thimphu. She earns a monthly salary of <strong style="color:#f0ead6;">Nu. 22,000</strong> — a stable income by most standards. Yet every month, she found herself asking the same question: <em style="color:#e25f0e;">"Where did all my money go?"</em></p>
+
+      <p>By the 20th of each month, her account balance was nearly zero. She wasn't buying luxuries — she was paying rent, eating out a few times a week, covering her mobile bill, sending some money home to her parents in Paro, and occasionally shopping for clothes or household items. Nothing felt excessive. Yet nothing was left.</p>
+
+      <div style="background:rgba(226,95,14,0.1); border:1px solid rgba(226,95,14,0.3); border-left:4px solid #e25f0e; border-radius:8px; padding:16px 20px; font-size:14px; color:#f0955a; line-height:1.7;">
+        "I thought saving was only possible if you earned more. I kept waiting for a promotion, a raise — something. I didn't realise the problem wasn't my income. It was that I had no system."
+      </div>
+
+      <p>In March 2025, Sonam downloaded the SmartBudget Planner and spent one evening filling in her actual numbers for the first time. The results surprised her. She was spending <strong style="color:#f0ead6;">Nu. 4,200 per month</strong> on dining out and food delivery — almost 20% of her entire income. Another <strong style="color:#f0ead6;">Nu. 1,800</strong> was disappearing on small, untracked purchases: snacks, apps, impulse buys.</p>
+
+      <p>She wasn't reckless. She just had no visibility.</p>
+
+      <div style="background:rgba(76,175,130,0.08); border:1px solid rgba(76,175,130,0.25); border-radius:10px; padding:18px 20px;">
+        <div style="font-family:'Cinzel',serif; color:#c9a84c; font-size:12px; letter-spacing:1.5px; margin-bottom:14px; text-transform:uppercase;">Her 3-Month Turnaround</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; align-items:flex-start; gap:12px;">
+            <div style="width:22px; height:22px; min-width:22px; border-radius:50%; background:rgba(76,175,130,0.2); border:1.5px solid #4caf82; color:#4caf82; font-family:'Cinzel',serif; font-size:11px; display:flex; align-items:center; justify-content:center;">1</div>
+            <span>Set a strict <strong style="color:#f0ead6;">Nu. 2,000/month</strong> dining budget. Cooked at home 5 days a week and reserved eating out for weekends only.</span>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:12px;">
+            <div style="width:22px; height:22px; min-width:22px; border-radius:50%; background:rgba(76,175,130,0.2); border:1.5px solid #4caf82; color:#4caf82; font-family:'Cinzel',serif; font-size:11px; display:flex; align-items:center; justify-content:center;">2</div>
+            <span>Opened a separate savings account at Bhutan National Bank and set up a <strong style="color:#f0ead6;">standing instruction for Nu. 3,000</strong> on every payday — before spending a single ngultrum.</span>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:12px;">
+            <div style="width:22px; height:22px; min-width:22px; border-radius:50%; background:rgba(76,175,130,0.2); border:1.5px solid #4caf82; color:#4caf82; font-family:'Cinzel',serif; font-size:11px; display:flex; align-items:center; justify-content:center;">3</div>
+            <span>Logged every expense in the Expense Tracker sheet — even Nu. 20 drinks — every Sunday evening.</span>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:12px;">
+            <div style="width:22px; height:22px; min-width:22px; border-radius:50%; background:rgba(76,175,130,0.2); border:1.5px solid #4caf82; color:#4caf82; font-family:'Cinzel',serif; font-size:11px; display:flex; align-items:center; justify-content:center;">4</div>
+            <span>Set a Savings Goal in the planner: <strong style="color:#f0ead6;">Nu. 18,000 by June 2025</strong> — enough for a trip home to Paro and an emergency cushion.</span>
+          </div>
+        </div>
+      </div>
+
+      <p>Three months later, Sonam had <strong style="color:#4caf82;">Nu. 18,000 in her savings account</strong> — more than she had saved in the previous two years combined. She hadn't received a raise. She hadn't changed jobs. She had simply made her spending visible and her savings automatic.</p>
+
+      <div style="text-align:center; border-top:1px solid rgba(201,168,76,0.18); padding-top:22px; font-size:14px; color:#a89e84; font-style:italic; line-height:1.8;">
+        "I stopped waiting to earn more. I started managing what I had. That was the only thing that needed to change."
+        <div style="margin-top:8px; color:#c9a84c; font-family:'Cinzel',serif; font-size:12px; letter-spacing:1px; font-style:normal;">— Sonam Choden</div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center; margin-top:28px;">
+      <button onclick="closeSonamModal()" style="
+        padding:13px 36px;
+        font-family:'Cinzel',serif; font-size:13px;
+        letter-spacing:2px; text-transform:uppercase;
+        border:2px solid #c9a84c; background:transparent;
+        color:#c9a84c; cursor:pointer; border-radius:6px;
+        transition:background 0.25s, color 0.25s;
+      " onmouseover="this.style.background='#c9a84c';this.style.color='#0d0a04'" onmouseout="this.style.background='transparent';this.style.color='#c9a84c'">
+        Close
+      </button>
+    </div>
+  </div>
+</div>
 
   <script src="script.js"></script>
 </body>
