@@ -1,561 +1,627 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Budget Bhutan</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Budget Bhutan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Lato:wght@300;400;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-<nav id="main-nav">
-  <span class="nav-brand">SBB</span>
+  <nav id="main-nav">
+    <span class="nav-brand">SBB</span>
 
-  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-    <span class="hamburger-bar"></span>
-    <span class="hamburger-bar"></span>
-    <span class="hamburger-bar"></span>
-  </button>
-
-<div class="nav-menu" id="nav-menu">
-  <a onclick="showSection('home')" id="nav-home" class="active-link">Home</a>
-  <a onclick="showSection('dashboard')" id="nav-dashboard">Dashboard</a>
-  <a onclick="showSection('budget')" id="nav-budget">Budget</a>
-  <a onclick="showSection('planner')" id="nav-planner">Budget Planner</a>
-  <a onclick="showSection('quiz')" id="nav-quiz">Quiz</a>
-  <a onclick="showSection('about')" id="nav-about">About</a>
-</div>
-</nav>
-
-<!-- ══ HOME ══ -->
-<div class="overlay active" id="home">
-  <h1>Financial Resilience at the Household Level</h1>
-  <p class="subtitle">Intern Project: Smart Budget Bhutan</p>
-
-  <!-- QUIZ INVITE TOAST -->
-  <div class="quiz-toast" id="quiz-toast">
-    <button class="toast-dismiss" onclick="dismissToast()" aria-label="Dismiss">✕</button>
-    <div class="toast-badge"><div class="toast-dot"></div> QUIZ</div>
-    <div class="toast-title">Test Your Financial Knowledge</div>
-    <div class="toast-body">Ready? Take our 8-question financial literacy quiz and get AI-powered feedback.</div>
-    <button class="toast-btn" onclick="showSection('quiz'); dismissToast();">Start the Challenge →</button>
-  </div>
-
-  <!-- CONFETTI -->
-  <div class="confetti-wrap" id="confetti-wrap" style="display:none;"></div>
-
- <!-- JOURNEY GAMIFICATION BAR -->
-<div class="journey-gamify-bar">
-  <div class="jg-step active-step" onclick="showSection('home')" style="cursor:pointer;" title="Go to Home">
-    <div class="jg-num">1</div>
-    <div class="jg-lbl">Learn</div>
-  </div>
-  <div class="jg-line"></div>
-  <div class="jg-step" onclick="showSection('quiz')" style="cursor:pointer;" title="Go to Quiz">
-    <div class="jg-num">2</div>
-    <div class="jg-lbl">Quiz</div>
-  </div>
-  <div class="jg-line"></div>
-  <div class="jg-step" onclick="showSection('planner')" style="cursor:pointer;" title="Go to Budget Planner">
-    <div class="jg-num">3</div>
-    <div class="jg-lbl">Plan</div>
-  </div>
-</div>
-
-  <div class="home-unified-frame">
-
-   <div class="huf-intro">
-  <h2 class="story-title">Why I Built SmartBudget Bhutan</h2>
-
-  <div class="huf-quote-box">
-    Financial resilience is not about how much you earn: 
-    <span style="color:var(--gold); font-style:italic;">it is about how well you manage what you have.</span>
-  </div>
-
-  <div class="huf-story-body">
-    <p>I am 3rd year  student at Gedu College of Business Studies, did  my internship at Bhutan Data Scientist Pvt. Ltd. (BDS). During this time, I worked on a project focused on financial resilience at the household level in urban Bhutan.</p>
-    <p>Growing up and studying in Bhutan, I had personally experienced both the importance and the challenges of managing money wisely at a young age. As students, most of us did not have a regular source of income and relied on pocket money from our parents along with a small monthly stipend of around Nu. 3,000.</p>
-    <p>Like many others, I often ran out of money in the middle of the month. Even small needs of Nu. 100 or Nu. 200 became difficult to manage when my bank balance reached zero.</p>
-    <p>This experience inspired me to create SmartBudget Bhutan, a platform designed to help students, employees, and individuals build stronger financial habits and make better financial decisions.</p>
-    <p>Through this website, I aimed to promote financial awareness by providing practical tools such as budget planner templates, basic budgeting methods, interactive quizzes, and simple learning resources.</p>
-
-
-  </div>
-
-  <!-- HOME CTA BLOCK -->
-    <button class="cta-primary-btn" onclick="showSection('quiz')">
-      Take the Quiz
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
     </button>
-    <button class="cta-secondary-link" onclick="showSection('planner')">
-      Skip to Budget Planner →
-    </button>
-  </div>
-</div>
-  </div>
-</div>
 
-<!--DASHBOARD -->
-<section id="dashboard">
-  <h2>Financial Resilience Dashboard</h2>
-  <p class="section-tagline">Interactive Tableau Visualization</p>
-  <div class="dashboard-desc">
-   This dashboard visualizes real household financial data collected from urban Bhutanese families. It explores
-   income distribution, monthly expense breakdowns, and savings behaviour across different income brackets. Use it to identify patterns, stress points, and opportunities for financial improvement
-   in Bhutanese households. Filter by income group or expense category to drill deeper into the data.
-  </div>
-  <div class="tableau-container">
-    <iframe 
-      src="https://public.tableau.com/views/FinancialResilienceattheHouseholdLevelinUrbanBhutan/IntroducingSmartBudgetBhutan2?:showVizHome=no&:embed=true&:toolbar=no"
-      width="100%" 
-      height="650" 
-      frameborder="0" 
-      allowfullscreen>
-    </iframe>
-  </div>
+    <div class="nav-menu" id="nav-menu">
+      <a onclick="showSection('home')" id="nav-home" class="active-link">Home</a>
+      <a onclick="showSection('dashboard')" id="nav-dashboard">Dashboard</a>
+      <a onclick="showSection('budget')" id="nav-budget">Budget</a>
+      <a onclick="showSection('planner')" id="nav-planner">Budget Planner</a>
+      <a onclick="showSection('quiz')" id="nav-quiz">Quiz</a>
+      <a onclick="showSection('about')" id="nav-about">About</a>
+    </div>
+  </nav>
 
-  <p class="dashboard-note">
-    Tip: Click on chart elements to filter and explore specific segments of the data.
-  </p>
+  <!-- ══ HOME ══ -->
+  <div class="overlay active" id="home">
+    <h1>Financial Resilience at the Household Level</h1>
+    <p class="subtitle"><strong>Intern Project: Smart Budget Bhutan</strong></p>
 
-</section>
+    <!-- QUIZ INVITE TOAST -->
+    <div class="quiz-toast" id="quiz-toast">
+      <button class="toast-dismiss" onclick="dismissToast()" aria-label="Dismiss">✕</button>
+      <div class="toast-badge">
+        <div class="toast-dot"></div> QUIZ
+      </div>
+      <div class="toast-title">Test Your Financial Knowledge</div>
+      <div class="toast-body">Ready? Take our 8-question financial literacy quiz..</div>
+      <button class="toast-btn" onclick="showSection('quiz'); dismissToast();">Start the Challenge →</button>
+    </div>
 
-<!-- ══ BUDGET ══ -->
-<section id="budget">
-  <h2>Budget Examples</h2>
-  <p class="section-tagline">Monthly Household Budgets in Bhutan</p>
-  <p class="budget-intro">
-    These sample budgets are based on real urban Bhutanese household data. Each plan follows the
-    recommended <strong>50/30/20 rule</strong> 50% needs, 30% wants, 20% savings adapted for local income levels and costs of living.
-  </p>
-  <div class="budget-rule">Recommended Framework: 50% Needs · 30% Wants · 20% Savings</div>
-  <div class="budget-container">
-    <div class="budget-card low" onclick="showSection('planner')" style="cursor:pointer;" title="Open Budget Planner">
-      <h3>Low Income</h3>
-      <div class="budget-row"><span class="label">Monthly Income</span><span class="value">Nu. 20,000</span></div>
-      <div class="budget-row"><span class="label">Needs (Rent, Food)</span><span class="value">Nu. 10,000</span></div>
-      <div class="budget-row"><span class="label">Utilities & Transport</span><span class="value">Nu. 4,000</span></div>
-      <div class="budget-row"><span class="label">Personal & Misc.</span><span class="value">Nu. 4,000</span></div>
-      <div class="budget-row saving"><span class="label">Savings Target</span><span class="value">Nu. 2,000</span></div>
-      <div class="budget-bar-wrap">
-        <p>Savings Rate: 10%</p>
-        <div class="budget-bar"><div class="budget-bar-fill" style="width:10%"></div></div>
+    <!-- CONFETTI -->
+    <div class="confetti-wrap" id="confetti-wrap" style="display:none;"></div>
+
+    <!-- JOURNEY GAMIFICATION BAR -->
+    <div class="journey-gamify-bar">
+      <div class="jg-step active-step" onclick="showSection('home')" style="cursor:pointer;" title="Go to Home">
+        <div class="jg-num">1</div>
+        <div class="jg-lbl">Learn</div>
+      </div>
+      <div class="jg-line"></div>
+      <div class="jg-step" onclick="showSection('quiz')" style="cursor:pointer;" title="Go to Quiz">
+        <div class="jg-num">2</div>
+        <div class="jg-lbl">Quiz</div>
+      </div>
+      <div class="jg-line"></div>
+      <div class="jg-step" onclick="showSection('planner')" style="cursor:pointer;" title="Go to Budget Planner">
+        <div class="jg-num">3</div>
+        <div class="jg-lbl">Plan</div>
       </div>
     </div>
-    <div class="budget-card mid" onclick="showSection('planner')" style="cursor:pointer;" title="Open Budget Planner">
-      <h3>Middle Income</h3>
-      <div class="budget-row"><span class="label">Monthly Income</span><span class="value">Nu. 40,000</span></div>
-      <div class="budget-row"><span class="label">Needs (Rent, Food)</span><span class="value">Nu. 18,000</span></div>
-      <div class="budget-row"><span class="label">Utilities & Transport</span><span class="value">Nu. 8,000</span></div>
-      <div class="budget-row"><span class="label">Personal & Misc.</span><span class="value">Nu. 8,000</span></div>
-      <div class="budget-row saving"><span class="label">Savings Target</span><span class="value">Nu. 6,000</span></div>
-      <div class="budget-bar-wrap">
-        <p>Savings Rate: 15%</p>
-        <div class="budget-bar"><div class="budget-bar-fill" style="width:15%"></div></div>
-      </div>
-    </div>
-   <div class="budget-card high" onclick="showSection('planner')" style="cursor:pointer;" title="Open Budget Planner">
-      <h3>High Income</h3>
-      <div class="budget-row"><span class="label">Monthly Income</span><span class="value">Nu. 80,000</span></div>
-      <div class="budget-row"><span class="label">Needs (Rent, Food)</span><span class="value">Nu. 32,000</span></div>
-      <div class="budget-row"><span class="label">Utilities & Transport</span><span class="value">Nu. 14,000</span></div>
-      <div class="budget-row"><span class="label">Personal & Misc.</span><span class="value">Nu. 20,000</span></div>
-      <div class="budget-row saving"><span class="label">Savings Target</span><span class="value">Nu. 14,000</span></div>
-      <div class="budget-bar-wrap">
-        <p>Savings Rate: 17.5%</p>
-        <div class="budget-bar"><div class="budget-bar-fill" style="width:17.5%"></div></div>
+
+    <div class="home-unified-frame">
+
+      <div class="huf-intro">
+        <h2 class="story-title">Why I Built SmartBudget Bhutan</h2>
+
+        <div class="huf-quote-box">
+          Financial resilience is not about how much you earn:
+          <span style="color:var(--gold); font-style:italic;">it is about how well you manage what you have.</span>
+        </div>
+
+        <div class="huf-story-body">
+          <p>I am 3rd year student at Gedu College of Business Studies, did my internship at Bhutan Data Scientist Pvt.
+            Ltd. (BDS). During this time, I worked on a project focused on financial resilience at the household level
+            in urban Bhutan.</p>
+          <p>Growing up and studying in Bhutan, I had personally experienced both the importance and the challenges of
+            managing money wisely at a young age. As students, most of us did not have a regular source of income and
+            relied on pocket money from our parents along with a small monthly stipend of around Nu. 3,000.</p>
+          <p>Like many others, I often ran out of money in the middle of the month. Even small needs of Nu. 100 or Nu.
+            200 became difficult to manage when my bank balance reached zero.</p>
+          <p>This experience inspired me to create SmartBudget Bhutan, a platform designed to help students, employees,
+            and individuals build stronger financial habits and make better financial decisions.</p>
+          <p>Through this website, I aimed to promote financial awareness by providing practical tools such as budget
+            planner templates, basic budgeting methods, interactive quizzes, and simple learning resources.</p>
+
+
+        </div>
+
+        <!-- HOME CTA BLOCK -->
+        <button class="cta-primary-btn" onclick="showSection('quiz')">
+          Take the Quiz
+        </button>
+        <button class="cta-secondary-link" onclick="showSection('planner')">
+          Skip to Budget Planner →
+        </button>
       </div>
     </div>
   </div>
-  <div class="budget-tips-wrap">
-    <h3>Budgeting Principles</h3>
-    <div class="tips-grid">
-      <div class="tip-mini"><strong>Pay Yourself First</strong>Transfer savings immediately when you receive your salary treat it like a non-negotiable bill.</div>
-      <div class="tip-mini"><strong>Track Every Ngultrum</strong>Small daily expenses like tea and snacks add up. Log them weekly to spot leaks.</div>
-      <div class="tip-mini"><strong>Avoid Lifestyle Creep</strong>When income rises, maintain your current lifestyle and increase savings rate instead.</div>
-      <div class="tip-mini"><strong>Separate Accounts</strong>Keep savings in a separate account to reduce temptation to spend it.</div>
-    </div>
   </div>
-</section>
 
-<!-- ══ BUDGET PLANNER ══ -->
-<section id="planner">
-  <h2>Budget Planner</h2>
-  <p class="section-tagline">SmartBudget Planner, Interactive Sample & Free Download</p>
-  <div class="page-story-strip">
-  Running out of money before month-end was something I personally experienced as a student. I built this planner so no one in Bhutan has to face that same stress.It is free, practical, and designed for real Bhutanese incomes.
-</div>
+  <!--DASHBOARD -->
+  <section id="dashboard">
+    <h2>Financial Resilience Dashboard</h2>
+    <p class="section-tagline"><strong>Interactive Tableau Visualization</strong></p>
+    <div class="dashboard-desc">
+      This dashboard visualizes real household financial data collected from urban Bhutanese families. It explores
+      income distribution, monthly expense breakdowns, and savings behaviour across different income brackets. Use it to
+      identify patterns, stress points, and opportunities for financial improvement
+      in Bhutanese households. Filter by income group or expense category to drill deeper into the data.
+    </div>
+    <div class="tableau-container">
+      <iframe
+        src="https://public.tableau.com/views/FinancialResilienceattheHouseholdLevelinUrbanBhutan/IntroducingSmartBudgetBhutan2?:showVizHome=no&:embed=true&:toolbar=no"
+        width="100%" height="650" frameborder="0" allowfullscreen>
+      </iframe>
+    </div>
 
-  <!-- PERSONALIZED WELCOME BANNER — shown after quiz -->
-<div class="planner-welcome-banner" id="planner-welcome-banner" style="display:none;">
-  <span id="planner-banner-text">Well done completing the quiz! Now let's turn your knowledge into action.</span>
-</div>
+    <p class="dashboard-note">
+      Tip: Click on chart elements to filter and explore specific segments of the data.
+    </p>
 
-  <!-- DOWNLOAD CARD -->
-  <div class="planner-download-card">
-    <div class="planner-download-left">
-      <div class="planner-dl-icon"></div>
-      <div>
-        <div class="planner-dl-title">SmartBudget Planner Sample</div>
-        <div class="planner-dl-desc">Full Excel workbook with 6 sheets: Cover · Budget Planner · Dashboard · Expense Tracker · Savings Goals · Tips & Principles</div>
-        <div class="planner-dl-tags">
-          <span class="planner-tag">Budget Planner</span>
-          <span class="planner-tag">Expense Tracker</span>
-          <span class="planner-tag">Savings Goals</span>
-          <span class="planner-tag">Dashboard</span>
+  </section>
+
+  <!-- ══ BUDGET ══ -->
+  <section id="budget">
+    <h2>Budget Examples</h2>
+    <p class="section-tagline"><strong>Monthly Household Budgets in Bhutan</strong></p>
+    <p class="budget-intro">
+      These sample budgets are based on real urban Bhutanese household data. Each plan follows the
+      recommended <strong>50/30/20 rule</strong> 50% needs, 30% wants, 20% savings adapted for local income levels and
+      costs of living.
+    </p>
+    <div class="budget-rule">Recommended Framework: 50% Needs, 30% Wants, 20% Savings</div>
+    <div class="budget-container">
+      <div class="budget-card low" onclick="showSection('planner')" style="cursor:pointer;" title="Open Budget Planner">
+        <h3>Low Income</h3>
+        <div class="budget-row"><span class="label">Monthly Income</span><span class="value">Nu. 20,000</span></div>
+        <div class="budget-row"><span class="label">Needs (Rent, Food)</span><span class="value">Nu. 10,000</span></div>
+        <div class="budget-row"><span class="label">Utilities & Transport</span><span class="value">Nu. 4,000</span>
+        </div>
+        <div class="budget-row"><span class="label">Personal & Misc.</span><span class="value">Nu. 4,000</span></div>
+        <div class="budget-row saving"><span class="label">Savings Target</span><span class="value">Nu. 2,000</span>
+        </div>
+        <div class="budget-bar-wrap">
+          <p>Savings Rate: 10%</p>
+          <div class="budget-bar">
+            <div class="budget-bar-fill" style="width:10%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="budget-card mid" onclick="showSection('planner')" style="cursor:pointer;" title="Open Budget Planner">
+        <h3>Middle Income</h3>
+        <div class="budget-row"><span class="label">Monthly Income</span><span class="value">Nu. 40,000</span></div>
+        <div class="budget-row"><span class="label">Needs (Rent, Food)</span><span class="value">Nu. 18,000</span></div>
+        <div class="budget-row"><span class="label">Utilities & Transport</span><span class="value">Nu. 8,000</span>
+        </div>
+        <div class="budget-row"><span class="label">Personal & Misc.</span><span class="value">Nu. 8,000</span></div>
+        <div class="budget-row saving"><span class="label">Savings Target</span><span class="value">Nu. 6,000</span>
+        </div>
+        <div class="budget-bar-wrap">
+          <p>Savings Rate: 15%</p>
+          <div class="budget-bar">
+            <div class="budget-bar-fill" style="width:15%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="budget-card high" onclick="showSection('planner')" style="cursor:pointer;"
+        title="Open Budget Planner">
+        <h3>High Income</h3>
+        <div class="budget-row"><span class="label">Monthly Income</span><span class="value">Nu. 80,000</span></div>
+        <div class="budget-row"><span class="label">Needs (Rent, Food)</span><span class="value">Nu. 32,000</span></div>
+        <div class="budget-row"><span class="label">Utilities & Transport</span><span class="value">Nu. 14,000</span>
+        </div>
+        <div class="budget-row"><span class="label">Personal & Misc.</span><span class="value">Nu. 20,000</span></div>
+        <div class="budget-row saving"><span class="label">Savings Target</span><span class="value">Nu. 14,000</span>
+        </div>
+        <div class="budget-bar-wrap">
+          <p>Savings Rate: 17.5%</p>
+          <div class="budget-bar">
+            <div class="budget-bar-fill" style="width:17.5%"></div>
+          </div>
         </div>
       </div>
     </div>
-    <a class="planner-dl-btn" href="SmartBudget_Planner_Sample.xlsx" download>⬇ Download Free</a>
-  </div>
-
-  <!-- SONAM STORY -->
-  <div class="planner-story">
-    <span class="planner-story-quote">"Why can't I save anything?"</span>
-    <span class="planner-story-text"> — Sonam Choden, 27, Thimphu. She used this planner and saved <strong>Nu. 18,000 in 3 months.</strong></span>
-  </div>
-
-  <!-- HOW TO USE -->
-  <div class="planner-how-wrap">
-    <h3>How to Use This Workbook</h3>
-    <div class="planner-steps">
-      <div class="planner-step"><div class="planner-step-num">1</div><div class="planner-step-text"><strong>Budget Planner</strong>: Enter your monthly income in the blue cells and fill in budgeted amounts for Needs, Wants, and Savings.</div></div>
-      <div class="planner-step"><div class="planner-step-num">2</div><div class="planner-step-text"><strong>Dashboard</strong>: Review your 50/30/20 split at a glance. All values pull automatically from the Budget Planner sheet.</div></div>
-      <div class="planner-step"><div class="planner-step-num">3</div><div class="planner-step-text"><strong>Expense Tracker</strong>: Log every daily expense with date, category, and Needs/Wants/Savings label.</div></div>
-      <div class="planner-step"><div class="planner-step-num">4</div><div class="planner-step-text"><strong>Savings Goals</strong> : Set specific goals with targets and deadlines. Track progress as you save.</div></div>
-      <div class="planner-step"><div class="planner-step-num">5</div><div class="planner-step-text"><strong>Tips & Principles</strong> : Read Sonam's practical saving strategies adapted for Bhutanese households.</div></div>
-    </div>
-  </div>
-
-  <!-- SHEET PREVIEWS -->
-<div class="planner-sheets-wrap">
-  <h3>What's Inside — Sheet by Sheet</h3>
-  <div class="planner-sheets-visual">
-
-    <!-- Cover -->
-    <div class="psv-card">
-      <div class="psv-img-wrap">
-        <img src="cover.png" alt="Cover sheet preview" class="psv-img">
-      </div>
-      <div class="psv-info">
-        <div class="psv-label">Cover</div>
-        <div class="psv-desc">Introduction, Sonam's story, and step-by-step guide to using the workbook.</div>
+    <div class="budget-tips-wrap">
+      <h3>Budgeting Principles</h3>
+      <div class="tips-grid">
+        <div class="tip-mini"><strong>Pay Yourself First</strong>Transfer savings immediately when you receive your
+          salary treat it like a non-negotiable bill.</div>
+        <div class="tip-mini"><strong>Track Every Ngultrum</strong>Small daily expenses like tea and snacks add up. Log
+          them weekly to spot leaks.</div>
+        <div class="tip-mini"><strong>Avoid Lifestyle Creep</strong>When income rises, maintain your current lifestyle
+          and increase savings rate instead.</div>
+        <div class="tip-mini"><strong>Separate Accounts</strong>Keep savings in a separate account to reduce temptation
+          to spend it.</div>
       </div>
     </div>
+  </section>
 
-    <!-- Budget Planner -->
-    <div class="psv-card">
-      <div class="psv-img-wrap">
-        <img src="budget_planner.png" alt="Budget Planner sheet preview" class="psv-img">
-      </div>
-      <div class="psv-info">
-        <div class="psv-label">Budget Planner</div>
-        <div class="psv-desc">Main 50/30/20 sheet. Enter income, set budgets for Needs, Wants, and Savings.</div>
-      </div>
+  <!-- ══ BUDGET PLANNER ══ -->
+  <section id="planner">
+    <h2>Budget Planner</h2>
+    <p class="section-tagline"><strong>SmartBudget Planner, Interactive Sample & Free Download</strong></p>
+    <div class="page-story-strip">
+      <strong>Running out of money before month-end was something I personally experienced as a student. I built this
+        planner so no one in Bhutan has to face that same stress.It is free, practical, and designed for real Bhutanese
+        incomes.</strong>
     </div>
 
-    <!-- Dashboard -->
-    <div class="psv-card">
-      <div class="psv-img-wrap">
-        <img src="dashboard.png" alt="Dashboard sheet preview" class="psv-img">
-      </div>
-      <div class="psv-info">
-        <div class="psv-label">Dashboard</div>
-        <div class="psv-desc">Auto-calculated visual summary. See your budget vs. actuals at a glance.</div>
-      </div>
+    <!-- PERSONALIZED WELCOME BANNER — shown after quiz -->
+    <div class="planner-welcome-banner" id="planner-welcome-banner" style="display:none;">
+      <span id="planner-banner-text">Well done completing the quiz! Now let's turn your knowledge into action.</span>
     </div>
 
-    <!-- Expense Tracker -->
-    <div class="psv-card">
-      <div class="psv-img-wrap">
-        <img src="expense_tracker.png" alt="Expense Tracker sheet preview" class="psv-img">
-      </div>
-      <div class="psv-info">
-        <div class="psv-label">Expense Tracker</div>
-        <div class="psv-desc">Daily log for every Ngultrum spent date, category, and Needs/Wants/Savings tag.</div>
-      </div>
-    </div>
-
-    <!-- Savings Goals -->
-    <div class="psv-card">
-      <div class="psv-img-wrap">
-        <img src="savings_goals.png" alt="Savings Goals sheet preview" class="psv-img">
-      </div>
-      <div class="psv-info">
-        <div class="psv-label">Savings Goals</div>
-        <div class="psv-desc">Set targets with deadlines and watch your progress percentage grow automatically.</div>
-      </div>
-    </div>
-
-    <!-- Tips -->
-    <div class="psv-card">
-      <div class="psv-img-wrap">
-        <img src="tips.png" alt="Tips sheet preview" class="psv-img">
-      </div>
-      <div class="psv-info">
-        <div class="psv-label">Tips & Principles</div>
-        <div class="psv-desc">Sonam's practical saving strategies and the 50/30/20 rule explained for Bhutanese households.</div>
-      </div>
-    </div>
-
-  </div>
-</div>
- 
-  <!-- SONAM 5-STEP PLAN -->
-  <div class="planner-steps-wrap">
-    <h3>Sonam's 5-Step Savings Starter Plan</h3>
-    <div class="sonam-steps">
-      <div class="sonam-step"><span class="sonam-num">1</span><span>Calculate your real income and all monthly expenses, fixed and variable.</span></div>
-      <div class="sonam-step"><span class="sonam-num">2</span><span>Set a savings target of at least 10% of Nu. 2,000 on Nu. 20,000 = Nu. 24,000/year.</span></div>
-      <div class="sonam-step"><span class="sonam-num">3</span><span>Open a dedicated savings account, keep it separate from spending money.</span></div>
-      <div class="sonam-step"><span class="sonam-num">4</span><span>Identify and cut your top 2 unnecessary expenses. Redirect to savings.</span></div>
-      <div class="sonam-step"><span class="sonam-num">5</span><span>Review your balance every month. Celebrate small wins, they build momentum!</span></div>
-    </div>
-  </div>
-
-  <!-- BOTTOM DOWNLOAD CTA -->
-  <div class="planner-cta">
-    <div class="planner-cta-text">Ready to take control of your finances?</div>
-    <div class="planner-cta-sub">Download the free SmartBudget Planner and start your journey today, just like Sonam did.</div>
-    <a class="planner-dl-btn large" href="SmartBudget_Planner_Sample.xlsx" download>⬇ Download SmartBudget Planner: Free</a>
-  </div>
-</section>
-
-<!-- ══ QUIZ ══ -->
-<section id="quiz">
-  <h2>Financial Literacy Quiz</h2>
-  <p class="quiz-tagline">Based on Real Survey Data from Urban Bhutanese Households</p>
-  <!-- START SCREEN -->
-  <div id="quiz-start">
-    <div class="quiz-start-card">
-      <p>During my internship, I surveyed real urban Bhutanese households and uncovered some surprising patterns in how families manage money. These 8 questions are drawn directly from those findings and see how your financial knowledge stacks up against real local data.</p>
-      <div class="quiz-meta-pills">
-        <span class="quiz-meta-pill">8 Questions</span>
-        <span class="quiz-meta-pill">Multiple Choice</span>
-        <span class="quiz-meta-pill">AI Feedback</span>
-        <span class="quiz-meta-pill">3 Minutes</span>
-      </div>
-      <button class="btn-primary" onclick="startQuiz()">Begin Quiz</button>
-    </div>
-  </div>
-
-  <!-- QUESTION SCREEN -->
-  <div id="quiz-question">
-    <div class="quiz-progress-bar-wrap">
-      <div class="quiz-progress-label">
-        <span id="q-counter">Question 1 of 8</span>
-        <span id="q-score-live">Score: 0</span>
-      </div>
-      <div class="quiz-progress-track">
-        <div class="quiz-progress-fill" id="q-progress-fill" style="width:0%"></div>
-      </div>
-    </div>
-
-    <div class="quiz-q-card fade-in" id="quiz-q-card">
-      <div class="quiz-q-number" id="q-number">QUESTION 1</div>
-      <div class="quiz-q-text" id="q-text"></div>
-      <div class="quiz-options" id="q-options"></div>
-      <div class="quiz-feedback" id="q-feedback"></div>
-      <button class="quiz-next-btn" id="q-next-btn" onclick="nextQuestion()">Next Question →</button>
-    </div>
-  </div>
-
-  <!-- RESULTS SCREEN -->
-  <div id="quiz-results">
-    <div class="quiz-score-ring-wrap">
-      <div class="quiz-score-circle">
-        <div class="quiz-score-number" id="result-score">0/8</div>
-        <div class="quiz-score-label">CORRECT</div>
-      </div>
-      <div class="quiz-result-title" id="result-title"></div>
-      <div class="quiz-result-subtitle" id="result-subtitle"></div>
-    </div>
-
-    <div class="quiz-ai-feedback-box" id="ai-feedback-box">
-      <h4>AI Financial Coach Feedback</h4>
-      <div class="quiz-ai-feedback-text" id="ai-feedback-text">
-        <div class="ai-loading"><span></span><span></span><span></span></div>
-      </div>
-    </div>
-
-    <div class="quiz-result-breakdown" id="result-breakdown">
-      <h4> Question Breakdown</h4>
-      <div id="breakdown-list"></div>
-    </div>
-
-<!-- DYNAMIC PLANNER PUSH BLOCK (injected by JS after quiz) -->
-<div class="planner-push-block" id="planner-push-block">
-  <div class="ppb-badge">Step 3 of 3: Final Step</div>
-  <div class="ppb-title" id="ppb-title">Now Put Your Knowledge to Work</div>
-  <div class="ppb-desc" id="ppb-desc">Use the SmartBudget Planner to apply what you've learned.</div>
-  <div class="ppb-features">
-    <span class="ppb-feat">50/30/20 Template</span>
-    <span class="ppb-feat">Expense Tracker</span>
-    <span class="ppb-feat">Savings Goals</span>
-    <span class="ppb-feat">Free Download</span>
-  </div>
-  <button class="ppb-btn" onclick="showSection('planner')">
-    Explore Budget Planner →
-  </button>
-</div>
-
-<div style="text-align:center; margin-top: 12px;">
-  <button class="quiz-retry-btn" onclick="resetQuiz()">Try Again</button>
-</div>
-    
-  </div>
-</section>
-
-<!-- ══ ABOUT ══ -->
-<section id="about">
-  <h2>About This Project</h2>
-  <p class="section-tagline">Research · Data · Impact</p>
-  <div class="about-container">
-    <div class="about-card" onclick="showSection('dashboard')" style="cursor:pointer;" title="View Dashboard">
-      <h3>Project Background</h3>
-      <p>I am an intern at Bhutan Data Scientist Pvt. Ltd. (BDS), working on financial resilience at the household level in urban Bhutan.</p>
-      <p>This project analyzes real household data to understand income, expenses, savings behaviour, and financial stress points among Bhutanese families with the goal of making insights accessible and actionable.</p>
-    </div>
-   <div class="about-card" onclick="showSection('dashboard')" style="cursor:pointer;" title="View Dashboard">
-      <h3>Objectives</h3>
-      <ul>
-        <li>Identify key financial challenges in urban Bhutanese households</li>
-        <li>Visualize income, expense, and saving patterns clearly</li>
-        <li>Provide practical, data-informed budgeting recommendations</li>
-        <li>Promote long-term financial stability and resilience</li>
-        <li>Make complex financial insights accessible to everyone</li>
-      </ul>
-    </div>
-    <div class="about-card" onclick="showSection('dashboard')" style="cursor:pointer;" title="View Dashboard">
-      <h3>Tools & Technology</h3>
-      <p style="margin-bottom:14px">This project uses a modern data-to-web pipeline to turn raw household data into clear, actionable insights.</p>
-      <p style="color:var(--text); font-size:13px; margin-bottom:8px">Data & Visualization</p>
-      <div class="tech-row" style="margin-bottom:14px">
-        <span class="tech-tag">Tableau</span>
-        <span class="tech-tag">Data Analysis</span>
-      </div>
-      <p style="color:var(--text); font-size:13px; margin-bottom:8px">Website</p>
-      <div class="tech-row">
-        <span class="tech-tag">HTML</span>
-        <span class="tech-tag">CSS</span>
-        <span class="tech-tag">JavaScript</span>
-      </div>
-    </div>
-  </div>
-<!-- ══ FINANCIAL PLATFORMS SECTION ══ -->
-<div class="platforms-wrap">
-  <h3 class="platforms-title">Trusted Savings & Investment Platforms in Bhutan</h3>
-  <p class="platforms-sub">Explore verified financial institutions to start saving, investing, or planning your financial future.</p>
-
-  <div class="platforms-grid">
-
-    <div class="platform-card">
-      <div class="platform-header">
-        <div class="platform-icon"></div>
+    <!-- DOWNLOAD CARD -->
+    <div class="planner-download-card">
+      <div class="planner-download-left">
+        <div class="planner-dl-icon"></div>
         <div>
-          <div class="platform-name">Bank of Bhutan</div>
-          <div class="platform-tag">Savings · Fixed Deposits · Loans</div>
+          <div class="planner-dl-title">SmartBudget Planner Sample</div>
+          <div class="planner-dl-desc">Full Excel workbook with 6 sheets: Cover, Budget Planner, Dashboard, Expense
+            Tracker, Savings Goals, and Tips & Principles</div>
         </div>
       </div>
-      <p class="platform-desc">Bhutan's oldest and largest bank. Offers savings accounts (4.5% p.a.), fixed deposits from 91 days to 10 years, personal loans, home loans, and mobile banking via mBoB.</p>
-      <a class="platform-link" href="https://www.bob.bt" target="_blank" rel="noopener">Visit Website →</a>
+      <a class="planner-dl-btn" href="SmartBudget_Planner_Sample.xlsx" download>⬇ Download Free</a>
     </div>
 
-    <div class="platform-card">
-      <div class="platform-header">
-        <div class="platform-icon"></div>
-        <div>
-          <div class="platform-name">Bhutan National Bank</div>
-          <div class="platform-tag">Savings · Recurring Deposits · Cards</div>
+    <!-- SONAM STORY -->
+    <div class="planner-story">
+      <span class="planner-story-quote">"Why can't I save anything?"</span>
+      <span class="planner-story-text"> — Sonam Choden, 27, Thimphu. She used this planner and saved <strong>Nu. 18,000
+          in 3 months.</strong></span>
+    </div>
+
+    <!-- HOW TO USE -->
+    <div class="planner-how-wrap">
+      <h3>How to Use This Workbook</h3>
+      <div class="planner-steps">
+        <div class="planner-step">
+          <div class="planner-step-num">1</div>
+          <div class="planner-step-text"><strong>Budget Planner</strong>: Enter your monthly income in the blue cells
+            and fill in budgeted amounts for Needs, Wants, and Savings.</div>
+        </div>
+        <div class="planner-step">
+          <div class="planner-step-num">2</div>
+          <div class="planner-step-text"><strong>Dashboard</strong>: Review your 50/30/20 split at a glance. All values
+            pull automatically from the Budget Planner sheet.</div>
+        </div>
+        <div class="planner-step">
+          <div class="planner-step-num">3</div>
+          <div class="planner-step-text"><strong>Expense Tracker</strong>: Log every daily expense with date, category,
+            and Needs/Wants/Savings label.</div>
+        </div>
+        <div class="planner-step">
+          <div class="planner-step-num">4</div>
+          <div class="planner-step-text"><strong>Savings Goals</strong> : Set specific goals with targets and deadlines.
+            Track progress as you save.</div>
+        </div>
+        <div class="planner-step">
+          <div class="planner-step-num">5</div>
+          <div class="planner-step-text"><strong>Tips & Principles</strong> : Read Sonam's practical saving strategies
+            adapted for Bhutanese households.</div>
         </div>
       </div>
-      <p class="platform-desc">A leading commercial bank offering savings accounts with no minimum balance, recurring deposits from Nu. 300/month, fixed deposits, internet & mobile banking via MPay.</p>
-      <a class="platform-link" href="https://bnb.bt" target="_blank" rel="noopener">Visit Website →</a>
     </div>
 
-    <div class="platform-card">
-      <div class="platform-header">
-        <div class="platform-icon"></div>
-        <div>
-          <div class="platform-name">Bhutan Development Bank</div>
-          <div class="platform-tag">Rural Savings · Agriculture Loans · SME</div>
+    <!-- SHEET PREVIEWS -->
+    <div class="planner-sheets-wrap">
+      <h3>What's Inside: Sheet by Sheet</h3>
+      <div class="planner-sheets-visual">
+
+        <!-- Cover -->
+        <div class="psv-card">
+          <div class="psv-img-wrap">
+            <img src="cover.png" alt="Cover sheet preview" class="psv-img">
+          </div>
+          <div class="psv-info">
+            <div class="psv-label">Cover</div>
+            <div class="psv-desc">Introduction, Sonam's story, and step-by-step guide to using the workbook.</div>
+          </div>
+        </div>
+
+        <!-- Budget Planner -->
+        <div class="psv-card">
+          <div class="psv-img-wrap">
+            <img src="budget_planner.png" alt="Budget Planner sheet preview" class="psv-img">
+          </div>
+          <div class="psv-info">
+            <div class="psv-label">Budget Planner</div>
+            <div class="psv-desc">Main 50/30/20 sheet. Enter income, set budgets for Needs, Wants, and Savings.</div>
+          </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="psv-card">
+          <div class="psv-img-wrap">
+            <img src="dashboard.png" alt="Dashboard sheet preview" class="psv-img">
+          </div>
+          <div class="psv-info">
+            <div class="psv-label">Dashboard</div>
+            <div class="psv-desc">Auto-calculated visual summary. See your budget vs. actuals at a glance.</div>
+          </div>
+        </div>
+
+        <!-- Expense Tracker -->
+        <div class="psv-card">
+          <div class="psv-img-wrap">
+            <img src="expense_tracker.png" alt="Expense Tracker sheet preview" class="psv-img">
+          </div>
+          <div class="psv-info">
+            <div class="psv-label">Expense Tracker</div>
+            <div class="psv-desc">Daily log for every Ngultrum spent date, category, and Needs/Wants/Savings tag.</div>
+          </div>
+        </div>
+
+        <!-- Savings Goals -->
+        <div class="psv-card">
+          <div class="psv-img-wrap">
+            <img src="savings_goals.png" alt="Savings Goals sheet preview" class="psv-img">
+          </div>
+          <div class="psv-info">
+            <div class="psv-label">Savings Goals</div>
+            <div class="psv-desc">Set targets with deadlines and watch your progress percentage grow automatically.
+            </div>
+          </div>
+        </div>
+
+        <!-- Tips -->
+        <div class="psv-card">
+          <div class="psv-img-wrap">
+            <img src="tips.png" alt="Tips sheet preview" class="psv-img">
+          </div>
+          <div class="psv-info">
+            <div class="psv-label">Tips & Principles</div>
+            <div class="psv-desc">Sonam's practical saving strategies and the 50/30/20 rule explained for Bhutanese
+              households.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SONAM 5-STEP PLAN -->
+    <div class="planner-steps-wrap">
+      <h3>Sonam's 5-Step Savings Starter Plan</h3>
+      <div class="sonam-steps">
+        <div class="sonam-step"><span class="sonam-num">1</span><span>Calculate your real income and all monthly
+            expenses, fixed and variable.</span></div>
+        <div class="sonam-step"><span class="sonam-num">2</span><span>Set a savings target of at least 10% of Nu. 2,000
+            on Nu. 20,000 = Nu. 24,000/year.</span></div>
+        <div class="sonam-step"><span class="sonam-num">3</span><span>Open a dedicated savings account, keep it separate
+            from spending money.</span></div>
+        <div class="sonam-step"><span class="sonam-num">4</span><span>Identify and cut your top 2 unnecessary expenses.
+            Redirect to savings.</span></div>
+        <div class="sonam-step"><span class="sonam-num">5</span><span>Review your balance every month. Celebrate small
+            wins, they build momentum!</span></div>
+      </div>
+    </div>
+
+    <!-- BOTTOM DOWNLOAD CTA -->
+    <div class="planner-cta">
+      <div class="planner-cta-text">Ready to take control of your finances?</div>
+      <div class="planner-cta-sub">Download the free SmartBudget Planner and start your journey today, just like Sonam
+        did.</div>
+      <a class="planner-dl-btn large" href="SmartBudget_Planner_Sample.xlsx" download>⬇ Download SmartBudget Planner:
+        Free</a>
+    </div>
+  </section>
+
+  <!-- ══ QUIZ ══ -->
+  <section id="quiz">
+    <h2>Financial Literacy Quiz</h2>
+    <p class="quiz-tagline">Based on Real Survey Data from Urban Bhutanese Households</p>
+    <!-- START SCREEN -->
+    <div id="quiz-start">
+      <div class="quiz-start-card">
+        <p>During my internship, I surveyed real urban Bhutanese households and uncovered some surprising patterns in
+          how families manage money. These 8 questions are drawn directly from those findings and see how your financial
+          knowledge stacks up against real local data.</p>
+        <button class="btn-primary" onclick="startQuiz()">Begin Quiz</button>
+      </div>
+    </div>
+
+    <!-- QUESTION SCREEN -->
+    <div id="quiz-question">
+      <div class="quiz-progress-bar-wrap">
+        <div class="quiz-progress-label">
+          <span id="q-counter">Question 1 of 8</span>
+          <span id="q-score-live">Score: 0</span>
+        </div>
+        <div class="quiz-progress-track">
+          <div class="quiz-progress-fill" id="q-progress-fill" style="width:0%"></div>
         </div>
       </div>
-      <p class="platform-desc">Your development partner since 1988. Focused on rural and agricultural finance savings accounts, seasonal and business loans, and microfinance for small entrepreneurs.</p>
-      <a class="platform-link" href="https://bdb.bt" target="_blank" rel="noopener">Visit Website →</a>
+
+      <div class="quiz-q-card fade-in" id="quiz-q-card">
+        <div class="quiz-q-number" id="q-number">QUESTION 1</div>
+        <div class="quiz-q-text" id="q-text"></div>
+        <div class="quiz-options" id="q-options"></div>
+        <div class="quiz-feedback" id="q-feedback"></div>
+        <button class="quiz-next-btn" id="q-next-btn" onclick="nextQuestion()">Next Question →</button>
+      </div>
     </div>
 
-    <div class="platform-card">
-      <div class="platform-header">
-        <div class="platform-icon"></div>
-        <div>
-          <div class="platform-name">T Bank</div>
-          <div class="platform-tag">Fixed Deposits · Recurring Savings · Loans</div>
+    <!-- RESULTS SCREEN -->
+    <div id="quiz-results">
+      <div class="quiz-score-ring-wrap">
+        <div class="quiz-score-circle">
+          <div class="quiz-score-number" id="result-score">0/8</div>
+          <div class="quiz-score-label">CORRECT</div>
+        </div>
+        <div class="quiz-result-title" id="result-title"></div>
+        <div class="quiz-result-subtitle" id="result-subtitle"></div>
+      </div>
+
+      <div class="quiz-ai-feedback-box" id="ai-feedback-box">
+        <h4>AI Financial Coach Feedback</h4>
+        <div class="quiz-ai-feedback-text" id="ai-feedback-text">
+          <div class="ai-loading"><span></span><span></span><span></span></div>
         </div>
       </div>
-      <p class="platform-desc">Offers high-return fixed deposit schemes from 45 days to 120 months, recurring deposit savings plans for salaried employees, and competitive interest rates for long-term savers.</p>
-      <a class="platform-link" href="https://www.tbank.bt" target="_blank" rel="noopener">Visit Website →</a>
-    </div>
 
-    <div class="platform-card">
-      <div class="platform-header">
-        <div class="platform-icon"></div>
-        <div>
-          <div class="platform-name">Druk PNB Bank</div>
-          <div class="platform-tag">Savings · Personal Loans · NRI Banking</div>
+      <div class="quiz-result-breakdown" id="result-breakdown">
+        <h4> Question Breakdown</h4>
+        <div id="breakdown-list"></div>
+      </div>
+
+      <!-- DYNAMIC PLANNER PUSH BLOCK (injected by JS after quiz) -->
+      <div class="planner-push-block" id="planner-push-block">
+        <div class="ppb-badge">Step 3 of 3: Final Step</div>
+        <div class="ppb-title" id="ppb-title">Now Put Your Knowledge to Work</div>
+        <div class="ppb-desc" id="ppb-desc">Use the SmartBudget Planner to apply what you've learned.</div>
+        <div class="ppb-features">
+          <span class="ppb-feat">50/30/20 Template</span>
+          <span class="ppb-feat">Expense Tracker</span>
+          <span class="ppb-feat">Savings Goals</span>
+          <span class="ppb-feat">Free Download</span>
+        </div>
+        <button class="ppb-btn" onclick="showSection('planner')">
+          Explore Budget Planner →
+        </button>
+      </div>
+
+      <div style="text-align:center; margin-top: 12px;">
+        <button class="quiz-retry-btn" onclick="resetQuiz()">Try Again</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ ABOUT ══ -->
+  <section id="about">
+    <h2>About This Project</h2>
+    <p class="section-tagline">Research · Data · Impact</p>
+    <div class="about-container">
+      <div class="about-card" onclick="showSection('dashboard')" style="cursor:pointer;" title="View Dashboard">
+        <h3>Project Background</h3>
+        <p>I am an intern at Bhutan Data Scientist Pvt. Ltd. (BDS), working on financial resilience at the household
+          level in urban Bhutan.</p>
+        <p>This project analyzes real household data to understand income, expenses, savings behaviour, and financial
+          stress points among Bhutanese families with the goal of making insights accessible and actionable.</p>
+      </div>
+      <div class="about-card" onclick="showSection('dashboard')" style="cursor:pointer;" title="View Dashboard">
+        <h3>Objectives</h3>
+        <ul>
+          <li>Identify key financial challenges in urban Bhutanese households</li>
+          <li>Visualize income, expense, and saving patterns clearly</li>
+          <li>Provide practical, data-informed budgeting recommendations</li>
+          <li>Promote long-term financial stability and resilience</li>
+          <li>Make complex financial insights accessible to everyone</li>
+        </ul>
+      </div>
+      <div class="about-card" onclick="showSection('dashboard')" style="cursor:pointer;" title="View Dashboard">
+        <h3>Tools & Technology</h3>
+        <p style="margin-bottom:14px">This project uses a modern data-to-web pipeline to turn raw household data into
+          clear, actionable insights.</p>
+        <p style="color:var(--text); font-size:13px; margin-bottom:8px">Data & Visualization</p>
+        <div class="tech-row" style="margin-bottom:14px">
+          <span class="tech-tag">Tableau</span>
+          <span class="tech-tag">Data Analysis</span>
+        </div>
+        <p style="color:var(--text); font-size:13px; margin-bottom:8px">Website</p>
+        <div class="tech-row">
+          <span class="tech-tag">HTML</span>
+          <span class="tech-tag">CSS</span>
+          <span class="tech-tag">JavaScript</span>
         </div>
       </div>
-      <p class="platform-desc">A joint-venture commercial bank offering personal savings, fixed deposits, consumer loans, and banking services for Bhutanese citizens and NRIs through digital platforms.</p>
-      <a class="platform-link" href="https://www.drukpnbbank.bt" target="_blank" rel="noopener">Visit Website →</a>
     </div>
+    <!-- ══ FINANCIAL PLATFORMS SECTION ══ -->
+    <div class="platforms-wrap">
+      <h3 class="platforms-title">Trusted Savings & Investment Platforms in Bhutan</h3>
+      <p class="platforms-sub">Explore verified financial institutions to start saving, investing, or planning your
+        financial future.</p>
 
-    <div class="platform-card">
-      <div class="platform-header">
-        <div class="platform-icon"></div>
-        <div>
-          <div class="platform-name">NPPF</div>
-          <div class="platform-tag">Pension · Provident Fund · Housing Loans</div>
+      <div class="platforms-grid">
+
+        <div class="platform-card">
+          <div class="platform-header">
+            <div class="platform-icon"></div>
+            <div>
+              <div class="platform-name">Bank of Bhutan</div>
+              <div class="platform-tag">Savings,Fixed Deposits,Loans</div>
+            </div>
+          </div>
+          <p class="platform-desc">Bhutan's oldest and largest bank. Offers savings accounts (4.5% p.a.), fixed deposits
+            from 91 days to 10 years, personal loans, home loans, and mobile banking via mBoB.</p>
+          <a class="platform-link" href="https://www.bob.bt" target="_blank" rel="noopener">Visit Website →</a>
         </div>
-      </div>
-      <p class="platform-desc">National Pension & Provident Fund manages retirement savings for civil servants and private sector employees. Offers pension (Tier I) and provident fund (Tier II) benefits plus housing loans.</p>
-      <a class="platform-link" href="https://www.nppf.org.bt" target="_blank" rel="noopener">Visit Website →</a>
-    </div>
 
-    <div class="platform-card">
-      <div class="platform-header">
-        <div class="platform-icon"></div>
-        <div>
-          <div class="platform-name">Royal Securities Exchange of Bhutan</div>
-          <div class="platform-tag">Stock Market · Listed Companies · Equity</div>
+        <div class="platform-card">
+          <div class="platform-header">
+            <div class="platform-icon"></div>
+            <div>
+              <div class="platform-name">Bhutan National Bank</div>
+              <div class="platform-tag">Savings,Recurring Deposits,Cards</div>
+            </div>
+          </div>
+          <p class="platform-desc">A leading commercial bank offering savings accounts with no minimum balance,
+            recurring deposits from Nu. 300/month, fixed deposits, internet & mobile banking via MPay.</p>
+          <a class="platform-link" href="https://bnb.bt" target="_blank" rel="noopener">Visit Website →</a>
         </div>
-      </div>
-      <p class="platform-desc">Bhutan's official stock exchange established in 1993. With 19 listed companies and ~$738M market cap, it's the gateway for Bhutanese citizens to invest in local equities.</p>
-      <a class="platform-link" href="https://www.rseb.org.bt" target="_blank" rel="noopener">Visit Website →</a>
-    </div>
 
-    <div class="platform-card">
-      <div class="platform-header">
-        <div class="platform-icon"></div>
-        <div>
-          <div class="platform-name">DK Bank (Digital Kidu)</div>
-          <div class="platform-tag">Digital Banking · Cardless · Inclusive</div>
+        <div class="platform-card">
+          <div class="platform-header">
+            <div class="platform-icon"></div>
+            <div>
+              <div class="platform-name">Bhutan Development Bank</div>
+              <div class="platform-tag">Rural Savings,Agriculture Loans,SME</div>
+            </div>
+          </div>
+          <p class="platform-desc">Your development partner since 1988. Focused on rural and agricultural finance
+            savings accounts, seasonal and business loans, and microfinance for small entrepreneurs.</p>
+          <a class="platform-link" href="https://bdb.bt" target="_blank" rel="noopener">Visit Website →</a>
         </div>
+
+        <div class="platform-card">
+          <div class="platform-header">
+            <div class="platform-icon"></div>
+            <div>
+              <div class="platform-name">T Bank</div>
+              <div class="platform-tag">Fixed Deposits,Recurring Savings,Loans</div>
+            </div>
+          </div>
+          <p class="platform-desc">Offers high-return fixed deposit schemes from 45 days to 120 months, recurring
+            deposit savings plans for salaried employees, and competitive interest rates for long-term savers.</p>
+          <a class="platform-link" href="https://www.tbank.bt" target="_blank" rel="noopener">Visit Website →</a>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-header">
+            <div class="platform-icon"></div>
+            <div>
+              <div class="platform-name">Druk PNB Bank</div>
+              <div class="platform-tag">Savings,Personal Loans,NRI Banking</div>
+            </div>
+          </div>
+          <p class="platform-desc">A joint-venture commercial bank offering personal savings, fixed deposits, consumer
+            loans, and banking services for Bhutanese citizens and NRIs through digital platforms.</p>
+          <a class="platform-link" href="https://www.drukpnbbank.bt" target="_blank" rel="noopener">Visit Website →</a>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-header">
+            <div class="platform-icon"></div>
+            <div>
+              <div class="platform-name">NPPF</div>
+              <div class="platform-tag">Pension,Provident Fund,Housing Loans</div>
+            </div>
+          </div>
+          <p class="platform-desc">National Pension & Provident Fund manages retirement savings for civil servants and
+            private sector employees. Offers pension (Tier I) and provident fund (Tier II) benefits plus housing loans.
+          </p>
+          <a class="platform-link" href="https://www.nppf.org.bt" target="_blank" rel="noopener">Visit Website →</a>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-header">
+            <div class="platform-icon"></div>
+            <div>
+              <div class="platform-name">Royal Securities Exchange of Bhutan</div>
+              <div class="platform-tag">Stock Market,Listed Companies,Equity</div>
+            </div>
+          </div>
+          <p class="platform-desc">Bhutan's official stock exchange established in 1993. With 19 listed companies and
+            ~$738M market cap, it's the gateway for Bhutanese citizens to invest in local equities.</p>
+          <a class="platform-link" href="https://www.rseb.org.bt" target="_blank" rel="noopener">Visit Website →</a>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-header">
+            <div class="platform-icon"></div>
+            <div>
+              <div class="platform-name">DK Bank (Digital Kidu)</div>
+              <div class="platform-tag">Digital Banking,Cardless,Inclusive</div>
+            </div>
+          </div>
+          <p class="platform-desc">Bhutan's first digital-first bank. Offers simplified savings accounts, cardless
+            withdrawals, and modern banking services designed for easy access for all Bhutanese citizens.</p>
+          <a class="platform-link" href="https://www.digitalkidu.bt" target="_blank" rel="noopener">Visit Website →</a>
+        </div>
+
       </div>
-      <p class="platform-desc">Bhutan's first digital-first bank. Offers simplified savings accounts, cardless withdrawals, and modern banking services designed for easy access for all Bhutanese citizens.</p>
-      <a class="platform-link" href="https://www.digitalkidu.bt" target="_blank" rel="noopener">Visit Website →</a>
+
+      <div class="platforms-note">
+        All institutions above are regulated by the Royal Monetary Authority (RMA) of Bhutan. Always verify current
+        interest rates and products directly on their official websites.
+      </div>
     </div>
+  </section>
+  <footer>
+    <p>© 2026 <span>Smart Budget Bhutan</span> · Bhutan Data Scientist Pvt. Ltd. · All rights reserved</p>
+  </footer>
 
-  </div>
-
-  <div class="platforms-note">
-    All institutions above are regulated by the Royal Monetary Authority (RMA) of Bhutan. Always verify current interest rates and products directly on their official websites.
-  </div>
-</div>
-</section>
-<footer>
-  <p>© 2026 <span>Smart Budget Bhutan</span> · Bhutan Data Scientist Pvt. Ltd. · All rights reserved</p>
-</footer>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>

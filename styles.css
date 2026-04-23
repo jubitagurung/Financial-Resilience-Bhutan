@@ -484,24 +484,6 @@ section, .overlay { display: none; }
   margin-bottom: 24px;
 }
 
-.quiz-meta-pills {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 28px;
-}
-
-.quiz-meta-pill {
-  background: rgba(201,168,76,0.1);
-  border: 1px solid rgba(201,168,76,0.3);
-  color: var(--gold);
-  font-size: 12px;
-  padding: 6px 16px;
-  border-radius: 50px;
-  letter-spacing: 1px;
-}
-
 /* ── QUESTION SCREEN ── */
 #quiz-question { display: none; max-width: 680px; width: 100%; }
 
@@ -993,17 +975,6 @@ footer span { color: var(--gold); }
   color: var(--muted);
   line-height: 1.55;
   margin-bottom: 10px;
-}
-
-.planner-dl-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-
-.planner-tag {
-  font-size: 11px;
-  padding: 3px 10px;
-  border-radius: 20px;
-  border: 1px solid rgba(201,168,76,0.25);
-  color: rgba(201,168,76,0.75);
-  background: rgba(201,168,76,0.06);
 }
 
 .planner-dl-btn {
