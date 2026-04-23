@@ -422,3 +422,20 @@ document.addEventListener('DOMContentLoaded', () => {
   `;
   document.body.appendChild(banner);
 });
+
+function openSonamModal() {
+  const overlay = document.getElementById('sonam-modal-overlay');
+  overlay.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSonamModal() {
+  const overlay = document.getElementById('sonam-modal-overlay');
+  overlay.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// Close with Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeSonamModal();
+});
