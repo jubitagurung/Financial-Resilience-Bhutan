@@ -261,6 +261,7 @@ section, .overlay { display: none; }
   line-height: 1.75;
   color: var(--muted);
   margin-bottom: 28px;
+  text-align: justify; 
 }
 
 .dashboard-desc strong { color: var(--text); }
@@ -313,6 +314,7 @@ section, .overlay { display: none; }
   line-height: 1.75;
   color: var(--muted);
   margin-bottom: 10px;
+  text-align: justify;
 }
 
 .budget-rule {
@@ -437,6 +439,7 @@ section, .overlay { display: none; }
   font-size: 13.5px;
   line-height: 1.6;
   color: var(--muted);
+  text-align: justify;
 }
 
 .tip-mini strong { color: var(--text); display: block; margin-bottom: 4px; }
@@ -488,6 +491,7 @@ section, .overlay { display: none; }
   font-size: 15px;
   line-height: 1.75;
   margin-bottom: 24px;
+  text-align: justify;
 }
 
 .quiz-meta-pills {
@@ -634,6 +638,7 @@ section, .overlay { display: none; }
   font-size: 13.5px;
   line-height: 1.65;
   display: none;
+  text-align: justify;
 }
 
 .quiz-feedback.correct-fb {
@@ -724,7 +729,7 @@ section, .overlay { display: none; }
   display: flex; align-items: center; gap: 8px;
 }
 
-.quiz-ai-feedback-text { color: #c9b99a; font-size: 14px; line-height: 1.75; }
+.quiz-ai-feedback-text { color: #c9b99a; font-size: 14px; line-height: 1.75;text-align: justify;text-align: justify;}
 
 .quiz-result-breakdown {
   background: var(--card-bg);
@@ -958,6 +963,7 @@ footer span { color: var(--gold); }
   padding: 14px 20px;
   font-size: 14px; color: #c9b99a;
   margin-bottom: 32px; line-height: 1.65;
+  text-align: justify;
 }
 
 .planner-story-quote { color: var(--accent); font-style: italic; font-size: 15px; }
@@ -1101,7 +1107,7 @@ footer span { color: var(--gold); }
   font-size: 20px; letter-spacing: 1px; margin-bottom: 8px;
 }
 
-.planner-cta-sub { color: #c9b99a; font-size: 14px; margin-bottom: 24px; line-height: 1.65; }
+.planner-cta-sub { color: #c9b99a; font-size: 14px; margin-bottom: 24px; line-height: 1.65;text-align: justify; }
 
 @media (max-width: 600px) {
   .planner-download-card { flex-direction: column; }
@@ -1136,7 +1142,7 @@ footer span { color: var(--gold); }
 .psv-info { padding: 14px 16px; }
 
 .psv-label { font-family: 'Cinzel', serif; color: var(--gold); font-size: 13px; letter-spacing: 1px; margin-bottom: 6px; }
-.psv-desc { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+.psv-desc { text-align: justify; font-size: 12.5px; color: var(--muted); line-height: 1.6; }
 
 @media (max-width: 600px) {
   .planner-sheets-visual { grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -1151,7 +1157,7 @@ footer span { color: var(--gold); }
   text-align: center; margin-bottom: 10px;
 }
 
-.platforms-sub { color: var(--muted); font-size: 13.5px; text-align: center; margin-bottom: 28px; line-height: 1.65; }
+.platforms-sub { color: var(--muted); font-size: 13.5px; text-align: center; margin-bottom: 28px; line-height: 1.65; text-align: justify;}
 
 .platforms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
 
@@ -1170,7 +1176,7 @@ footer span { color: var(--gold); }
 
 .platform-name { font-family: 'Cinzel', serif; color: var(--text); font-size: 13px; letter-spacing: 0.5px; margin-bottom: 3px; }
 .platform-tag { font-size: 11px; color: var(--accent); letter-spacing: 0.5px; }
-.platform-desc { font-size: 13px; color: #c9b99a; line-height: 1.65; flex: 1; }
+.platform-desc { font-size: 13px; color: #c9b99a; line-height: 1.65; flex: 1;text-align: justify;}
 
 .platform-link {
   display: inline-block; font-size: 12.5px;
@@ -1186,6 +1192,7 @@ footer span { color: var(--gold); }
 .platform-link:hover { background: var(--gold); color: var(--deep); }
 
 .platforms-note {
+  text-align: justify;
   margin-top: 22px; font-size: 12.5px; color: var(--muted);
   text-align: center;
   background: rgba(201,168,76,0.06);
@@ -1295,7 +1302,7 @@ footer span { color: var(--gold); }
 .huf-story { padding: 24px 36px 32px; border-top: 1px solid rgba(201,168,76,0.12); }
 
 .huf-story-body { text-align: justify; line-height: 1.78; margin-bottom: 28px; }
-.huf-story-body p { margin-bottom: 15px; font-size: 14.8px; color: var(--muted); }
+.huf-story-body p {text-align: justify; margin-bottom: 15px; font-size: 14.8px; color: var(--muted); }
 .huf-story-body p:last-child { margin-bottom: 0; }
 .huf-story-body strong { color: var(--text); }
 
@@ -1310,6 +1317,7 @@ footer span { color: var(--gold); }
   margin-bottom: 24px;
   font-style: italic;
   text-align: left;
+  text-align: justify;
 }
 
 .huf-closing {
@@ -1474,6 +1482,7 @@ footer span { color: var(--gold); }
 .ppb-title { font-family: 'Cinzel', serif; font-size: 17px; color: var(--gold); letter-spacing: 1px; margin-bottom: 8px; }
 
 .ppb-desc {
+  text-align: justify;
   font-size: 13px; color: var(--muted); line-height: 1.65;
   margin-bottom: 16px; max-width: 480px;
   margin-left: auto; margin-right: auto;
@@ -1538,6 +1547,7 @@ footer span { color: var(--gold); }
   border-radius: 8px; padding: 13px 20px;
   font-size: 13.5px; color: #c9b99a;
   line-height: 1.7; margin-bottom: 24px; text-align: center;
+  text-align: justify; 
 }
 
 /* ── BUDGET ROW LABEL ── */
