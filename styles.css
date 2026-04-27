@@ -1001,8 +1001,8 @@ footer span { color: var(--gold); }
 .planner-story {
   max-width: 860px;
   width: 100%;
-  background:  rgba(226, 95, 14, 0.1);
-  border: 1px solid rgba(226,95,14,0.3);
+  background: rgba(0,0,0,0.82);
+  border: 1px solid rgba(226,95,14,0.4);
   border-left: 4px solid var(--accent);
   border-radius: 8px;
   padding: 14px 20px;
@@ -3322,8 +3322,8 @@ footer span { color: var(--gold); }
 .page-story-strip {
   max-width: 640px;
   width: 100%;
-  background: rgba(226,95,14,0.08);
-  border: 1px solid rgba(226,95,14,0.25);
+  background: rgba(0,0,0,0.82);
+  border: 1px solid rgba(226,95,14,0.4);
   border-left: 4px solid var(--accent);
   border-radius: 8px;
   padding: 13px 20px;
