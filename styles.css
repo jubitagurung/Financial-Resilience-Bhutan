@@ -282,6 +282,28 @@ section, .overlay { display: none; }
   border: none;
 }
 
+/* ── MOBILE TABLEAU FIX ── */
+@media (max-width: 768px) {
+  .tableau-container {
+    overflow-x: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+  }
+
+  .tableau-scroll-wrap {
+    width: 900px;        /* forces Tableau to render at full width */
+    overflow: visible;
+  }
+
+  .tableau-scroll-wrap iframe {
+    width: 900px;
+    height: 700px;
+    border: none;
+    display: block;
+  }
+}
+
 .dashboard-note {
   margin-top: 16px;
   font-size: 12px;
@@ -825,7 +847,7 @@ section, .overlay { display: none; }
   letter-spacing: 1px;
 }
 
-.about-card p, .about-card li { color: #c9b99a; font-size: 13.5px; line-height: 1.7; }
+.about-card p, .about-card li { color: #c9b99a; font-size: 13.5px; line-height: 1.7;text-align: justify;}
 .about-card p + p { margin-top: 10px; }
 .about-card ul { list-style: none; padding-left: 0; }
 .about-card ul li { margin: 10px 0; padding-left: 22px; position: relative; }
@@ -1552,3 +1574,80 @@ footer span { color: var(--gold); }
 
 /* ── BUDGET ROW LABEL ── */
 .budget-row .label { color: #b8ae96; }
+
+
+/* ══ CONTACT SECTION ══ */
+.contact-wrap {
+  max-width: 640px;
+  width: 100%;
+  margin: 52px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #000000;
+  font-weight: 700;
+}
+
+.contact-title {
+  font-family: 'Cinzel', serif; color: var(--gold);
+  font-size: 20px; letter-spacing: 1.5px;
+  text-align: center; margin-bottom: 10px;
+}
+
+.contact-sub {
+  color: var(--muted); font-size: 13.5px;
+  text-align: center; margin-bottom: 28px;
+  line-height: 1.65;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.contact-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(201,168,76,0.18);
+  border-top: 3px solid var(--gold);
+  border-radius: 12px;
+  padding: 24px 20px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+.contact-role {
+  font-size: 11px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--accent);
+  font-family: 'Cinzel', serif;
+}
+
+.contact-name {
+  font-family: 'Cinzel', serif; color: var(--text);
+  font-size: 15px; letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.contact-detail {
+  font-size: 13px; color: var(--muted);
+  line-height: 1.65;
+}
+
+.nav-btn {
+  padding: 8px 24px;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 1px solid rgba(201,168,76,0.5);
+  background: rgba(201,168,76,0.08);
+  color: var(--gold);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.nav-btn:hover {
+  background: var(--gold);
+  color: var(--deep);
+}

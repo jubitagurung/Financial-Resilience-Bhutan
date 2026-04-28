@@ -91,14 +91,13 @@
             and individuals build stronger financial habits and make better financial decisions.</p>
           <p>Through this website, I aimed to promote financial awareness by providing practical tools such as budget
             planner templates, basic budgeting methods, interactive quizzes, and simple learning resources.</p>
-
-
         </div>
 
+
         <!-- HOME CTA BLOCK -->
-        <button class="cta-primary-btn" onclick="showSection('dashboard')">
-          Next
-        </button>
+        <div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
+            <button class="nav-btn" onclick="showSection('dashboard')">Next →</button>
+        </div>
       </div>
     </div>
   </div>
@@ -114,24 +113,27 @@
       identify patterns, stress points, and opportunities for financial improvement
       in Bhutanese households. Filter by income group or expense category to drill deeper into the data.
     </div>
+    
     <div class="tableau-container">
-      <iframe
-        src="https://public.tableau.com/views/FinancialResilienceattheHouseholdLevelinUrbanBhutan/IntroducingSmartBudgetBhutan2?:showVizHome=no&:embed=true&:toolbar=no"
-        width="100%" height="650" frameborder="0" allowfullscreen>
-      </iframe>
-    </div>
+  <div class="tableau-scroll-wrap">
+    <iframe
+      src="https://public.tableau.com/views/FinancialResilienceattheHouseholdLevelinUrbanBhutan/IntroducingSmartBudgetBhutan2?:showVizHome=no&:embed=true&:toolbar=yes"
+      width="100%" height="650" frameborder="0" allowfullscreen>
+    </iframe>
+  </div>
+</div>
+    
+   
 
     <p class="dashboard-note">
       Tip: Click on chart elements to filter and explore specific segments of the data.
     </p>
 
 <div style="margin-top:32px;">
-  <button class="cta-primary-btn" onclick="showSection('home')" style="margin-top:32px;">
-    Previous
-  </button>
-<button class="cta-primary-btn" onclick="showSection('budget')" style="margin-top:32px;">
-  Next
-</button>
+  <div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
+     <button class="nav-btn" onclick="showSection('home')">← Previous</button>
+     <button class="nav-btn" onclick="showSection('budget')">Next →</button>
+  </div>
 </div>
   </section>
 
@@ -210,12 +212,10 @@
       </div>
     </div>
     <div style="margin-top:32px;">
-  <button class="cta-primary-btn" onclick="showSection('dashboard')" style="margin-top:32px;">
-    Previous
-  </button>
-<button class="cta-primary-btn" onclick="showSection('planner')" style="margin-top:32px;">
-  Next
-</button>
+  <div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
+    <button class="nav-btn" onclick="showSection('budget')">← Previous</button>
+    <button class="nav-btn" onclick="showSection('planner')">Next →</button>
+  </div>
 </div>
 
   </section>
@@ -391,14 +391,12 @@
     </div>
 
 <div style="margin-top:32px;">
-  <button class="cta-primary-btn" onclick="showSection('budget')" style="margin-top:32px;">
-    Previous
-  </button>
-
-<button class="cta-primary-btn" onclick="showSection('quiz')" style="margin-top:32px;">
-Next
-</button>
+<div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
+  <button class="nav-btn" onclick="showSection('budget')">← Previous</button>
+  <button class="nav-btn" onclick="showSection('quiz')">Next →</button>
 </div>
+</div>
+
   </section>
 
   <!-- ══ QUIZ ══ -->
@@ -481,12 +479,12 @@ Next
 
     </div>
 <div style="margin-top:32px;">
-  <button class="cta-primary-btn" onclick="showSection('planner')" style="margin-top:32px;">
-    Previous
-  </button>
-<button class="cta-primary-btn" onclick="showSection('about')" style="margin-top:32px;">
-  Next
-</button>
+
+<div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
+  <button class="nav-btn" onclick="showSection('planner')">← Previous</button>
+  <button class="nav-btn" onclick="showSection('about')">Next →</button>
+</div>
+
 </div>
   </section>
 
@@ -648,11 +646,40 @@ Next
         All institutions above are regulated by the Royal Monetary Authority (RMA) of Bhutan. Always verify current
         interest rates and products directly on their official websites.
       </div>
+
+      <!-- ══ CONTACT SECTION ══ -->
+<div class="contact-wrap">
+  <h3 class="contact-title">Contact Info 📞</h3>
+  <p class="contact-sub"><strong>Have questions about this project or want to collaborate? Reach out directly.</strong></p>
+
+  <div class="contact-grid">
+
+    <!-- Your Card -->
+    <div class="contact-card">
+      <div class="contact-role">Project Intern</div>
+      <div class="contact-name">Jubita Gurung</div>
+      <div class="contact-detail">📍 Gedu College of Business Studies</div>
+      <div class="contact-detail">✉️ gurungjubita212@gmail.com</div>
+      <div class="contact-detail">📞 +975 77490081</div>
+    </div>
+
+    <!-- BDS Card -->
+    <div class="contact-card">
+      <div class="contact-role">Host Organization</div>
+      <div class="contact-name">Bhutan DataScientist Pvt. Ltd.</div>
+      <div class="contact-detail">📍 Thimphu, Bhutan</div>
+      <div class="contact-detail">✉️ info@datascientists.com</div>
+      <div class="contact-detail">🌐 <a href="https://datascientists.bt/" target="_blank" 
+        style="color:var(--gold);">www.bds.bt</a></div>
+    </div>
+
+  </div>
+</div>
     </div>
     <div style="margin-top:32px;">
-  <button class="cta-primary-btn" onclick="showSection('quiz')" style="margin-top:32px;">
-    Previous
-  </button>
+ <div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
+  <button class="nav-btn" onclick="showSection('quiz')">← Previous</button>
+</div>
   </div>
   </section>
   <footer>
@@ -677,7 +704,6 @@ Next
     ">✕</button>
 
 
-
     <div style="font-size:11px; letter-spacing:3px; color:#e25f0e; font-family:'Cinzel',serif; text-transform:uppercase; margin-bottom:6px;">Sonam's Story</div>
     <div style="font-family:'Cinzel',serif; color:#c9a84c; font-size:16px; letter-spacing:1px; margin-bottom:20px;">— Sonam Choden, 27, Thimphu</div>
 
@@ -695,7 +721,7 @@ Next
         letter-spacing:2px; text-transform:uppercase;
         border:2px solid #c9a84c; background:transparent;
         color:#c9a84c; cursor:pointer; border-radius:6px;
-      " onmouseover="this.style.background='#c9a84c';this.style.color='#0d0a04'"
+      "onmouseover="this.style.background='#c9a84c';this.style.color='#0d0a04'"
          onmouseout="this.style.background='transparent';this.style.color='#c9a84c'">
         Close
       </button>
