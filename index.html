@@ -113,7 +113,7 @@
       identify patterns, stress points, and opportunities for financial improvement
       in Bhutanese households. Filter by income group or expense category to drill deeper into the data.
     </div>
-    
+
     <div class="tableau-container">
   <div class="tableau-scroll-wrap">
     <iframe
@@ -224,78 +224,83 @@
   <section id="planner">
     <h2>Budget Planner</h2>
     <p class="section-tagline"><strong>SmartBudget Planner, Interactive Sample & Free Download</strong></p>
-    <div class="page-story-strip">
-      <strong>Running out of money before month-end was something I personally experienced as a student. I built this
-        planner so no one in Bhutan has to face that same stress.It is free, practical, and designed for real Bhutanese
-        incomes.</strong>
-    </div>
+  <div class="planner-master-box">
 
-    <!-- PERSONALIZED WELCOME BANNER — shown after quiz -->
-    <div class="planner-welcome-banner" id="planner-welcome-banner" style="display:none;">
-      <span id="planner-banner-text">Well done completing the quiz! Now let's turn your knowledge into action.</span>
-    </div>
+  <!-- 1. INTRO STRIP -->
+  <div class="pmb-intro">
+    <strong>Running out of money before month-end was something I personally experienced as a student. I built this
+      planner so no one in Bhutan has to face that same stress. It is free, practical, and designed for real Bhutanese
+      incomes.</strong>
+  </div>
 
-    <!-- DOWNLOAD CARD -->
-    <div class="planner-download-card">
-      <div class="planner-download-left">
-        <div class="planner-dl-icon"></div>
-        <div>
-          <div class="planner-dl-title">SmartBudget Planner Sample</div>
-          <div class="planner-dl-desc">Full Excel workbook with 6 sheets: Cover, Budget Planner, Dashboard, Expense
-            Tracker, Savings Goals, and Tips & Principles</div>
-        </div>
+  <!-- 2. WELCOME BANNER (shown after quiz by JS) -->
+  <div class="pmb-banner" id="planner-welcome-banner">
+    <span id="planner-banner-text">Well done completing the quiz! Now let's turn your knowledge into action.</span>
+  </div>
+
+  <!-- 3. DOWNLOAD CARD -->
+  <div class="pmb-section pmb-download">
+    <div class="pmb-download-left">
+      <div class="pmb-dl-icon">📊</div>
+      <div>
+        <div class="pmb-dl-title">SmartBudget Planner Sample</div>
+        <div class="pmb-dl-desc">Full Excel workbook with 6 sheets: Cover, Budget Planner, Dashboard, Expense
+          Tracker, Savings Goals, and Tips &amp; Principles</div>
       </div>
-      <a class="planner-dl-btn" href="SmartBudget_Planner_Sample.xlsx" download>⬇ Download Free</a>
     </div>
+    <a class="planner-dl-btn" href="SmartBudget_Planner_Sample.xlsx" download>⬇ Download Free</a>
+  </div>
 
-    <!-- SONAM STORY -->
-<div class="planner-story" id="sonam-story-trigger" onclick="openSonamModal()" style="cursor:pointer;" title="Click to read Sonam's full story">
-  <span class="planner-story-quote">"Why can't I save anything?"</span>
-  <span class="planner-story-text"> — Sonam Choden, 27, Thimphu. She used this planner and saved <strong>Nu. 18,000 in 3 months.</strong></span>
-  <span style="display:inline-block; margin-left:10px; color:var(--gold); font-family:'Cinzel',serif; font-size:12px; letter-spacing:1px; border-bottom: 1px solid var(--gold);">Read her story →</span>
+  <!-- 4. SONAM STORY QUOTE -->
+  <div class="pmb-section pmb-story" id="sonam-story-trigger"
+    onclick="openSonamModal()" title="Click to read Sonam's full story">
+    <span class="pmb-story-quote">"Why can't I save anything?"</span>
+    <span class="pmb-story-text"> — Sonam Choden, 27, Thimphu. She used this planner and saved
+      <strong>Nu. 18,000 in 3 months.</strong>
+    </span>
+    <span class="pmb-story-cta">Read her story →</span>
+  </div>
+
+  <!-- 5. CTA -->
+  <div class="pmb-section pmb-cta">
+    <div class="pmb-cta-title">Ready to take control of your finances?</div>
+    <div class="pmb-cta-sub">Download the free SmartBudget Planner and start your journey today, just like Sonam did.</div>
+    <a class="planner-dl-btn large" href="SmartBudget_Planner_Sample.xlsx" download>⬇ Download SmartBudget Planner: Free</a>
+  </div>
+
+  <!-- 6. HOW TO USE -->
+  <div class="pmb-section">
+    <div class="pmb-how-title">How to Use This Workbook</div>
+    <div class="pmb-steps">
+      <div class="pmb-step">
+        <div class="pmb-step-num">1</div>
+        <div><strong>Budget Planner</strong>: Enter your monthly income in the blue cells
+          and fill in budgeted amounts for Needs, Wants, and Savings.</div>
+      </div>
+      <div class="pmb-step">
+        <div class="pmb-step-num">2</div>
+        <div><strong>Dashboard</strong>: Review your 50/30/20 split at a glance. All values
+          pull automatically from the Budget Planner sheet.</div>
+      </div>
+      <div class="pmb-step">
+        <div class="pmb-step-num">3</div>
+        <div><strong>Expense Tracker</strong>: Log every daily expense with date, category,
+          and Needs/Wants/Savings label.</div>
+      </div>
+      <div class="pmb-step">
+        <div class="pmb-step-num">4</div>
+        <div><strong>Savings Goals</strong>: Set specific goals with targets and deadlines.
+          Track progress as you save.</div>
+      </div>
+      <div class="pmb-step">
+        <div class="pmb-step-num">5</div>
+        <div><strong>Tips & amp; Principles</strong>: Read Sonam's practical saving strategies
+          adapted for Bhutanese households.</div>
+      </div>
+    </div>
+  </div>
+
 </div>
-
-        <!-- BOTTOM DOWNLOAD CTA -->
-    <div class="planner-cta">
-      <div class="planner-cta-text">Ready to take control of your finances?</div>
-      <div class="planner-cta-sub">Download the free SmartBudget Planner and start your journey today, just like Sonam
-        did.</div>
-      <a class="planner-dl-btn large" href="SmartBudget_Planner_Sample.xlsx" download>⬇ Download SmartBudget Planner:
-        Free</a>
-    </div>
-
-
-    <!-- HOW TO USE -->
-    <div class="planner-how-wrap">
-      <h3>How to Use This Workbook</h3>
-      <div class="planner-steps">
-        <div class="planner-step">
-          <div class="planner-step-num">1</div>
-          <div class="planner-step-text"><strong>Budget Planner</strong>: Enter your monthly income in the blue cells
-            and fill in budgeted amounts for Needs, Wants, and Savings.</div>
-        </div>
-        <div class="planner-step">
-          <div class="planner-step-num">2</div>
-          <div class="planner-step-text"><strong>Dashboard</strong>: Review your 50/30/20 split at a glance. All values
-            pull automatically from the Budget Planner sheet.</div>
-        </div>
-        <div class="planner-step">
-          <div class="planner-step-num">3</div>
-          <div class="planner-step-text"><strong>Expense Tracker</strong>: Log every daily expense with date, category,
-            and Needs/Wants/Savings label.</div>
-        </div>
-        <div class="planner-step">
-          <div class="planner-step-num">4</div>
-          <div class="planner-step-text"><strong>Savings Goals</strong> : Set specific goals with targets and deadlines.
-            Track progress as you save.</div>
-        </div>
-        <div class="planner-step">
-          <div class="planner-step-num">5</div>
-          <div class="planner-step-text"><strong>Tips & Principles</strong> : Read Sonam's practical saving strategies
-            adapted for Bhutanese households.</div>
-        </div>
-      </div>
-    </div>
 
     <!-- SHEET PREVIEWS -->
     <div class="planner-sheets-wrap">
