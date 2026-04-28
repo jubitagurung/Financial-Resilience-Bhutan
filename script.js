@@ -1,23 +1,19 @@
 // ── SECTION NAVIGATION ──
 function showSection(id) {
-  // Hide all sections cleanly
   document.querySelectorAll('section, .overlay').forEach(el => {
     el.classList.remove('active');
-    el.style.display = '';          // ← clear inline style, let CSS class control it
+    el.style.display = '';
   });
 
-  // Show target
   const target = document.getElementById(id);
   if (target) {
-    target.classList.add('active'); // ← CSS .active { display: flex } handles it
+    target.classList.add('active');
   }
 
-  // Update nav active link
   document.querySelectorAll('nav a').forEach(a => a.classList.remove('active-link'));
   const navLink = document.getElementById('nav-' + id);
   if (navLink) navLink.classList.add('active-link');
 
-  // Close mobile menu
   document.getElementById('nav-menu')?.classList.remove('open');
   const t = document.getElementById('nav-toggle');
   if (t) { t.classList.remove('open'); t.setAttribute('aria-expanded', 'false'); }
@@ -64,18 +60,15 @@ function dismissToast() {
   setTimeout(() => { t.style.display = 'none'; }, 300);
 }
 
-// Show toast on home load
 function showToastOnHome() {
   const t = document.getElementById('quiz-toast');
   if (!t) return;
   t.style.display = 'block';
-  // auto-dismiss after 12 seconds
   setTimeout(() => dismissToast(), 12000);
 }
 
-// ══ JOURNEY BAR — update step highlights ══
+// ══ JOURNEY BAR ══
 function updateJourneyBar(activeStep) {
-  // activeStep: 1 = home, 2 = quiz, 3 = planner
   const steps = document.querySelectorAll('.jg-step');
   steps.forEach((s, i) => {
     s.classList.remove('active-step', 'done-step');
@@ -104,7 +97,7 @@ function launchConfetti() {
   setTimeout(() => { wrap.style.display = 'none'; }, 5000);
 }
 
-// ══ PLANNER PUSH BLOCK — set dynamic message based on score ══
+// ══ PLANNER PUSH BLOCK ══
 function setPlannnerPush(score, total) {
   const pct = Math.round(score / total * 100);
   const titleEl = document.getElementById('ppb-title');
@@ -127,7 +120,7 @@ function setPlannnerPush(score, total) {
   }
 }
 
-// ══ PLANNER WELCOME BANNER — set message ══
+// ══ PLANNER WELCOME BANNER ══
 function setPlannerBanner(score, total) {
   const banner = document.getElementById('planner-welcome-banner');
   const text   = document.getElementById('planner-banner-text');
@@ -220,12 +213,22 @@ const QUESTIONS = [
 let currentQ = 0;
 let score = 0;
 let answers = [];
+let answeredQuestions = []; // tracks selected index per question (null = not yet answered)
 
 function startQuiz() {
-  currentQ = 0; score = 0; answers = [];
+  currentQ = 0;
+  score = 0;
+  answers = [];
+  answeredQuestions = new Array(QUESTIONS.length).fill(null);
+
   document.getElementById("quiz-start").style.display = "none";
   document.getElementById("quiz-question").style.display = "block";
   document.getElementById("quiz-results").style.display = "none";
+
+  // Remove any leftover prev button from a previous run
+  const oldPrev = document.getElementById("q-prev-btn");
+  if (oldPrev) oldPrev.remove();
+
   renderQuestion();
 }
 
@@ -235,31 +238,68 @@ function renderQuestion() {
   const pct = (currentQ / total) * 100;
 
   document.getElementById("q-counter").textContent = `Question ${currentQ + 1} of ${total}`;
-  document.getElementById("q-score-live").textContent = `Score: ${score}`;
   document.getElementById("q-progress-fill").style.width = pct + "%";
   document.getElementById("q-number").textContent = `QUESTION ${currentQ + 1}`;
   document.getElementById("q-text").textContent = q.q;
 
+  // Recalculate score from answeredQuestions
+  score = answeredQuestions.filter((a, i) => a !== null && a === QUESTIONS[i].correct).length;
+  document.getElementById("q-score-live").textContent = `Score: ${score}`;
+
+  // Build options
   const optionsEl = document.getElementById("q-options");
   optionsEl.innerHTML = "";
   const letters = ["A", "B", "C", "D"];
+  const prevAnswer = answeredQuestions[currentQ];
+
   q.options.forEach((opt, i) => {
     const btn = document.createElement("button");
     btn.className = "quiz-option";
     btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${opt}</span>`;
-    btn.onclick = () => selectAnswer(i);
+
+    if (prevAnswer !== null) {
+      // Already answered — restore visual state, lock options
+      btn.classList.add("disabled");
+      if (i === q.correct) btn.classList.add("correct");
+      else if (i === prevAnswer && prevAnswer !== q.correct) btn.classList.add("wrong");
+    } else {
+      btn.onclick = () => selectAnswer(i);
+    }
     optionsEl.appendChild(btn);
   });
 
+  // Restore or hide feedback
   const feedback = document.getElementById("q-feedback");
-  feedback.style.display = "none";
-  feedback.className = "quiz-feedback";
-  feedback.innerHTML = "";
+  if (prevAnswer !== null) {
+    const isCorrect = prevAnswer === q.correct;
+    feedback.className = "quiz-feedback " + (isCorrect ? "correct-fb" : "wrong-fb");
+    feedback.innerHTML = (isCorrect ? "✅ " : "❌ ") + q.explanation;
+    feedback.style.display = "block";
+  } else {
+    feedback.style.display = "none";
+    feedback.className = "quiz-feedback";
+    feedback.innerHTML = "";
+  }
 
+  // Next button
   const nextBtn = document.getElementById("q-next-btn");
-  nextBtn.style.display = "none";
+  nextBtn.style.display = prevAnswer !== null ? "inline-block" : "none";
   nextBtn.textContent = currentQ < QUESTIONS.length - 1 ? "Next Question →" : "See My Results →";
 
+  // Previous button — create once, reuse
+  let prevBtn = document.getElementById("q-prev-btn");
+  if (!prevBtn) {
+    prevBtn = document.createElement("button");
+    prevBtn.id = "q-prev-btn";
+    prevBtn.className = "quiz-next-btn";
+    prevBtn.style.marginRight = "10px";
+    prevBtn.textContent = "← Previous";
+    prevBtn.onclick = prevQuestion;
+    nextBtn.parentNode.insertBefore(prevBtn, nextBtn);
+  }
+  prevBtn.style.display = currentQ > 0 ? "inline-block" : "none";
+
+  // Fade animation
   const card = document.getElementById("quiz-q-card");
   card.classList.remove("fade-in");
   void card.offsetWidth;
@@ -270,17 +310,22 @@ function selectAnswer(selectedIndex) {
   const q = QUESTIONS[currentQ];
   const opts = document.querySelectorAll(".quiz-option");
 
+  // Save answer
+  answeredQuestions[currentQ] = selectedIndex;
+
+  // Lock all options
   opts.forEach(o => o.classList.add("disabled"));
 
   const isCorrect = selectedIndex === q.correct;
-  if (isCorrect) score++;
 
+  // Highlight correct / wrong
   opts.forEach((o, i) => {
     if (i === q.correct) o.classList.add("correct");
     else if (i === selectedIndex && !isCorrect) o.classList.add("wrong");
   });
 
-  answers.push({
+  // Store full answer object
+  answers[currentQ] = {
     question: q.q,
     selectedIndex,
     correctIndex: q.correct,
@@ -288,22 +333,47 @@ function selectAnswer(selectedIndex) {
     selectedText: q.options[selectedIndex],
     correctText: q.options[q.correct],
     explanation: q.explanation
-  });
+  };
 
+  // Show feedback
   const feedback = document.getElementById("q-feedback");
   feedback.className = "quiz-feedback " + (isCorrect ? "correct-fb" : "wrong-fb");
   feedback.innerHTML = (isCorrect ? "✅ " : "❌ ") + q.explanation;
   feedback.style.display = "block";
 
+  // Update live score
+  score = answeredQuestions.filter((a, i) => a !== null && a === QUESTIONS[i].correct).length;
   document.getElementById("q-score-live").textContent = `Score: ${score}`;
-  document.getElementById("q-next-btn").style.display = "inline-block";
+
+  // Show next button
+  const nextBtn = document.getElementById("q-next-btn");
+  nextBtn.style.display = "inline-block";
+  nextBtn.textContent = currentQ < QUESTIONS.length - 1 ? "Next Question →" : "See My Results →";
+}
+
+function prevQuestion() {
+  if (currentQ > 0) {
+    currentQ--;
+    renderQuestion();
+  }
 }
 
 function nextQuestion() {
-  currentQ++;
-  if (currentQ < QUESTIONS.length) {
+  if (currentQ < QUESTIONS.length - 1) {
+    currentQ++;
     renderQuestion();
   } else {
+    // Build final answers array from answeredQuestions
+    answers = QUESTIONS.map((q, i) => ({
+      question: q.q,
+      selectedIndex: answeredQuestions[i],
+      correctIndex: q.correct,
+      isCorrect: answeredQuestions[i] === q.correct,
+      selectedText: answeredQuestions[i] !== null ? q.options[answeredQuestions[i]] : "Not answered",
+      correctText: q.options[q.correct],
+      explanation: q.explanation
+    }));
+    score = answers.filter(a => a.isCorrect).length;
     showResults();
   }
 }
@@ -314,14 +384,14 @@ function showResults() {
 
   const pct = Math.round((score / QUESTIONS.length) * 100);
   document.getElementById("result-score").textContent = `${score}/${QUESTIONS.length}`;
-    //
+
   const resultData = {
-  score: score,
-  total: QUESTIONS.length,
-  percent: pct,
-  date: new Date().toLocaleDateString('en-BT', { day:'numeric', month:'short', year:'numeric' })
-};
-localStorage.setItem('sbb_last_quiz', JSON.stringify(resultData));
+    score: score,
+    total: QUESTIONS.length,
+    percent: pct,
+    date: new Date().toLocaleDateString('en-BT', { day:'numeric', month:'short', year:'numeric' })
+  };
+  localStorage.setItem('sbb_last_quiz', JSON.stringify(resultData));
 
   let title, subtitle;
   if (pct === 100) { title = "Financial Expert!"; subtitle = "Perfect score — you are ready to teach others!"; }
@@ -331,6 +401,10 @@ localStorage.setItem('sbb_last_quiz', JSON.stringify(resultData));
 
   document.getElementById("result-title").textContent = title;
   document.getElementById("result-subtitle").textContent = subtitle;
+
+  // Planner push block
+  setPlannnerPush(score, QUESTIONS.length);
+  setPlannerBanner(score, QUESTIONS.length);
 
   // Breakdown
   const breakdownEl = document.getElementById("breakdown-list");
@@ -384,9 +458,18 @@ Write a brief, warm, encouraging 3–4 sentence coaching message. Acknowledge th
 function resetQuiz() {
   document.getElementById("quiz-results").style.display = "none";
   document.getElementById("quiz-start").style.display = "block";
-  currentQ = 0; score = 0; answers = [];
+
+  // Clean up prev button so it doesn't duplicate on next run
+  const prevBtn = document.getElementById("q-prev-btn");
+  if (prevBtn) prevBtn.remove();
+
+  currentQ = 0;
+  score = 0;
+  answers = [];
+  answeredQuestions = [];
 }
 
+// ══ LAST QUIZ RESULT BANNER (on page load) ══
 document.addEventListener('DOMContentLoaded', () => {
   const saved = localStorage.getItem('sbb_last_quiz');
   if (!saved) return;
@@ -423,6 +506,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.body.appendChild(banner);
 });
 
+// ══ SONAM MODAL ══
 function openSonamModal() {
   const overlay = document.getElementById('sonam-modal-overlay');
   overlay.style.display = 'block';
@@ -435,7 +519,6 @@ function closeSonamModal() {
   document.body.style.overflow = '';
 }
 
-// Close with Escape key
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeSonamModal();
 });

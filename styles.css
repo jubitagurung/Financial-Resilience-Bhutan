@@ -66,6 +66,26 @@ nav {
   white-space: nowrap;
 }
 
+/* ── HIGHLIGHT NAV ITEMS ── */
+#nav-planner,
+#nav-quiz {
+  color: var(--gold);
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.35);
+  position: relative;
+}
+
+#nav-planner::after,
+#nav-quiz::after {
+  content: '★';
+  font-size: 8px;
+  color: var(--accent);
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  line-height: 1;
+}
+
 .nav-menu a:hover,
 .nav-menu a.active-link {
   color: var(--gold);
@@ -1118,8 +1138,13 @@ footer span { color: var(--gold); }
   font-size: 20px; letter-spacing: 1.5px;
   text-align: center; margin-bottom: 10px;
 }
-
-.platforms-sub { color: var(--muted); font-size: 13.5px; text-align: justify; margin-bottom: 28px; line-height: 1.65; }
+.platforms-sub {
+  color: var(--muted);
+  font-size: 13.5px;
+  text-align: center;   /* ← change from 'justify' to 'center' */
+  margin-bottom: 28px;
+  line-height: 1.65;
+}
 
 .platforms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
 
