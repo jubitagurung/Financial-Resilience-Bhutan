@@ -792,8 +792,7 @@ section, .overlay { display: none; }
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-  background: linear-gradient(rgba(0,0,0,0.62), rgba(0,0,0,0.72)),
-              url("https://images.unsplash.com/photo-1522202176988-66273c2b033f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80") center/cover no-repeat;
+  background: linear-gradient(135deg, #0a0f2e 0%, #0d1b4b 50%, #0a1628 100%);
 }
 
 #about h2 {
