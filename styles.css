@@ -251,7 +251,7 @@ section, .overlay { display: none; }
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-  background: rgba(0,0,0,0.6);
+  background: linear-gradient(135deg, #0a0f2e 0%, #0d1b4b 50%, #0a1628 100%);
 }
 
 #dashboard h2 {
@@ -334,8 +334,7 @@ section, .overlay { display: none; }
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-  background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.75)),
-              url("https://thumbs.dreamstime.com/z/bhutanese-ngultrum-banknotes-depicting-kings-currency-kingdom-bhutan-currently-pegged-to-indian-rupee-parity-126929954.jpg") center/cover no-repeat;
+  background:  linear-gradient(135deg, #0a0f2e 0%, #0d1b4b 50%, #0a1628 100%);
 }
 
 #budget h2 {
@@ -488,7 +487,7 @@ section, .overlay { display: none; }
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-  background: linear-gradient(rgba(0,0,0,0.68), rgba(0,0,0,0.78)), url("https://www.publicdomainpictures.net/pictures/270000/velka/flag-of-bhutan-bhutan-flag-nation.jpg") center/cover fixed;
+  background: linear-gradient(135deg, #0a0f2e 0%, #0d1b4b 50%, #0a1628 100%);
 }
 
 #quiz h2 {
@@ -895,7 +894,7 @@ footer span { color: var(--gold); }
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-  background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.75)), url("https://www.publicdomainpictures.net/pictures/270000/velka/flag-of-bhutan-bhutan-flag-nation.jpg") center/cover fixed;
+  background: linear-gradient(135deg, #0a0f2e 0%, #0d1b4b 50%, #0a1628 100%);
 }
 
 #planner h2 {
