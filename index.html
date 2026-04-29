@@ -43,7 +43,7 @@
         <div class="toast-dot"></div> QUIZ
       </div>
       <div class="toast-title">Test Your Financial Knowledge</div>
-      <div class="toast-body">Ready? Take our 8-question financial literacy quiz..</div>
+      <div class="toast-body">Ready? Take our 12-question financial literacy quiz.</div>
       <button class="toast-btn" onclick="showSection('quiz'); dismissToast();">Start the Challenge →</button>
     </div>
 
@@ -114,17 +114,26 @@
       in Bhutanese households. Filter by income group or expense category to drill deeper into the data.
     </div>
 
-    <div class="tableau-container">
-  <div class="tableau-scroll-wrap">
+  <div class="tableau-container">
+  <div class="tableau-scroll-wrap" style="position:relative;">
+    <div id="tableau-loader" style="
+      position:absolute; inset:0;
+      background:rgba(10,8,2,0.92);
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      gap:14px; z-index:2; border-radius:8px;">
+      <div class="ai-loading"><span></span><span></span><span></span></div>
+      <div style="color:var(--muted); font-size:13px; letter-spacing:1px;">Loading Dashboard…</div>
+    </div>
     <iframe
       src="https://public.tableau.com/views/FinancialResilienceattheHouseholdLevelinUrbanBhutan/IntroducingSmartBudgetBhutan2?:showVizHome=no&:embed=true"
-      width="100%" height="650" frameborder="0" allowfullscreen>
+      width="100%" height="650" frameborder="0" allowfullscreen
+      onload="document.getElementById('tableau-loader').style.display='none'">
     </iframe>
   </div>
 </div>
-    
-   
 
+   
     <p class="dashboard-note">
       Tip: Click on chart elements to filter and explore specific segments of the data.
     </p>
@@ -213,8 +222,8 @@
     </div>
     <div style="margin-top:32px;">
   <div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
-    <button class="nav-btn" onclick="showSection('budget')">← Previous</button>
-    <button class="nav-btn" onclick="showSection('planner')">Next →</button>
+    <button class="nav-btn" onclick="showSection('dashboard')">← Previous</button>
+<button class="nav-btn" onclick="showSection('planner')">Next →</button>
   </div>
 </div>
 
@@ -263,7 +272,10 @@
   <div class="pmb-section pmb-cta">
     <div class="pmb-cta-title">Ready to take control of your finances?</div>
     <div class="pmb-cta-sub">Download the free SmartBudget Planner and start your journey today, just like Sonam did.</div>
-    <a class="planner-dl-btn large" href="SmartBudget_Planner_Sample.xlsx" download>⬇ Download SmartBudget Planner: Free</a>
+    <a class="planner-dl-btn" href="SmartBudget_Planner_Sample.xlsx" download
+       onclick="if(!this.href||this.href.endsWith('undefined')){event.preventDefault();alert('Download file coming soon! Contact gurungjubita212@gmail.com to request a copy.');}">
+      ⬇ Download Free
+    </a>  
   </div>
 
   <!-- 6. HOW TO USE -->
@@ -309,6 +321,7 @@
         <div class="psv-card">
           <div class="psv-img-wrap">
             <img src="cover.png" alt="Cover sheet preview" class="psv-img">
+                      onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:13px;padding:20px;text-align:center;\'>Preview coming soon</div>'">
           </div>
           <div class="psv-info">
             <div class="psv-label">Cover</div>
@@ -320,6 +333,7 @@
         <div class="psv-card">
           <div class="psv-img-wrap">
             <img src="budget_planner.png" alt="Budget Planner sheet preview" class="psv-img">
+                  onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:13px;padding:20px;text-align:center;\'>Preview coming soon</div>'">
           </div>
           <div class="psv-info">
             <div class="psv-label">Budget Planner</div>
@@ -331,6 +345,7 @@
         <div class="psv-card">
           <div class="psv-img-wrap">
             <img src="dashboard.png" alt="Dashboard sheet preview" class="psv-img">
+                  onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:13px;padding:20px;text-align:center;\'>Preview coming soon</div>'">
           </div>
           <div class="psv-info">
             <div class="psv-label">Dashboard</div>
@@ -342,6 +357,7 @@
         <div class="psv-card">
           <div class="psv-img-wrap">
             <img src="expense_tracker.png" alt="Expense Tracker sheet preview" class="psv-img">
+                  onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:13px;padding:20px;text-align:center;\'>Preview coming soon</div>'">
           </div>
           <div class="psv-info">
             <div class="psv-label">Expense Tracker</div>
@@ -353,6 +369,7 @@
         <div class="psv-card">
           <div class="psv-img-wrap">
             <img src="savings_goals.png" alt="Savings Goals sheet preview" class="psv-img">
+                  onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:13px;padding:20px;text-align:center;\'>Preview coming soon</div>'">
           </div>
           <div class="psv-info">
             <div class="psv-label">Savings Goals</div>
@@ -365,6 +382,7 @@
         <div class="psv-card">
           <div class="psv-img-wrap">
             <img src="tips.png" alt="Tips sheet preview" class="psv-img">
+                  onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:13px;padding:20px;text-align:center;\'>Preview coming soon</div>'">
           </div>
           <div class="psv-info">
             <div class="psv-label">Tips & Principles</div>
@@ -410,8 +428,8 @@
     <div id="quiz-start">
       <div class="quiz-start-card">
         <p>During my internship, I surveyed real urban Bhutanese households and uncovered some surprising patterns in
-          how families manage money. These 8 questions are drawn directly from those findings and see how your financial
-          knowledge stacks up against real local data.</p>
+         how families manage money. These 12 questions — including real-life scenarios — are drawn directly from those
+         findings. See how your financial knowledge stacks up against real local data.</p>
         <button class="btn-primary" onclick="startQuiz()">Begin Quiz</button>
       </div>
     </div>
@@ -540,7 +558,7 @@
 
         <div class="platform-card">
           <div class="platform-header">
-            <div class="platform-icon"></div>
+            <div class="platform-icon">🏦</div>
             <div>
               <div class="platform-name">Bank of Bhutan</div>
               <div class="platform-tag">Savings,Fixed Deposits,Loans</div>
@@ -553,7 +571,7 @@
 
         <div class="platform-card">
           <div class="platform-header">
-            <div class="platform-icon"></div>
+            <div class="platform-icon">🏛️</div>
             <div>
               <div class="platform-name">Bhutan National Bank</div>
               <div class="platform-tag">Savings,Recurring Deposits,Cards</div>
@@ -566,7 +584,7 @@
 
         <div class="platform-card">
           <div class="platform-header">
-            <div class="platform-icon"></div>
+            <div class="platform-icon">🌾</div>
             <div>
               <div class="platform-name">Bhutan Development Bank</div>
               <div class="platform-tag">Rural Savings,Agriculture Loans,SME</div>
@@ -579,7 +597,7 @@
 
         <div class="platform-card">
           <div class="platform-header">
-            <div class="platform-icon"></div>
+            <div class="platform-icon">💰</div>
             <div>
               <div class="platform-name">T Bank</div>
               <div class="platform-tag">Fixed Deposits,Recurring Savings,Loans</div>
@@ -592,7 +610,7 @@
 
         <div class="platform-card">
           <div class="platform-header">
-            <div class="platform-icon"></div>
+            <div class="platform-icon">🤝</div>
             <div>
               <div class="platform-name">Druk PNB Bank</div>
               <div class="platform-tag">Savings,Personal Loans,NRI Banking</div>
@@ -605,7 +623,7 @@
 
         <div class="platform-card">
           <div class="platform-header">
-            <div class="platform-icon"></div>
+            <div class="platform-icon">🛡️</div>
             <div>
               <div class="platform-name">NPPF</div>
               <div class="platform-tag">Pension,Provident Fund,Housing Loans</div>
@@ -619,7 +637,7 @@
 
         <div class="platform-card">
           <div class="platform-header">
-            <div class="platform-icon"></div>
+            <div class="platform-icon">📈</div>
             <div>
               <div class="platform-name">Royal Securities Exchange of Bhutan</div>
               <div class="platform-tag">Stock Market,Listed Companies,Equity</div>
@@ -632,7 +650,7 @@
 
         <div class="platform-card">
           <div class="platform-header">
-            <div class="platform-icon"></div>
+            <div class="platform-icon">📱</div>
             <div>
               <div class="platform-name">DK Bank (Digital Kidu)</div>
               <div class="platform-tag">Digital Banking,Cardless,Inclusive</div>
