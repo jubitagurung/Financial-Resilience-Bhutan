@@ -14,7 +14,7 @@ body {
   font-family: 'Lato', sans-serif;
   background: var(--deep);
   color: var(--text);
-  background-image: url("https://www.publicdomainpictures.net/pictures/270000/velka/flag-of-bhutan-bhutan-flag-nation.jpg");
+  background-image: url("https://th.bing.com/th/id/R.e5adff3d7bd5523e94b130a716d2d3b4?rik=KIEakIcQWMMNsQ&pid=ImgRaw&r=0");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -180,11 +180,11 @@ section, .overlay { display: none; }
 #home h1 {
   font-family: 'Cinzel', serif;
   font-size: clamp(36px, 6vw, 64px);
-  color: var(--gold);
+  color: #ccc6e0;
   letter-spacing: 3px;
   line-height: 1.2;
   margin-bottom: 12px;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.8);
+  text-shadow: 0 2px 20px rgba(255,255,255,0.3);
 }
 
 #home .subtitle {
