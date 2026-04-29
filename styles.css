@@ -164,8 +164,10 @@ nav {
 
 /* keep this line — do not remove */
 section, .overlay { display: none; }
-.active { display: flex; }
+.active { display: flex; flex-direction: column; align-items: center; }
 
+/* sections that need row layout override */
+#home.active { flex-direction: column; }
 /* ── HOME ── */
 #home {
   min-height: 100vh;
@@ -304,17 +306,22 @@ section, .overlay { display: none; }
 /* ── MOBILE TABLEAU FIX ── */
 @media (max-width: 768px) {
   .tableau-container {
-    overflow-x: auto;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
     border-radius: 8px;
   }
   .tableau-scroll-wrap {
-    width: 900px;
-    overflow: visible;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    /* Scroll only INSIDE the wrap, not the whole page */
+    max-width: 100%;
   }
   .tableau-scroll-wrap iframe {
     width: 900px;
+    min-width: 900px;
     height: 700px;
     border: none;
     display: block;
@@ -1451,4 +1458,219 @@ footer span { color: var(--gold); }
 .nav-btn:hover {
   background: var(--gold);
   color: var(--deep);
+}
+
+/* ══════════════════════════════════════════════
+   PASTE THIS ENTIRE BLOCK AT THE VERY BOTTOM
+   OF YOUR EXISTING styles.css FILE
+   ══════════════════════════════════════════════ */
+
+/* ── ENHANCED FEEDBACK BLOCKS ── */
+.fb-main {
+  font-size: 13.5px;
+  line-height: 1.65;
+  margin-bottom: 10px;
+}
+
+.fb-example {
+  background: rgba(201,168,76,0.08);
+  border-left: 3px solid var(--gold);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #d4c8a8;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.fb-tip {
+  background: rgba(76,175,130,0.08);
+  border-left: 3px solid var(--green);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #7dd4b0;
+  line-height: 1.6;
+}
+
+/* ── POINTS BADGE ON QUESTION ── */
+.q-points-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 50px;
+  padding: 4px 14px;
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+}
+
+/* ── POINTS SUMMARY ON RESULTS ── */
+.pts-summary {
+  background: rgba(201,168,76,0.06);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 700px;
+}
+
+.pts-row {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.pts-item {
+  text-align: center;
+  min-width: 80px;
+}
+
+.pts-val {
+  font-family: 'Cinzel', serif;
+  font-size: 26px;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.pts-lbl {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ── LEADERBOARD ── */
+.lb-section {
+  background: var(--card-bg);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-top: 3px solid var(--gold);
+  border-radius: 12px;
+  padding: 22px 24px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 700px;
+  text-align: left;
+}
+
+.lb-submit-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.lb-name-input {
+  flex: 1;
+  min-width: 180px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 8px;
+  padding: 11px 16px;
+  font-size: 13.5px;
+  color: var(--text);
+  font-family: 'Lato', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.lb-name-input:focus { border-color: var(--gold); }
+.lb-name-input::placeholder { color: var(--muted); }
+
+.lb-submit-btn {
+  padding: 11px 22px;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 2px solid var(--gold);
+  background: var(--gold);
+  color: var(--deep);
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 700;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.lb-submit-btn:hover { opacity: 0.85; }
+.lb-submit-btn:disabled { opacity: 0.4; cursor: default; }
+
+.lb-title {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  font-size: 13px;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+
+.lb-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  border: 1px solid rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.02);
+  font-size: 13px;
+  transition: background 0.2s;
+}
+
+.lb-row:hover { background: rgba(201,168,76,0.06); }
+
+.lb-gold   { border-left: 3px solid #FFD700; background: rgba(255,215,0,0.05); }
+.lb-silver { border-left: 3px solid #C0C0C0; background: rgba(192,192,192,0.04); }
+.lb-bronze { border-left: 3px solid #CD7F32; background: rgba(205,127,50,0.05); }
+
+.lb-rank { font-size: 16px; min-width: 28px; text-align: center; }
+.lb-name { color: var(--text); font-weight: 700; flex: 1; font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 0.5px; }
+.lb-pts  { color: var(--gold); font-weight: 700; font-family: 'Cinzel', serif; font-size: 13px; white-space: nowrap; }
+.lb-meta { color: var(--muted); font-size: 11px; white-space: nowrap; }
+
+@media (max-width: 480px) {
+  .lb-meta { display: none; }
+  .lb-row  { flex-wrap: wrap; }
+}
+
+/* ── STREAK TOAST ── */
+.streak-toast {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: linear-gradient(135deg, rgba(226,95,14,0.95), rgba(201,168,76,0.95));
+  color: #0d0a04;
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 12px 28px;
+  border-radius: 50px;
+  box-shadow: 0 8px 32px rgba(226,95,14,0.4);
+  z-index: 99999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+  white-space: nowrap;
+}
+
+.streak-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── BREAKDOWN TIP ── */
+.bd-tip {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  color: #7dd4b0;
+  line-height: 1.5;
 }
