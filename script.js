@@ -295,44 +295,12 @@ let bestStreak = 0;
 let answers = [];
 let answeredQuestions = [];
 
-// ── LEADERBOARD (localStorage) ──
-function getLeaderboard() {
-  try { return JSON.parse(localStorage.getItem('sbb_leaderboard') || '[]'); }
-  catch { return []; }
-}
-
-function saveToLeaderboard(name, points, correct, total) {
-  const lb = getLeaderboard();
-  lb.push({
-    name, points, correct, total,
-    date: new Date().toLocaleDateString('en-BT', { day: 'numeric', month: 'short', year: 'numeric' })
-  });
-  lb.sort((a, b) => b.points - a.points);
-  localStorage.setItem('sbb_leaderboard', JSON.stringify(lb.slice(0, 10)));
-}
-
-function renderLeaderboard() {
-  const lb = getLeaderboard();
-  const el = document.getElementById('leaderboard-list');
-  if (!el) return;
-  if (!lb.length) {
-    el.innerHTML = '<div style="color:var(--muted);font-size:13px;text-align:center;padding:16px 0;">No scores yet — be the first!</div>';
-    return;
-  }
-  el.innerHTML = lb.map((entry, i) => `
-    <div class="lb-row ${i === 0 ? 'lb-gold' : i === 1 ? 'lb-silver' : i === 2 ? 'lb-bronze' : ''}">
-      <span class="lb-rank">${i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '#' + (i + 1)}</span>
-      <span class="lb-name">${entry.name}</span>
-      <span class="lb-pts">${entry.points} pts</span>
-      <span class="lb-meta">${entry.correct}/${entry.total} · ${entry.date}</span>
-    </div>
-  `).join('');
-}
-
 // ── START ──
 function startQuiz() {
   currentQ = 0; score = 0; totalPoints = 0; streak = 0; bestStreak = 0;
-  answers = []; answeredQuestions = new Array(QUESTIONS.length).fill(null);
+  answers = [];
+  // FIX: initialize answeredQuestions as array of nulls with correct length
+  answeredQuestions = new Array(QUESTIONS.length).fill(null);
 
   document.getElementById('quiz-start').style.display = 'none';
   document.getElementById('quiz-question').style.display = 'block';
@@ -347,7 +315,7 @@ function startQuiz() {
 function renderQuestion() {
   const q = QUESTIONS[currentQ];
   const total = QUESTIONS.length;
-const pct = ((currentQ + 1) / total) * 100;
+  const pct = ((currentQ + 1) / total) * 100;
 
   document.getElementById('q-counter').textContent = `Question ${currentQ + 1} of ${total}`;
   document.getElementById('q-progress-fill').style.width = pct + '%';
@@ -539,6 +507,7 @@ function nextQuestion() {
 function showResults() {
   document.getElementById('quiz-question').style.display = 'none';
   document.getElementById('quiz-results').style.display = 'block';
+  document.getElementById('quiz-nav-buttons').style.display = 'flex';
 
   const total = QUESTIONS.length;
   const maxPoints = QUESTIONS.reduce((s, q) => s + q.points, 0);
@@ -562,24 +531,6 @@ function showResults() {
       <div class="pts-item"><div class="pts-val">${score}/${total}</div><div class="pts-lbl">Correct</div></div>
     </div>
   `;
-
-  // Leaderboard section (inject after pts summary)
-  let lbSection = document.getElementById('lb-section');
-  if (!lbSection) {
-    lbSection = document.createElement('div');
-    lbSection.id = 'lb-section';
-    lbSection.className = 'lb-section';
-    lbSection.innerHTML = `
-      <div class="lb-submit-row">
-        <input id="lb-name-input" class="lb-name-input" type="text" maxlength="20" placeholder="Enter your name to join leaderboard…" />
-        <button class="lb-submit-btn" onclick="submitScore()">Submit Score</button>
-      </div>
-      <h4 class="lb-title">🏆 Leaderboard — Top 10</h4>
-      <div id="leaderboard-list"></div>
-    `;
-    ptsSummary.after(lbSection);
-  }
-  renderLeaderboard();
 
   let title, subtitle;
   if (pct === 100)    { title = 'Financial Expert!';  subtitle = 'Perfect score — you are ready to teach others!'; }
@@ -623,22 +574,6 @@ function showResults() {
   fetchAIFeedback(score, total, answers);
 }
 
-// ── SUBMIT TO LEADERBOARD ──
-function submitScore() {
-  const nameInput = document.getElementById('lb-name-input');
-  const name = (nameInput?.value || '').trim();
-  if (!name) { if (nameInput) nameInput.style.borderColor = 'var(--accent)'; return; }
-  saveToLeaderboard(name, totalPoints, score, QUESTIONS.length);
-  renderLeaderboard();
-  if (nameInput) {
-    nameInput.value = '';
-    nameInput.placeholder = '✅ Score saved!';
-    nameInput.disabled = true;
-  }
-  const submitBtn = document.querySelector('.lb-submit-btn');
-  if (submitBtn) submitBtn.disabled = true;
-}
-
 // ── AI FEEDBACK ──
 async function fetchAIFeedback(score, total, answers) {
   const wrongTopics = answers.filter(a => !a.isCorrect).map(a => a.question).join('; ');
@@ -671,16 +606,16 @@ Write a brief, warm, encouraging 3–4 sentence coaching message. Acknowledge th
 function resetQuiz() {
   document.getElementById('quiz-results').style.display = 'none';
   document.getElementById('quiz-start').style.display = 'block';
+  document.getElementById('quiz-nav-buttons').style.display = 'none';
 
   const prevBtn = document.getElementById('q-prev-btn');
   if (prevBtn) prevBtn.remove();
   const ptsSummary = document.getElementById('pts-summary');
   if (ptsSummary) ptsSummary.remove();
-  const lbSection = document.getElementById('lb-section');
-  if (lbSection) lbSection.remove();
-
   currentQ = 0; score = 0; totalPoints = 0; streak = 0; bestStreak = 0;
-  answers = []; answeredQuestions = [];
+  answers = [];
+  // FIX: reset answeredQuestions as proper null-filled array, not empty array
+  answeredQuestions = new Array(QUESTIONS.length).fill(null);
 }
 
 // ══ LAST QUIZ RESULT BANNER (on page load) ══
