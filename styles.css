@@ -79,7 +79,7 @@ nav {
 #nav-quiz::after {
   content: '★';
   font-size: 8px;
-  color: var(--accent);
+  color:  #ffffff;
   position: absolute;
   top: 4px;
   right: 4px;
@@ -362,12 +362,12 @@ section, .overlay { display: none; }
 }
 
 .budget-rule {
-  background: rgba(226,95,14,0.12);
-  border: 1px solid rgba(226,95,14,0.35);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 10px 24px;
   border-radius: 50px;
   font-size: 13px;
-  color: var(--accent);
+  color: #ffffff;
   margin-bottom: 32px;
   letter-spacing: 1px;
 }
@@ -549,7 +549,7 @@ section, .overlay { display: none; }
 }
 
 .quiz-progress-track {
-  background: rgba(255,255,255,0.08);
+  background: rgba(25, 18, 18, 0.08);
   border-radius: 20px;
   height: 6px;
   overflow: hidden;
@@ -573,7 +573,7 @@ section, .overlay { display: none; }
 
 .quiz-q-number {
   font-size: 11px;
-  color: var(--accent);
+  color: var(--gold);
   letter-spacing: 2px;
   text-transform: uppercase;
   margin-bottom: 10px;
@@ -844,7 +844,7 @@ section, .overlay { display: none; }
 .about-card p + p { margin-top: 10px; }
 .about-card ul { list-style: none; padding-left: 0; }
 .about-card ul li { margin: 10px 0; padding-left: 22px; position: relative; }
-.about-card ul li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+.about-card ul li::before { content: "→"; position: absolute; left: 0; color: #ffffff; }
 
 .tech-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
 
@@ -1016,7 +1016,7 @@ footer span { color: var(--gold); }
 }
 .pmb-story:hover { background: rgba(226,95,14,0.05); }
 
-.pmb-story-quote { color: var(--accent); font-style: italic; font-size: 15px; }
+.pmb-story-quote { color: #ffffff; font-style: italic; font-size: 15px; }
 .pmb-story-text  { color: #c9b99a; font-size: 14px; line-height: 1.6; }
 .pmb-story-text strong { color: var(--green); }
 
@@ -1127,13 +1127,14 @@ footer span { color: var(--gold); }
 .sonam-num {
   width: 26px; height: 26px; min-width: 26px;
   border-radius: 50%;
-  background: rgba(226,95,14,0.15);
-  border: 1.5px solid var(--accent);
-  color: var(--accent);
+  background: rgba(201,168,76,0.15);
+  border: 1.5px solid var(--gold);
+  color: var(--gold);
   font-family: 'Cinzel', serif; font-size: 12px;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
+
 
 /* ── FINANCIAL PLATFORMS ── */
 .platforms-wrap { max-width: 1100px; width: 100%; margin-top: 52px; }
@@ -1166,7 +1167,7 @@ footer span { color: var(--gold); }
 .platform-header { display: flex; align-items: center; gap: 12px; }
 .platform-icon { font-size: 22px; flex-shrink: 0; }
 .platform-name { font-family: 'Cinzel', serif; color: var(--text); font-size: 13px; letter-spacing: 0.5px; margin-bottom: 3px; }
-.platform-tag { font-size: 11px; color: var(--accent); letter-spacing: 0.5px; }
+.platform-tag { font-size: 11px; color: var(--green); letter-spacing: 0.5px; }
 .platform-desc { font-size: 13px; color: #c9b99a; line-height: 1.65; flex: 1; text-align: justify; }
 
 .platform-link {
@@ -1333,10 +1334,10 @@ footer span { color: var(--gold); }
 
 .ppb-badge {
   display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(226,95,14,0.15);
-  border: 1px solid rgba(226,95,14,0.35);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.25);
   border-radius: 50px; padding: 4px 14px;
-  font-size: 11px; color: var(--accent);
+  font-size: 11px; color: #ffffff;
   letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px;
 }
 
@@ -1428,7 +1429,7 @@ footer span { color: var(--gold); }
 
 .contact-role {
   font-size: 11px; letter-spacing: 2px;
-  text-transform: uppercase; color: var(--accent);
+  text-transform: uppercase; color: #ffffff;
   font-family: 'Cinzel', serif;
 }
 
