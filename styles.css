@@ -726,26 +726,8 @@ section, .overlay { display: none; }
 
 .quiz-result-subtitle { color: var(--muted); font-size: 14px; margin-bottom: 28px; }
 
-.quiz-ai-feedback-box {
-  background: var(--card-bg);
-  border: 1px solid rgba(201,168,76,0.2);
-  border-left: 4px solid var(--accent);
-  border-radius: 10px;
-  padding: 22px 24px;
-  text-align: left;
-  margin-bottom: 24px;
-}
 
-.quiz-ai-feedback-box h4 {
-  font-family: 'Cinzel', serif;
-  color: var(--gold);
-  font-size: 13px;
-  letter-spacing: 1px;
-  margin-bottom: 12px;
-  display: flex; align-items: center; gap: 8px;
-}
 
-.quiz-ai-feedback-text { color: #c9b99a; font-size: 14px; line-height: 1.75; text-align: justify; }
 
 .quiz-result-breakdown {
   background: var(--card-bg);
@@ -799,7 +781,10 @@ section, .overlay { display: none; }
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-  background: linear-gradient(135deg, #0a0f2e 0%, #0d1b4b 50%, #0a1628 100%);
+  background-image: url("https://th.bing.com/th/id/R.e5adff3d7bd5523e94b130a716d2d3b4?rik=KIEakIcQWMMNsQ&pid=ImgRaw&r=0");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 #about h2 {
@@ -884,15 +869,7 @@ footer span { color: var(--gold); }
 
 .fade-in { animation: fadeIn 0.35s ease forwards; }
 
-.ai-loading { display: flex; gap: 5px; align-items: center; padding: 4px 0; }
-.ai-loading span {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--gold);
-  animation: bounce 1s infinite;
-  display: inline-block;
-}
-.ai-loading span:nth-child(2) { animation-delay: 0.2s; }
-.ai-loading span:nth-child(3) { animation-delay: 0.4s; }
+
 
 /* ── BUDGET PLANNER ── */
 #planner {
