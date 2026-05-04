@@ -27,7 +27,9 @@
       <a onclick="showSection('budget')" id="nav-budget">Budget</a>
       <a onclick="showSection('planner')" id="nav-planner">Budget Planner</a>
       <a onclick="showSection('quiz')" id="nav-quiz">Quiz</a>
+      <a onclick="showSection('tools')" id="nav-tools">Tools</a>
       <a onclick="showSection('about')" id="nav-about">About</a>
+   
     </div>
   </nav>
 
@@ -502,6 +504,120 @@
 </div>
   </section>
 
+    <!-- ══ TOOLS ══ -->
+<section id="tools">
+  <h2>Financial Tools</h2>
+  <p class="section-tagline"><strong>Currency Converter · Savings Calculator · 50/30/20 Calculator</strong></p>
+
+  <!-- TABS -->
+  <div class="tool-tabs">
+    <button class="tab-btn active" onclick="switchTab('converter', this)">🔄 Currency Converter</button>
+    <button class="tab-btn" onclick="switchTab('savings', this)">💰 Savings Calculator</button>
+    <button class="tab-btn" onclick="switchTab('budget', this)">📊 50/30/20 Calculator</button>
+  </div>
+
+  <!-- ══ TOOL 1: CURRENCY CONVERTER ══ -->
+  <div class="tool-panel active" id="panel-converter">
+    <div class="tool-card">
+      <div class="tool-title">🔄 Live Currency Converter</div>
+      <div class="tool-desc">Convert Bhutanese Ngultrum (Nu.) to USD or INR using live exchange rates. Useful for students studying abroad or planning international expenses.</div>
+      <div class="input-group">
+        <label class="tool-label">Amount in Ngultrum (Nu.)</label>
+<input type="number" id="nu-amount" placeholder="Enter amount e.g. 10000" min="0" style="width:100%;">
+      </div>
+      <div class="input-group">
+        <label class="tool-label">Convert To</label>
+        <select id="currency-target">
+          <option value="both">Both USD & INR</option>
+          <option value="USD">USD (US Dollar)</option>
+          <option value="INR">INR (Indian Rupee)</option>
+        </select>
+      </div>
+      <button class="calc-btn" onclick="convertCurrency()">Convert Now →</button>
+      <div class="result-box" id="converter-result">
+        <div class="result-title">Conversion Result</div>
+        <div class="currency-grid" id="currency-output"></div>
+        <div class="rate-note" id="rate-note"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TOOL 2: SAVINGS CALCULATOR ══ -->
+  <div class="tool-panel" id="panel-savings">
+    <div class="tool-card">
+      <div class="tool-title">💰 Savings Projection Calculator</div>
+      <div class="tool-desc">Enter your monthly income and savings percentage to see how much you'll save over 1, 3, and 5 years.</div>
+      <div class="input-group">
+        <label class="tool-label">Monthly Income (Nu.)</label>
+        <input type="number" id="monthly-income" placeholder="Enter income e.g. 30000" min="0" style="width:100%;">
+        </div>
+
+      <div class="input-group">
+        <label class="tool-label">Savings Percentage (%)</label>
+        <div class="tool-input-row">
+          <input type="number" id="savings-pct" placeholder="e.g. 20" min="1" max="100">
+          <select id="savings-preset" onchange="applyPreset()">
+            <option value="">— Quick Select —</option>
+            <option value="10">10% (Minimum)</option>
+            <option value="20">20% (Recommended)</option>
+            <option value="30">30% (Aggressive)</option>
+          </select>
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calculateSavings()">Calculate Projections →</button>
+      <div class="result-box" id="savings-result">
+        <div class="result-title">Your Savings Projections</div>
+        <div class="savings-grid" id="savings-output"></div>
+        <div class="savings-note" id="savings-note"></div>
+        <div class="tool-tip-box" id="savings-tip"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TOOL 3: 50/30/20 CALCULATOR ══ -->
+  <div class="tool-panel" id="panel-budget">
+    <div class="tool-card">
+      <div class="tool-title">📊 50/30/20 Budget Calculator</div>
+      <div class="tool-desc">Enter your monthly income and instantly see your 50% needs, 30% wants, and 20% savings split.</div>
+      <div class="input-group">
+        <label class="tool-label">Monthly Income (Nu.)</label>
+<input type="number" id="budget-income" placeholder="Enter income e.g. 40000" min="0" oninput="calculateBudget()" style="width:100%;">
+      </div>
+      <div class="result-box" id="budget-result" style="display:block;">
+        <div class="result-title">Your 50/30/20 Split</div>
+        <div class="budget-splits">
+          <div class="budget-split-item">
+            <div class="split-header"><span class="split-label">🏠 Needs (Rent, Food, Utilities)</span><span class="split-pct">50%</span></div>
+            <div class="split-header" style="margin-top:-6px;margin-bottom:8px;"><span class="split-amount" id="needs-amount">Nu. 0</span></div>
+            <div class="split-bar-track"><div class="split-bar-fill needs" id="needs-bar" style="width:0%"></div></div>
+          </div>
+          <hr style="border:none;border-top:1px solid rgba(201,168,76,0.12);margin:14px 0;">
+          <div class="budget-split-item">
+            <div class="split-header"><span class="split-label">🎉 Wants (Entertainment, Dining)</span><span class="split-pct">30%</span></div>
+            <div class="split-header" style="margin-top:-6px;margin-bottom:8px;"><span class="split-amount" id="wants-amount">Nu. 0</span></div>
+            <div class="split-bar-track"><div class="split-bar-fill wants" id="wants-bar" style="width:0%"></div></div>
+          </div>
+          <hr style="border:none;border-top:1px solid rgba(201,168,76,0.12);margin:14px 0;">
+          <div class="budget-split-item">
+            <div class="split-header"><span class="split-label">💚 Savings (Emergency, Goals)</span><span class="split-pct">20%</span></div>
+            <div class="split-header" style="margin-top:-6px;margin-bottom:8px;"><span class="split-amount" id="savings-amount">Nu. 0</span></div>
+            <div class="split-bar-track"><div class="split-bar-fill savings-bar-fill" id="savings-bar" style="width:0%"></div></div>
+          </div>
+        </div>
+        <div class="tool-tip-box" id="budget-tip" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;">
+    <div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
+      <button class="nav-btn" onclick="showSection('quiz')">← Previous</button>
+      <button class="nav-btn" onclick="showSection('about')">Next →</button>
+    </div>
+  </div>
+</section>
+
+
   <!-- ══ ABOUT ══ -->
   <section id="about">
     <h2>About This Project</h2>
@@ -692,10 +808,11 @@
     </div>
     <div style="margin-top:32px;">
  <div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
-  <button class="nav-btn" onclick="showSection('quiz')">← Previous</button>
+  <button class="nav-btn" onclick="showSection('tools')">← Previous</button>
 </div>
   </div>
   </section>
+
   <footer>
     <p>© 2026 <span>Smart Budget Bhutan</span> · Bhutan Data Scientist Pvt. Ltd. · All rights reserved</p>
   </footer>
