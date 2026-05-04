@@ -575,40 +575,6 @@ function resetQuiz() {
   answeredQuestions = new Array(QUESTIONS.length).fill(null);
 }
 
-// ── LAST QUIZ RESULT BANNER ──
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => showToastOnHome(), 3000);
-
-  let saved = null;
-  try { saved = localStorage.getItem('sbb_last_quiz'); } catch (e) { return; }
-  if (!saved) return;
-
-  let r;
-  try { r = JSON.parse(saved); } catch (e) { return; }
-
-  const banner = document.createElement('div');
-  banner.id = 'prev-score-banner';
-  banner.innerHTML = `
-    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
-      <span style="color:#c9a84c; font-family:'Cinzel',serif; font-size:12px; letter-spacing:1px;">LAST QUIZ RESULT</span>
-      <button onclick="document.getElementById('prev-score-banner').remove()" style="background:transparent; border:none; color:#a89e84; cursor:pointer; font-size:14px; padding:0;">✕</button>
-    </div>
-    <div>Score: <strong style="color:#c9a84c">${r.score}/${r.total} (${r.percent}%)</strong></div>
-    <div style="font-size:11px;">${r.date}</div>
-  `;
-  banner.style.cssText = `
-    position: fixed; bottom: 20px; right: 20px;
-    background: rgba(10,8,2,0.95);
-    border: 1px solid rgba(201,168,76,0.4);
-    border-left: 4px solid #c9a84c;
-    border-radius: 10px; padding: 14px 18px;
-    font-size: 13px; color: #a89e84;
-    z-index: 9999; display: flex; flex-direction: column;
-    gap: 10px; box-shadow: 0 8px 32px rgba(0,0,0,0.6); max-width: 320px;
-  `;
-  document.body.appendChild(banner);
-});
-
 // ── SONAM MODAL ──
 function openSonamModal() {
   const overlay = document.getElementById('sonam-modal-overlay');
@@ -626,42 +592,94 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeSonamModal();
 });
 
-// ── WELCOME MESSAGE ──
+// ══════════════════════════════════════════════
+// ── SINGLE DOMContentLoaded — all init here ──
+// ══════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
+
+  // 1. Show quiz invite toast after 3s (bottom right)
+  setTimeout(() => showToastOnHome(), 3000);
+
+  // 2. Welcome / Welcome Back toast (top center)
   let hasVisited = false;
   try { hasVisited = localStorage.getItem('sbb_visited'); } catch(e) {}
 
   const msg = hasVisited
     ? '👋 Welcome Back to SmartBudget Bhutan!'
     : '🎉 Welcome to SmartBudget Bhutan!';
-
   const sub = hasVisited
     ? 'Great to see you again. Keep building those financial habits!'
     : 'Your journey to financial resilience starts here.';
 
-  const toast = document.createElement('div');
-  toast.innerHTML = `
+  const welcomeToast = document.createElement('div');
+  welcomeToast.id = 'welcome-toast';
+  welcomeToast.style.cssText = `
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(12,9,2,0.97);
+    border: 1px solid rgba(201,168,76,0.35);
+    border-top: 3px solid #c9a84c;
+    border-radius: 12px;
+    padding: 16px 40px 16px 20px;
+    z-index: 9998;
+    min-width: 280px;
+    max-width: 360px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+  `;
+  welcomeToast.innerHTML = `
     <div style="font-family:'Cinzel',serif; color:#c9a84c; font-size:13px; letter-spacing:1px; margin-bottom:5px;">${msg}</div>
     <div style="font-size:12px; color:#a89e84; line-height:1.55;">${sub}</div>
-    <button onclick="this.parentElement.remove()" style="
+    <button onclick="document.getElementById('welcome-toast').remove()" style="
       position:absolute; top:8px; right:10px;
       background:transparent; border:none;
       color:#a89e84; cursor:pointer; font-size:13px;">✕</button>
   `;
-  toast.style.cssText = `
-    position:fixed; top:70px; left:50%; transform:translateX(-50%);
-    background:rgba(12,9,2,0.97);
-    border:1px solid rgba(201,168,76,0.35);
-    border-top:3px solid #c9a84c;
-    border-radius:12px; padding:16px 40px 16px 20px;
-    z-index:9998; min-width:280px; max-width:360px;
-    box-shadow:0 8px 32px rgba(0,0,0,0.7);
-    animation:toastSlide 0.5s cubic-bezier(.22,.68,0,1.2) both;
-    position:fixed;
-  `;
-
-  document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), 5000);
+  document.body.appendChild(welcomeToast);
+  setTimeout(() => {
+    const el = document.getElementById('welcome-toast');
+    if (el) el.remove();
+  }, 5000);
 
   try { localStorage.setItem('sbb_visited', 'true'); } catch(e) {}
+
+  // 3. Last quiz result banner (bottom LEFT — no clash with quiz toast)
+  let saved = null;
+  try { saved = localStorage.getItem('sbb_last_quiz'); } catch(e) { return; }
+  if (!saved) return;
+
+  let r;
+  try { r = JSON.parse(saved); } catch(e) { return; }
+
+  const banner = document.createElement('div');
+  banner.id = 'prev-score-banner';
+  banner.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+      <span style="color:#c9a84c; font-family:'Cinzel',serif; font-size:12px; letter-spacing:1px;">LAST QUIZ RESULT</span>
+      <button onclick="document.getElementById('prev-score-banner').remove()" style="background:transparent; border:none; color:#a89e84; cursor:pointer; font-size:14px; padding:0;">✕</button>
+    </div>
+    <div>Score: <strong style="color:#c9a84c">${r.score}/${r.total} (${r.percent}%)</strong></div>
+    <div style="font-size:11px;">${r.date}</div>
+  `;
+  banner.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(10,8,2,0.95);
+    border: 1px solid rgba(201,168,76,0.4);
+    border-left: 4px solid #c9a84c;
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: #a89e84;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    max-width: 280px;
+  `;
+  document.body.appendChild(banner);
+
 });
