@@ -265,7 +265,7 @@ section, .overlay { display: none; }
 }
 
 .section-tagline {
-  color: #000000;   /* ← was: var(--muted) */
+  color:#f0ead6;   /* ← was: var(--muted) */
   font-size: 14px;
   margin-bottom: 16px;
   letter-spacing: 1px;
@@ -781,7 +781,7 @@ section, .overlay { display: none; }
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-  background-image: url("https://tse1.mm.bing.net/th/id/OIP.LQ7TR91CXG3q7CsgzkbY1AHaE6?w=1204&h=800&rs=1&pid=ImgDetMain&o=7&rm=3");
+  background-image: url("https://www.lostwithpurpose.com/wp-content/uploads/2018/05/DSC02425.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -1123,7 +1123,7 @@ footer span { color: var(--gold); }
 }
 
 .platforms-sub {
-  color: #000000;  /* ← was: var(--muted) */
+  color:  #f0ead6;  /* ← was: var(--muted) */
   font-size: 13.5px;
   text-align: center;
   margin-bottom: 28px;
@@ -1384,7 +1384,7 @@ footer span { color: var(--gold); }
 }
 
 .contact-sub  {
-  color: #000000;  /* ← was: var(--muted) */
+  color: #f0ead6;  /* ← was: var(--muted) */
   font-size: 13.5px;
   text-align: center; margin-bottom: 28px;
   line-height: 1.65;
