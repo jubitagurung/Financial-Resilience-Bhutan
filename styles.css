@@ -1654,3 +1654,97 @@ footer span { color: var(--gold); }
   color: #7dd4b0;
   line-height: 1.5;
 }
+
+/* ══ FINANCIAL TOOLS SECTION ══ */
+#tools {
+  flex-direction: column; align-items: center;
+  min-height: 100vh; padding: 100px 20px 60px;
+  background: linear-gradient(135deg, #0a0f2e 0%, #0d1b4b 50%, #0a1628 100%);
+}
+#tools h2 { font-family:'Cinzel',serif; font-size:28px; color:var(--gold); letter-spacing:2px; margin-bottom:8px; }
+
+.tool-tabs { display:flex; gap:8px; justify-content:center; margin-bottom:36px; flex-wrap:wrap; }
+.tab-btn {
+  padding:10px 24px; font-family:'Cinzel',serif; font-size:12px;
+  letter-spacing:1.5px; text-transform:uppercase;
+  border:1px solid rgba(201,168,76,0.35); background:rgba(201,168,76,0.06);
+  color:var(--muted); cursor:pointer; border-radius:50px; transition:all 0.25s;
+}
+.tab-btn:hover, .tab-btn.active { background:var(--gold); color:var(--deep); border-color:var(--gold); font-weight:700; }
+
+.tool-panel { display:none; max-width:760px; width:100%; }
+.tool-panel.active { display:block; }
+
+.tool-card {
+  background:var(--card-bg); border:1px solid rgba(201,168,76,0.25);
+  border-top:4px solid var(--gold); border-radius:16px;
+  padding:36px 36px 32px; box-shadow:0 16px 48px rgba(0,0,0,0.6);
+}
+.tool-title { font-family:'Cinzel',serif; color:var(--gold); font-size:20px; letter-spacing:1.5px; margin-bottom:6px; }
+.tool-desc { color:var(--muted); font-size:13.5px; line-height:1.65; margin-bottom:28px; }
+
+.input-group { margin-bottom:20px; }
+.tool-label { display:block; font-size:12px; color:var(--gold); letter-spacing:1.5px; text-transform:uppercase; font-family:'Cinzel',serif; margin-bottom:8px; }
+.tool-input-row { display:flex; gap:12px; flex-wrap:wrap; }
+
+.prefix-wrap { position:relative; }
+.prefix { position:absolute; left:16px; top:50%; transform:translateY(-50%); color:var(--gold); font-family:'Cinzel',serif; font-size:13px; pointer-events:none; z-index:1; }
+.prefix-wrap input { padding-left: 62px; width:100%; }
+#tools input[type="number"], #tools select {
+  background:rgba(255,255,255,0.05); border:1px solid rgba(201,168,76,0.3);
+  border-radius:8px; padding:12px 16px; font-size:15px; color:var(--text);
+  font-family:'Lato',sans-serif; outline:none; transition:border-color 0.2s; width:100%;
+}
+#tools input[type="number"]:focus, #tools select:focus { border-color:var(--gold); }
+#tools input[type="number"]::placeholder { color:var(--muted); }
+#tools select option { background:#1a1208; color:var(--text); }
+
+.calc-btn {
+  width:100%; padding:14px; font-family:'Cinzel',serif; font-size:13px;
+  letter-spacing:2px; text-transform:uppercase; border:2px solid var(--gold);
+  background:var(--gold); color:var(--deep); cursor:pointer; border-radius:8px;
+  font-weight:700; transition:opacity 0.2s, transform 0.15s; margin-top:8px;
+}
+.calc-btn:hover { opacity:0.88; transform:translateY(-2px); }
+
+.result-box {
+  margin-top:28px; background:rgba(201,168,76,0.06);
+  border:1px solid rgba(201,168,76,0.2); border-radius:12px;
+  padding:24px; display:none;
+}
+.result-box.show { display:block; }
+.result-title { font-family:'Cinzel',serif; color:var(--gold); font-size:13px; letter-spacing:1px; margin-bottom:16px; text-transform:uppercase; }
+
+.currency-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.currency-item { background:rgba(255,255,255,0.04); border:1px solid rgba(201,168,76,0.15); border-radius:10px; padding:16px 18px; text-align:center; }
+.currency-flag { font-size:22px; margin-bottom:6px; }
+.currency-amount { font-family:'Cinzel',serif; font-size:22px; color:var(--gold); margin-bottom:4px; }
+.currency-label { font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; }
+.rate-note { font-size:11px; color:var(--muted); text-align:center; margin-top:12px; font-style:italic; }
+
+.savings-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:16px; }
+.savings-item { background:rgba(76,175,130,0.08); border:1px solid rgba(76,175,130,0.25); border-radius:10px; padding:16px 12px; text-align:center; }
+.savings-year { font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-bottom:8px; }
+.savings-amount { font-family:'Cinzel',serif; font-size:18px; color:var(--green); }
+.savings-note { font-size:12px; color:var(--muted); text-align:center; margin-top:4px; }
+
+.budget-splits { display:flex; flex-direction:column; gap:14px; }
+.split-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+.split-label { font-size:13px; color:var(--text); font-weight:700; }
+.split-pct { font-size:12px; color:var(--muted); }
+.split-amount { font-family:'Cinzel',serif; font-size:16px; color:var(--gold); }
+.split-bar-track { background:rgba(255,255,255,0.06); border-radius:20px; height:8px; overflow:hidden; }
+.split-bar-fill { height:100%; border-radius:20px; transition:width 0.8s cubic-bezier(.22,.68,0,1.2); }
+.split-bar-fill.needs { background:#5cb8e4; }
+.split-bar-fill.wants { background:var(--gold); }
+.split-bar-fill.savings-bar-fill { background:var(--green); }
+
+.tool-tip-box { margin-top:18px; font-size:13px; color:#7dd4b0; background:rgba(76,175,130,0.08); border-left:3px solid var(--green); border-radius:6px; padding:10px 14px; line-height:1.6; }
+.tool-error { color:#e25f0e; font-size:13px; text-align:center; padding:12px; }
+.tool-loading { color:var(--muted); font-size:13px; text-align:center; padding:12px; }
+
+@media (max-width:600px) {
+  .tool-card { padding:24px 18px; }
+  .currency-grid { grid-template-columns:1fr; }
+  .savings-grid { grid-template-columns:1fr; }
+}
