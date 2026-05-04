@@ -265,7 +265,7 @@ section, .overlay { display: none; }
 }
 
 .section-tagline {
-  color: var(--muted);
+  color: #000000;   /* ← was: var(--muted) */
   font-size: 14px;
   margin-bottom: 16px;
   letter-spacing: 1px;
@@ -781,7 +781,7 @@ section, .overlay { display: none; }
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-  background-image: url("https://th.bing.com/th/id/R.e5adff3d7bd5523e94b130a716d2d3b4?rik=KIEakIcQWMMNsQ&pid=ImgRaw&r=0");
+  background-image: url("https://tse1.mm.bing.net/th/id/OIP.LQ7TR91CXG3q7CsgzkbY1AHaE6?w=1204&h=800&rs=1&pid=ImgDetMain&o=7&rm=3");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -790,7 +790,7 @@ section, .overlay { display: none; }
 #about h2 {
   font-family: 'Cinzel', serif;
   font-size: 28px;
-  color: var(--gold);
+  color: #ffffff;   /* ← was: var(--gold) */
   letter-spacing: 2px;
   margin-bottom: 8px;
 }
@@ -1117,14 +1117,15 @@ footer span { color: var(--gold); }
 .platforms-wrap { max-width: 1100px; width: 100%; margin-top: 52px; }
 
 .platforms-title {
-  font-family: 'Cinzel', serif; color: var(--gold);
+  font-family: 'Cinzel', serif; color: #ffffff;  /* ← was: var(--gold) */
   font-size: 20px; letter-spacing: 1.5px;
   text-align: center; margin-bottom: 10px;
 }
+
 .platforms-sub {
-  color: var(--muted);
+  color: #000000;  /* ← was: var(--muted) */
   font-size: 13.5px;
-  text-align: center;   /* ← change from 'justify' to 'center' */
+  text-align: center;
   margin-bottom: 28px;
   line-height: 1.65;
 }
@@ -1161,7 +1162,7 @@ footer span { color: var(--gold); }
 .platform-link:hover { background: var(--gold); color: var(--deep); }
 
 .platforms-note {
-  margin-top: 22px; font-size: 12.5px; color: var(--muted);
+  margin-top: 22px; font-size: 12.5px; color: #ffffff;  /* ← change var(--muted) to #ffffff */
   text-align: center;
   background: rgba(201,168,76,0.06);
   border: 1px solid rgba(201,168,76,0.18);
@@ -1377,13 +1378,14 @@ footer span { color: var(--gold); }
 }
 
 .contact-title {
-  font-family: 'Cinzel', serif; color: var(--gold);
+  font-family: 'Cinzel', serif; color: #ffffff;  /* ← was: var(--gold) */
   font-size: 20px; letter-spacing: 1.5px;
   text-align: center; margin-bottom: 10px;
 }
 
-.contact-sub {
-  color: var(--muted); font-size: 13.5px;
+.contact-sub  {
+  color: #000000;  /* ← was: var(--muted) */
+  font-size: 13.5px;
   text-align: center; margin-bottom: 28px;
   line-height: 1.65;
 }
