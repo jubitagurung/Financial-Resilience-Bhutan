@@ -683,3 +683,100 @@ document.addEventListener('DOMContentLoaded', () => {
   document.body.appendChild(banner);
 
 });
+
+// ══ FINANCIAL TOOLS ══
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+async function convertCurrency() {
+  const amount = parseFloat(document.getElementById('nu-amount').value);
+  const target = document.getElementById('currency-target').value;
+  const resultBox = document.getElementById('converter-result');
+  const output = document.getElementById('currency-output');
+  const rateNote = document.getElementById('rate-note');
+  if (!amount || amount <= 0) {
+    output.innerHTML = '<div class="tool-error">Please enter a valid amount in Nu.</div>';
+    resultBox.classList.add('show'); return;
+  }
+  output.innerHTML = '<div class="tool-loading">Fetching live rates…</div>';
+  resultBox.classList.add('show');
+  try {
+    const res = await fetch('https://api.exchangerate-api.com/v4/latest/INR');
+    const data = await res.json();
+    const nuToUSD = data.rates.USD;
+    const usdAmount = (amount * nuToUSD).toFixed(2);
+    const inrAmount = amount.toLocaleString('en-IN');
+    let html = '';
+    if (target === 'both' || target === 'USD') html += `<div class="currency-item"><div class="currency-flag">🇺🇸</div><div class="currency-amount">$${usdAmount}</div><div class="currency-label">US Dollar</div></div>`;
+    if (target === 'both' || target === 'INR') html += `<div class="currency-item"><div class="currency-flag">🇮🇳</div><div class="currency-amount">₹${inrAmount}</div><div class="currency-label">Indian Rupee</div></div>`;
+    output.innerHTML = html;
+    rateNote.textContent = `Live rate: 1 Nu. = $${nuToUSD.toFixed(4)} · 1 Nu. = ₹1.00 (pegged)`;
+  } catch(e) {
+    const usdAmount = (amount * 0.012).toFixed(2);
+    let html = '';
+    if (target === 'both' || target === 'USD') html += `<div class="currency-item"><div class="currency-flag">🇺🇸</div><div class="currency-amount">$${usdAmount}</div><div class="currency-label">US Dollar</div></div>`;
+    if (target === 'both' || target === 'INR') html += `<div class="currency-item"><div class="currency-flag">🇮🇳</div><div class="currency-amount">₹${amount.toLocaleString('en-IN')}</div><div class="currency-label">Indian Rupee</div></div>`;
+    output.innerHTML = html;
+    rateNote.textContent = 'Approximate rates used (live fetch unavailable).';
+  }
+}
+
+function applyPreset() {
+  const val = document.getElementById('savings-preset').value;
+  if (val) document.getElementById('savings-pct').value = val;
+}
+
+function calculateSavings() {
+  const income = parseFloat(document.getElementById('monthly-income').value);
+  const pct = parseFloat(document.getElementById('savings-pct').value);
+  const resultBox = document.getElementById('savings-result');
+  const output = document.getElementById('savings-output');
+  const note = document.getElementById('savings-note');
+  const tip = document.getElementById('savings-tip');
+  if (!income || income <= 0 || !pct || pct <= 0 || pct > 100) {
+    output.innerHTML = '<div class="tool-error">Please enter valid income and percentage.</div>';
+    resultBox.classList.add('show'); return;
+  }
+  const monthly = income * (pct / 100);
+  const fmt = n => 'Nu. ' + Math.round(n).toLocaleString('en-IN');
+  output.innerHTML = `
+    <div class="savings-item"><div class="savings-year">1 Year</div><div class="savings-amount">${fmt(monthly*12)}</div></div>
+    <div class="savings-item"><div class="savings-year">3 Years</div><div class="savings-amount">${fmt(monthly*36)}</div></div>
+    <div class="savings-item"><div class="savings-year">5 Years</div><div class="savings-amount">${fmt(monthly*60)}</div></div>`;
+  note.textContent = `Saving ${fmt(monthly)} every month (${pct}% of ${fmt(income)})`;
+  tip.textContent = pct < 10 ? '💡 Try to save at least 10% — even small amounts grow over time!'
+    : pct < 20 ? '⭐ Good start! The recommended target is 20%. Can you increase a little more?'
+    : '🏆 Excellent! You are saving at or above the recommended 20% — keep it up!';
+  resultBox.classList.add('show');
+}
+
+function calculateBudget() {
+  const income = parseFloat(document.getElementById('budget-income').value);
+  const tip = document.getElementById('budget-tip');
+  const fmt = n => 'Nu. ' + Math.round(n).toLocaleString('en-IN');
+  if (!income || income <= 0) {
+    document.getElementById('needs-amount').textContent = 'Nu. 0';
+    document.getElementById('wants-amount').textContent = 'Nu. 0';
+    document.getElementById('savings-amount').textContent = 'Nu. 0';
+    ['needs-bar','wants-bar','savings-bar'].forEach(id => document.getElementById(id).style.width = '0%');
+    tip.style.display = 'none'; return;
+  }
+  document.getElementById('needs-amount').textContent = fmt(income * 0.5);
+  document.getElementById('wants-amount').textContent = fmt(income * 0.3);
+  document.getElementById('savings-amount').textContent = fmt(income * 0.2);
+  setTimeout(() => {
+    document.getElementById('needs-bar').style.width = '50%';
+    document.getElementById('wants-bar').style.width = '30%';
+    document.getElementById('savings-bar').style.width = '20%';
+  }, 100);
+  tip.style.display = 'block';
+  tip.textContent = income <= 20000
+    ? `💡 Even saving ${fmt(income*0.2)} monthly = ${fmt(income*0.2*12)} in a year!`
+    : income <= 50000
+    ? `⭐ Put your ${fmt(income*0.2)} savings into a separate BNB or BoB account on payday.`
+    : `🏆 Consider putting part of your ${fmt(income*0.2)} into RSEB stocks or a fixed deposit.`;
+}
