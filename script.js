@@ -18,14 +18,13 @@ function showSection(id) {
   const t = document.getElementById('nav-toggle');
   if (t) { t.classList.remove('open'); t.setAttribute('aria-expanded', 'false'); }
 
-  // Update journey bar step
   const stepMap = { home: 1, quiz: 2, planner: 3 };
   if (stepMap[id]) updateJourneyBar(stepMap[id]);
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// hamburger toggle
+// ── HAMBURGER TOGGLE ──
 (function () {
   const toggle = document.getElementById('nav-toggle');
   const menu   = document.getElementById('nav-menu');
@@ -54,7 +53,7 @@ function showSection(id) {
   });
 })();
 
-// ══ TOAST ══
+// ── TOAST ──
 function dismissToast() {
   const t = document.getElementById('quiz-toast');
   if (!t) return;
@@ -71,7 +70,7 @@ function showToastOnHome() {
   setTimeout(() => dismissToast(), 12000);
 }
 
-// ══ JOURNEY BAR ══
+// ── JOURNEY BAR ──
 function updateJourneyBar(activeStep) {
   const steps = document.querySelectorAll('.jg-step');
   steps.forEach((s, i) => {
@@ -81,7 +80,7 @@ function updateJourneyBar(activeStep) {
   });
 }
 
-// ══ CONFETTI ══
+// ── CONFETTI ──
 function launchConfetti() {
   const wrap = document.getElementById('confetti-wrap');
   if (!wrap) return;
@@ -101,7 +100,7 @@ function launchConfetti() {
   setTimeout(() => { wrap.style.display = 'none'; }, 5000);
 }
 
-// ══ PLANNER PUSH BLOCK ══
+// ── PLANNER PUSH BLOCK ──
 function setPlannnerPush(score, total) {
   const pct = Math.round(score / total * 100);
   const titleEl = document.getElementById('ppb-title');
@@ -124,7 +123,7 @@ function setPlannnerPush(score, total) {
   }
 }
 
-// ══ PLANNER WELCOME BANNER ══
+// ── PLANNER WELCOME BANNER ──
 function setPlannerBanner(score, total) {
   const banner = document.getElementById('planner-welcome-banner');
   const text   = document.getElementById('planner-banner-text');
@@ -146,7 +145,7 @@ function setPlannerBanner(score, total) {
 }
 
 // ══════════════════════════════════════════════
-// ── ENHANCED QUIZ ENGINE ──
+// ── QUIZ ENGINE ──
 // ══════════════════════════════════════════════
 
 const QUESTIONS = [
@@ -233,18 +232,17 @@ const QUESTIONS = [
     ],
     correct: 1,
     points: 10,
-    explanation: "'Pay yourself first' means automatically moving your savings to a separate account as soon as you receive your salary — before spending on anything else. This makes saving automatic, not optional.",
+    explanation: "'Pay yourself first' means automatically moving your savings to a separate account as soon as you receive your salary before spending on anything else. This makes saving automatic, not optional.",
     tip: "💡 Set up an automatic transfer on the day your salary arrives so saving is never optional.",
-    example: "Karma receives salary on the 1st — she immediately moves Nu. 4,000 to savings before spending."
+    example: "Karma receives salary on the 1st, she immediately moves Nu. 4,000 to savings before spending."
   },
-  // ── 4 SCENARIO-BASED QUESTIONS ──
   {
     q: "🏠 SCENARIO: Tshering earns Nu. 25,000/month. Her rent is Nu. 8,000, groceries Nu. 4,000, phone Nu. 500, and transport Nu. 1,500. She spends Nu. 6,000 on eating out and shopping. How much can she realistically save?",
     options: ["Nu. 2,000", "Nu. 5,000", "Nu. 8,000", "She cannot save anything"],
     correct: 1,
     points: 15,
     explanation: "Total fixed costs: Nu. 14,000. Discretionary spending: Nu. 6,000. That leaves Nu. 5,000 available to save each month.",
-    tip: "💡 Track discretionary spending for just one week — most people are shocked by what they find.",
+    tip: "💡 Track discretionary spending for just one week most people are shocked by what they find.",
     example: "Total fixed costs: Nu. 14,000. Wants: Nu. 6,000. Remaining: Nu. 5,000 available to save."
   },
   {
@@ -259,21 +257,21 @@ const QUESTIONS = [
   {
     q: "📈 SCENARIO: Sonam gets a salary raise of Nu. 8,000/month. She currently saves nothing. What is the BEST financial move?",
     options: [
-      "Spend the full raise — she deserves it",
+      "Spend the full raise she deserves it",
       "Save Nu. 1,600 (20%) and spend the rest",
       "Save the entire Nu. 8,000 raise for 6 months",
       "Use the raise to take out a bigger loan"
     ],
     correct: 1,
     points: 15,
-    explanation: "Saving 20% of the raise applies the 50/30/20 rule to new income — painless because she never had that money before.",
-    tip: "💡 Saving 20% of a raise is painless — you never had that money before, so you won't miss it.",
-    example: "Nu. 1,600/month × 12 months = Nu. 19,200 saved in year one — just from the raise!"
+    explanation: "Saving 20% of the raise applies the 50/30/20 rule to new income painless because she never had that money before.",
+    tip: "💡 Saving 20% of a raise is painless you never had that money before, so you won't miss it.",
+    example: "Nu. 1,600/month × 12 months = Nu. 19,200 saved in year one just from the raise!"
   },
   {
     q: "🛒 SCENARIO: Kinley has Nu. 3,000 left after bills. He wants new shoes (Nu. 2,500) but also has no emergency fund. What should he do?",
     options: [
-      "Buy the shoes — he needs them",
+      "Buy the shoes, he needs them",
       "Buy the shoes on credit and pay later",
       "Save the Nu. 3,000 and wait to buy shoes next month",
       "Split it: Nu. 1,500 to savings, skip shoes this month"
@@ -299,7 +297,6 @@ let answeredQuestions = [];
 function startQuiz() {
   currentQ = 0; score = 0; totalPoints = 0; streak = 0; bestStreak = 0;
   answers = [];
-  // FIX: initialize answeredQuestions as array of nulls with correct length
   answeredQuestions = new Array(QUESTIONS.length).fill(null);
 
   document.getElementById('quiz-start').style.display = 'none';
@@ -322,7 +319,6 @@ function renderQuestion() {
   document.getElementById('q-number').textContent = `QUESTION ${currentQ + 1}`;
   document.getElementById('q-text').textContent = q.q;
 
-  // Points badge
   let ptsBadge = document.getElementById('q-points-badge');
   if (!ptsBadge) {
     ptsBadge = document.createElement('div');
@@ -332,7 +328,6 @@ function renderQuestion() {
   }
   ptsBadge.innerHTML = `+${q.points} pts &nbsp;|&nbsp; 🔥 Streak: <span id="streak-live">${streak}</span>`;
 
-  // Live score
   score = answeredQuestions.filter((a, i) => a !== null && a === QUESTIONS[i].correct).length;
   totalPoints = answeredQuestions.reduce((sum, a, i) => {
     if (a !== null && a === QUESTIONS[i].correct) return sum + QUESTIONS[i].points;
@@ -340,7 +335,6 @@ function renderQuestion() {
   }, 0);
   document.getElementById('q-score-live').textContent = `Score: ${score} · ${totalPoints} pts`;
 
-  // Options
   const optionsEl = document.getElementById('q-options');
   optionsEl.innerHTML = '';
   const letters = ['A', 'B', 'C', 'D'];
@@ -360,7 +354,6 @@ function renderQuestion() {
     optionsEl.appendChild(btn);
   });
 
-  // Enhanced feedback
   const feedback = document.getElementById('q-feedback');
   if (prevAnswer !== null) {
     const isCorrect = prevAnswer === q.correct;
@@ -376,12 +369,10 @@ function renderQuestion() {
     feedback.innerHTML = '';
   }
 
-  // Next button
   const nextBtn = document.getElementById('q-next-btn');
   nextBtn.style.display = prevAnswer !== null ? 'inline-block' : 'none';
   nextBtn.textContent = currentQ < QUESTIONS.length - 1 ? 'Next Question →' : 'See My Results →';
 
-  // Previous button
   let prevBtn = document.getElementById('q-prev-btn');
   if (!prevBtn) {
     prevBtn = document.createElement('button');
@@ -394,7 +385,6 @@ function renderQuestion() {
   }
   prevBtn.style.display = currentQ > 0 ? 'inline-block' : 'none';
 
-  // Fade animation
   const card = document.getElementById('quiz-q-card');
   card.classList.remove('fade-in');
   void card.offsetWidth;
@@ -415,7 +405,6 @@ function selectAnswer(selectedIndex) {
     else if (i === selectedIndex && !isCorrect) o.classList.add('wrong');
   });
 
-  // Streak tracking
   if (isCorrect) {
     streak++;
     if (streak > bestStreak) bestStreak = streak;
@@ -439,7 +428,6 @@ function selectAnswer(selectedIndex) {
     points: q.points
   };
 
-  // Enhanced feedback
   const feedback = document.getElementById('q-feedback');
   feedback.className = 'quiz-feedback ' + (isCorrect ? 'correct-fb' : 'wrong-fb');
   feedback.innerHTML = `
@@ -449,7 +437,6 @@ function selectAnswer(selectedIndex) {
   `;
   feedback.style.display = 'block';
 
-  // Recalc score & points
   score = answeredQuestions.filter((a, i) => a !== null && a === QUESTIONS[i].correct).length;
   totalPoints = answeredQuestions.reduce((sum, a, i) => {
     if (a !== null && a === QUESTIONS[i].correct) return sum + QUESTIONS[i].points;
@@ -515,7 +502,6 @@ function showResults() {
 
   document.getElementById('result-score').textContent = `${score}/${total}`;
 
-  // Points summary (inject after score ring)
   let ptsSummary = document.getElementById('pts-summary');
   if (!ptsSummary) {
     ptsSummary = document.createElement('div');
@@ -533,9 +519,9 @@ function showResults() {
   `;
 
   let title, subtitle;
-  if (pct === 100)    { title = 'Financial Expert!';  subtitle = 'Perfect score — you are ready to teach others!'; }
-  else if (pct >= 75) { title = 'Great Knowledge!';   subtitle = 'Strong foundation — a few areas to sharpen.'; }
-  else if (pct >= 50) { title = 'Good Start!';        subtitle = 'You know the basics — keep building on them.'; }
+  if (pct === 100)    { title = 'Financial Expert!';  subtitle = 'Perfect score: you are ready to teach others!'; }
+  else if (pct >= 75) { title = 'Great Knowledge!';   subtitle = 'Strong foundation: a few areas to sharpen.'; }
+  else if (pct >= 50) { title = 'Good Start!';        subtitle = 'You know the basics: keep building on them.'; }
   else                { title = 'Keep Learning!';     subtitle = 'Explore the Budget and Saving sections to strengthen your skills.'; }
 
   document.getElementById('result-title').textContent = title;
@@ -544,7 +530,7 @@ function showResults() {
   setPlannnerPush(score, total);
   setPlannerBanner(score, total);
 
-  // Enhanced breakdown with tip
+  // ── QUESTION BREAKDOWN ──
   const breakdownEl = document.getElementById('breakdown-list');
   breakdownEl.innerHTML = '';
   answers.forEach((a, i) => {
@@ -563,43 +549,15 @@ function showResults() {
     breakdownEl.appendChild(div);
   });
 
-  // Save to localStorage
-  const resultData = {
-    score, total, percent: pct, points: totalPoints,
-    date: new Date().toLocaleDateString('en-BT', { day: 'numeric', month: 'short', year: 'numeric' })
-  };
-  localStorage.setItem('sbb_last_quiz', JSON.stringify(resultData));
+  // ── SAVE TO LOCALSTORAGE SAFELY ──
+  try {
+    localStorage.setItem('sbb_last_quiz', JSON.stringify({
+      score, total, percent: pct, points: totalPoints,
+      date: new Date().toLocaleDateString('en-BT', { day: 'numeric', month: 'short', year: 'numeric' })
+    }));
+  } catch (e) {}
 
   if (pct === 100) launchConfetti();
-  fetchAIFeedback(score, total, answers);
-}
-
-// ── AI FEEDBACK ──
-async function fetchAIFeedback(score, total, answers) {
-  const wrongTopics = answers.filter(a => !a.isCorrect).map(a => a.question).join('; ');
-  const prompt = `A user just completed a financial literacy quiz about household budgeting in Bhutan.
-Score: ${score}/${total} (${Math.round(score/total*100)}%) — Total Points: ${totalPoints}
-${wrongTopics ? `Questions they got wrong: ${wrongTopics}` : 'They got all questions correct!'}
-
-Write a brief, warm, encouraging 3–4 sentence coaching message. Acknowledge their score, mention 1–2 specific areas to focus on (or celebrate if perfect), and give one practical action they can take today. Use Ngultrum (Nu.) if referencing amounts. Keep it concise and motivating. Do not use markdown formatting.`;
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: 'You are a warm, encouraging financial literacy coach specializing in household budgeting for urban Bhutanese families. Give concise, practical, personalized coaching feedback.',
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-    const data = await res.json();
-    const text = data.content?.[0]?.text || 'Great effort! Review the Budget and Saving sections to continue building your financial skills.';
-    document.getElementById('ai-feedback-text').textContent = text;
-  } catch (e) {
-    document.getElementById('ai-feedback-text').textContent = 'Great effort on the quiz! Review the Budget and Saving sections to reinforce any areas you found challenging — every step toward financial literacy builds a stronger future.';
-  }
 }
 
 // ── RESET QUIZ ──
@@ -614,19 +572,20 @@ function resetQuiz() {
   if (ptsSummary) ptsSummary.remove();
   currentQ = 0; score = 0; totalPoints = 0; streak = 0; bestStreak = 0;
   answers = [];
-  // FIX: reset answeredQuestions as proper null-filled array, not empty array
   answeredQuestions = new Array(QUESTIONS.length).fill(null);
 }
 
-// ══ LAST QUIZ RESULT BANNER (on page load) ══
+// ── LAST QUIZ RESULT BANNER ──
 document.addEventListener('DOMContentLoaded', () => {
-  // Show quiz toast on home after 3 seconds
   setTimeout(() => showToastOnHome(), 3000);
 
-  const saved = localStorage.getItem('sbb_last_quiz');
+  let saved = null;
+  try { saved = localStorage.getItem('sbb_last_quiz'); } catch (e) { return; }
   if (!saved) return;
 
-  const r = JSON.parse(saved);
+  let r;
+  try { r = JSON.parse(saved); } catch (e) { return; }
+
   const banner = document.createElement('div');
   banner.id = 'prev-score-banner';
   banner.innerHTML = `
@@ -650,7 +609,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.body.appendChild(banner);
 });
 
-// ══ SONAM MODAL ══
+// ── SONAM MODAL ──
 function openSonamModal() {
   const overlay = document.getElementById('sonam-modal-overlay');
   overlay.style.display = 'block';
