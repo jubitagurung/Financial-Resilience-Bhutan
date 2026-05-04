@@ -625,3 +625,43 @@ function closeSonamModal() {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeSonamModal();
 });
+
+// ── WELCOME MESSAGE ──
+document.addEventListener('DOMContentLoaded', () => {
+  let hasVisited = false;
+  try { hasVisited = localStorage.getItem('sbb_visited'); } catch(e) {}
+
+  const msg = hasVisited
+    ? '👋 Welcome Back to SmartBudget Bhutan!'
+    : '🎉 Welcome to SmartBudget Bhutan!';
+
+  const sub = hasVisited
+    ? 'Great to see you again. Keep building those financial habits!'
+    : 'Your journey to financial resilience starts here.';
+
+  const toast = document.createElement('div');
+  toast.innerHTML = `
+    <div style="font-family:'Cinzel',serif; color:#c9a84c; font-size:13px; letter-spacing:1px; margin-bottom:5px;">${msg}</div>
+    <div style="font-size:12px; color:#a89e84; line-height:1.55;">${sub}</div>
+    <button onclick="this.parentElement.remove()" style="
+      position:absolute; top:8px; right:10px;
+      background:transparent; border:none;
+      color:#a89e84; cursor:pointer; font-size:13px;">✕</button>
+  `;
+  toast.style.cssText = `
+    position:fixed; top:70px; left:50%; transform:translateX(-50%);
+    background:rgba(12,9,2,0.97);
+    border:1px solid rgba(201,168,76,0.35);
+    border-top:3px solid #c9a84c;
+    border-radius:12px; padding:16px 40px 16px 20px;
+    z-index:9998; min-width:280px; max-width:360px;
+    box-shadow:0 8px 32px rgba(0,0,0,0.7);
+    animation:toastSlide 0.5s cubic-bezier(.22,.68,0,1.2) both;
+    position:fixed;
+  `;
+
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 5000);
+
+  try { localStorage.setItem('sbb_visited', 'true'); } catch(e) {}
+});
