@@ -385,6 +385,18 @@ function renderQuestion() {
   }
   prevBtn.style.display = currentQ > 0 ? 'inline-block' : 'none';
 
+    // Wrap both buttons in a flex row
+  let btnRow = document.getElementById('q-btn-row');
+  if (!btnRow) {
+    btnRow = document.createElement('div');
+    btnRow.id = 'q-btn-row';
+    btnRow.style.cssText = 'display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:22px;';
+    const card = document.getElementById('quiz-q-card');
+    card.appendChild(btnRow);
+    btnRow.appendChild(prevBtn);
+    btnRow.appendChild(nextBtn);
+  }
+
   const card = document.getElementById('quiz-q-card');
   card.classList.remove('fade-in');
   void card.offsetWidth;
@@ -589,9 +601,11 @@ function closeSonamModal() {
 }
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeSonamModal();
+  if (e.key === 'Escape') {
+    closeSonamModal();
+    closeSheetModal();
+  }
 });
-
 // ══════════════════════════════════════════════
 // ── SINGLE DOMContentLoaded — all init here ──
 // ══════════════════════════════════════════════
@@ -780,3 +794,18 @@ function calculateBudget() {
     ? `⭐ Put your ${fmt(income*0.2)} savings into a separate BNB or BoB account on payday.`
     : `🏆 Consider putting part of your ${fmt(income*0.2)} into RSEB stocks or a fixed deposit.`;
 }
+
+// ── SHEET PREVIEW MODAL ──
+function openSheetModal(src, title) {
+  const overlay = document.getElementById('sheet-modal-overlay');
+  document.getElementById('sheet-modal-img').src = src;
+  document.getElementById('sheet-modal-title').textContent = title;
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSheetModal() {
+  document.getElementById('sheet-modal-overlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
