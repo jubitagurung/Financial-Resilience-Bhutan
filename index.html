@@ -81,12 +81,10 @@
         </div>
 
         <div class="huf-story-body">
-          <p>I am Jubita Gurung and When I was 3rd year student at Gedu College of Business Studies, did my internship at Bhutan Data Scientist Pvt.
-            Ltd. (BDS) for six months. During this time, I worked on a project focused on financial resilience at the household level
-            in urban Bhutan.</p>
+          <p>I am Jubita Gurung. During my third year at Gedu College of Business Studies, I completed a six-month internship at Bhutan Data Scientist Pvt. Ltd. (BDS), where I worked on a project focused on financial resilience at the household level in urban Bhutan.</p>
           <p>Growing up and studying in Bhutan, I had personally experienced both the importance and the challenges of
             managing money wisely at a young age. As students, most of us did not have a regular source of income and
-            relied on pocket money from our parents along with a small monthly stipend of around Nu. 3,000.</p>
+            relied on pocket money from our parents along with a small monthly stipend of around Nu. 2,500.</p>
           <p>Like many others, I often ran out of money in the middle of the month. Even small needs of Nu. 100 or Nu.
             200 became difficult to manage when my bank balance reached zero.</p>
           <p>This experience inspired me to create SmartBudget Bhutan, a platform designed to help students, employees,
@@ -272,8 +270,8 @@
   <!-- 5. CTA -->
   <div class="pmb-section pmb-cta">
     <div class="pmb-cta-title">Ready to take control of your finances?</div>
-    <div class="pmb-cta-sub">Download the free SmartBudget Planner and start your journey today, just like Sonam did.</div>
-    <a class="planner-dl-btn" href="SmartBudget_Planner_Sample.xlsx" download
+    <div class="pmb-cta-sub">Download the free SmartBudget Global Planner and start your journey today, just like these people did.</div>
+    <a class="planner-dl-btn" href="SmartBudget_Global_planner.xlsx" download
        onclick="if(!this.href||this.href.endsWith('undefined')){event.preventDefault();alert('Download file coming soon! Contact gurungjubita212@gmail.com to request a copy.');}">
       ⬇ Download Free
     </a>  
@@ -308,6 +306,12 @@
         <div><strong>Tips &amp; Principles</strong>: Read Sonam's practical saving strategies
           adapted for Bhutanese households.</div>
       </div>
+
+      <div class="pmb-step">
+    <div class="pmb-step-num">7</div>
+    <div><strong>Currency Converter</strong>: Need to check exchange rates? Head to the <a onclick="showSection('tools')" style="color:var(--gold); cursor:pointer; text-decoration:underline;">Tools section</a> on this website for a live currency converter, useful when planning expenses across borders.</div>
+  </div>
+</div>
     </div>
   </div>
 
@@ -318,79 +322,70 @@
       <h3>What's Inside: Sheet by Sheet</h3>
       <div class="planner-sheets-visual">
 
-        <!-- Cover -->
-        <div class="psv-card">
-          <div class="psv-img-wrap">
-            <img src="cover.png" alt="Cover sheet preview" class="psv-img"
-              onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:13px;padding:20px;text-align:center;\'>Preview coming soon</div>'">
-          </div>
-          <div class="psv-info">
-            <div class="psv-label">Cover</div>
-            <div class="psv-desc">Introduction, Sonam's story, and step-by-step guide to using the workbook.</div>
-          </div>
-        </div>
+  <!-- Cover -->
+  <div class="psv-card" onclick="openSheetModal('cover.png', 'Cover Sheet')">
+    <div class="psv-img-wrap">
+      <div class="psv-click-hint">Click to View</div>
+    </div>
+    <div class="psv-info">
+      <div class="psv-label">Cover</div>
+      <div class="psv-desc">Introduction, Sonam's story, and step-by-step guide to using the workbook.</div>
+    </div>
+  </div>
 
         <!-- Budget Planner -->
-        <div class="psv-card">
-          <div class="psv-img-wrap">
-            <img src="budget_planner.png" alt="Budget Planner sheet preview" class="psv-img"
-              onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:13px;padding:20px;text-align:center;\'>Preview coming soon</div>'">
-          </div>
-          <div class="psv-info">
-            <div class="psv-label">Budget Planner</div>
-            <div class="psv-desc">Main 50/30/20 sheet. Enter income, set budgets for Needs, Wants, and Savings.</div>
-          </div>
-        </div>
+        <div class="psv-card" onclick="openSheetModal('budget_planner.png', 'Budget Planner')">
+    <div class="psv-img-wrap">
+      <div class="psv-click-hint">Click to View</div>
+    </div>
+    <div class="psv-info">
+      <div class="psv-label">Budget Planner</div>
+      <div class="psv-desc">Main 50/30/20 sheet. Enter income, set budgets for Needs, Wants, and Savings.</div>
+    </div>
+  </div>
 
         <!-- Dashboard -->
-        <div class="psv-card">
-          <div class="psv-img-wrap">
-            <img src="dashboard.png" alt="Dashboard sheet preview" class="psv-img"
-              onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:13px;padding:20px;text-align:center;\'>Preview coming soon</div>'">
-          </div>
-          <div class="psv-info">
-            <div class="psv-label">Dashboard</div>
-            <div class="psv-desc">Auto-calculated visual summary. See your budget vs. actuals at a glance.</div>
-          </div>
-        </div>
+   <div class="psv-card" onclick="openSheetModal('dashboard.png', 'Dashboard')">
+    <div class="psv-img-wrap">
+      <div class="psv-click-hint">Click to View</div>
+    </div>
+    <div class="psv-info">
+      <div class="psv-label">Dashboard</div>
+      <div class="psv-desc">Auto-calculated visual summary. See your budget vs. actuals at a glance.</div>
+    </div>
+  </div>
 
         <!-- Expense Tracker -->
-        <div class="psv-card">
-          <div class="psv-img-wrap">
-            <img src="expense_tracker.png" alt="Expense Tracker sheet preview" class="psv-img"
-              onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:13px;padding:20px;text-align:center;\'>Preview coming soon</div>'">
-          </div>
-          <div class="psv-info">
-            <div class="psv-label">Expense Tracker</div>
-            <div class="psv-desc">Daily log for every Ngultrum spent date, category, and Needs/Wants/Savings tag.</div>
-          </div>
-        </div>
+  <div class="psv-card" onclick="openSheetModal('expense_tracker.png', 'Expense Tracker')">
+    <div class="psv-img-wrap">
+      <div class="psv-click-hint">Click to View</div>
+    </div>
+    <div class="psv-info">
+      <div class="psv-label">Expense Tracker</div>
+      <div class="psv-desc">Daily log for every Ngultrum spent date, category, and Needs/Wants/Savings tag.</div>
+    </div>
+  </div>
 
         <!-- Savings Goals -->
-        <div class="psv-card">
-          <div class="psv-img-wrap">
-            <img src="savings_goals.png" alt="Savings Goals sheet preview" class="psv-img"
-              onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:13px;padding:20px;text-align:center;\'>Preview coming soon</div>'">
-          </div>
-          <div class="psv-info">
-            <div class="psv-label">Savings Goals</div>
-            <div class="psv-desc">Set targets with deadlines and watch your progress percentage grow automatically.
-            </div>
-          </div>
-        </div>
-
+  <div class="psv-card" onclick="openSheetModal('savings_goals.png', 'Savings Goals')">
+    <div class="psv-img-wrap">
+      <div class="psv-click-hint">Click to View</div>
+    </div>
+    <div class="psv-info">
+      <div class="psv-label">Savings Goals</div>
+      <div class="psv-desc">Set targets with deadlines and watch your progress percentage grow automatically.</div>
+    </div>
+  </div>
         <!-- Tips -->
-        <div class="psv-card">
-          <div class="psv-img-wrap">
-            <img src="tips.png" alt="Tips sheet preview" class="psv-img"
-              onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:13px;padding:20px;text-align:center;\'>Preview coming soon</div>'">
-          </div>
-          <div class="psv-info">
-            <div class="psv-label">Tips & Principles</div>
-            <div class="psv-desc">Sonam's practical saving strategies and the 50/30/20 rule explained for Bhutanese
-              households.</div>
-          </div>
-        </div>
+  <div class="psv-card" onclick="openSheetModal('tips.png', 'Tips & Principles')">
+    <div class="psv-img-wrap">
+      <div class="psv-click-hint">Click to View</div>
+    </div>
+    <div class="psv-info">
+      <div class="psv-label">Tips & Principles</div>
+      <div class="psv-desc">Sonam's practical saving strategies and the 50/30/20 rule explained for Bhutanese households.</div>
+    </div>
+  </div>
 
       </div>
     </div>
@@ -839,7 +834,7 @@
     <div style="font-family:'Cinzel',serif; color:#c9a84c; font-size:16px; letter-spacing:1px; margin-bottom:20px;">— Sonam Choden, 27, Thimphu</div>
 
 <iframe
-  src="Sonams_Story.pdf"
+  src="Sonam's Story.pdf"
   width="100%"
   height="600px"
   style="border:none; border-radius:8px; background:#fff;"
@@ -860,7 +855,30 @@
   </div>
 </div>
 
+<!-- SHEET PREVIEW MODAL -->
+<div id="sheet-modal-overlay" onclick="closeSheetModal()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:10000; overflow-y:auto; padding:40px 20px; align-items:center; justify-content:center;">
+  <div id="sheet-modal" onclick="event.stopPropagation()" style="
+    position:relative; max-width:900px; width:100%;
+    background:rgba(14,10,2,0.98);
+    border:1px solid rgba(201,168,76,0.35);
+    border-top:4px solid #c9a84c;
+    border-radius:16px; padding:28px; text-align:center;
+    margin:0 auto;">
+    <button onclick="closeSheetModal()" style="
+      position:absolute; top:14px; right:18px;
+      background:transparent; border:none;
+      color:#a89e84; font-size:22px; cursor:pointer;">✕</button>
+    <div id="sheet-modal-title" style="
+      font-family:'Cinzel',serif; color:#c9a84c;
+      font-size:16px; letter-spacing:1px; margin-bottom:16px;"></div>
+    <img id="sheet-modal-img" src="" alt="Sheet Preview" style="
+      width:100%; border-radius:8px;
+      object-fit:contain; max-height:80vh;">
+  </div>
+</div>
+
   <script src="script.js"></script>
+  
 </body>
 
 </html>
