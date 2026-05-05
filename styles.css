@@ -775,6 +775,22 @@ section, .overlay { display: none; }
 
 .quiz-retry-btn:hover { background: var(--gold); color: var(--deep); }
 
+/* ── QUIZ NAV BUTTONS (mobile fix) ── */
+#quiz-question .quiz-next-btn,
+#quiz-question #q-prev-btn {
+  display: inline-block;
+  width: auto;
+}
+
+#quiz-q-card > div:last-of-type {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 22px;
+}
+
 /* ── ABOUT ── */
 #about {
   flex-direction: column;
@@ -1071,9 +1087,7 @@ footer span { color: var(--gold); }
 .psv-card:hover { transform: translateY(-5px); box-shadow: 0 14px 36px rgba(0,0,0,0.55); }
 
 .psv-img-wrap {
-  width: 100%; aspect-ratio: 4 / 3; overflow: hidden;
-  background: rgba(0,0,0,0.3);
-  border-bottom: 1px solid rgba(201,168,76,0.15);
+  display: none;
 }
 
 .psv-img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform 0.35s ease; }
@@ -1747,4 +1761,42 @@ footer span { color: var(--gold); }
   .tool-card { padding:24px 18px; }
   .currency-grid { grid-template-columns:1fr; }
   .savings-grid { grid-template-columns:1fr; }
+}
+
+@media (max-width: 600px) {
+  .quiz-next-btn {
+    padding: 12px 20px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    width: auto !important;
+    flex: 1;
+    max-width: 160px;
+    text-align: center;
+  }
+}
+
+/* ── HIDDEN PREVIEW PLACEHOLDER ── */
+.psv-img-wrap {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: rgba(201,168,76,0.06);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.psv-click-hint {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  border: 1px dashed rgba(201,168,76,0.4);
+  padding: 12px 20px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.psv-card:hover .psv-click-hint {
+  background: rgba(201,168,76,0.12);
 }
