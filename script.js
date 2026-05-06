@@ -412,6 +412,8 @@ function selectAnswer(selectedIndex) {
 
   const isCorrect = selectedIndex === q.correct;
 
+
+
   opts.forEach((o, i) => {
     if (i === q.correct) o.classList.add('correct');
     else if (i === selectedIndex && !isCorrect) o.classList.add('wrong');
@@ -696,6 +698,10 @@ document.addEventListener('DOMContentLoaded', () => {
   `;
   document.body.appendChild(banner);
 
+   if (window.innerWidth <= 768) {
+    document.getElementById('mobile-scroll-hint').style.display = 'block';
+  }
+
 });
 
 // ══ FINANCIAL TOOLS ══
@@ -706,38 +712,130 @@ function switchTab(tab, btn) {
   btn.classList.add('active');
 }
 
+// ── SWAP CURRENCIES ──
+function swapCurrencies() {
+  const fromEl = document.getElementById('currency-from');
+  const toEl   = document.getElementById('currency-to');
+  const temp   = fromEl.value;
+  fromEl.value = toEl.value;
+  toEl.value   = temp;
+}
+
+// ── CURRENCY CONVERTER ──
 async function convertCurrency() {
-  const amount = parseFloat(document.getElementById('nu-amount').value);
-  const target = document.getElementById('currency-target').value;
+  const amount    = parseFloat(document.getElementById('nu-amount').value);
+  const fromCur   = document.getElementById('currency-from').value;
+  const toCur     = document.getElementById('currency-to').value;
   const resultBox = document.getElementById('converter-result');
-  const output = document.getElementById('currency-output');
-  const rateNote = document.getElementById('rate-note');
+  const output    = document.getElementById('currency-output');
+  const rateNote  = document.getElementById('rate-note');
+
   if (!amount || amount <= 0) {
-    output.innerHTML = '<div class="tool-error">Please enter a valid amount in Nu.</div>';
+    output.innerHTML = '<div class="tool-error">Please enter a valid amount.</div>';
     resultBox.classList.add('show'); return;
   }
+  if (fromCur === toCur) {
+    output.innerHTML = '<div class="tool-error">Please select two different currencies.</div>';
+    resultBox.classList.add('show'); return;
+  }
+
   output.innerHTML = '<div class="tool-loading">Fetching live rates…</div>';
   resultBox.classList.add('show');
+
+const flagMap = {
+  BTN:'🇧🇹', USD:'🇺🇸', INR:'🇮🇳', AUD:'🇦🇺', EUR:'🇪🇺',
+  GBP:'🇬🇧', SGD:'🇸🇬', JPY:'🇯🇵', CAD:'🇨🇦', CHF:'🇨🇭',
+  CNY:'🇨🇳', AED:'🇦🇪', MYR:'🇲🇾', THB:'🇹🇭', KRW:'🇰🇷'
+};
+const nameMap = {
+  BTN:'Ngultrum', USD:'US Dollar',    INR:'Indian Rupee',
+  AUD:'Australian Dollar', EUR:'Euro', GBP:'British Pound',
+  SGD:'Singapore Dollar',  JPY:'Japanese Yen', CAD:'Canadian Dollar',
+  CHF:'Swiss Franc', CNY:'Chinese Yuan', AED:'UAE Dirham',
+  MYR:'Malaysian Ringgit', THB:'Thai Baht', KRW:'Korean Won'
+};
+const symMap = {
+  BTN:'Nu.', USD:'$',  INR:'₹',  AUD:'A$', EUR:'€',
+  GBP:'£',  SGD:'S$', JPY:'¥',  CAD:'C$', CHF:'Fr',
+  CNY:'¥',  AED:'د.إ', MYR:'RM', THB:'฿', KRW:'₩'
+};
+
   try {
-    const res = await fetch('https://api.exchangerate-api.com/v4/latest/INR');
+    const apiFrom = fromCur === 'BTN' ? 'INR' : fromCur;
+    const res  = await fetch(`https://api.exchangerate-api.com/v4/latest/${apiFrom}`);
     const data = await res.json();
-    const nuToUSD = data.rates.USD;
-    const usdAmount = (amount * nuToUSD).toFixed(2);
-    const inrAmount = amount.toLocaleString('en-IN');
-    let html = '';
-    if (target === 'both' || target === 'USD') html += `<div class="currency-item"><div class="currency-flag">🇺🇸</div><div class="currency-amount">$${usdAmount}</div><div class="currency-label">US Dollar</div></div>`;
-    if (target === 'both' || target === 'INR') html += `<div class="currency-item"><div class="currency-flag">🇮🇳</div><div class="currency-amount">₹${inrAmount}</div><div class="currency-label">Indian Rupee</div></div>`;
-    output.innerHTML = html;
-    rateNote.textContent = `Live rate: 1 Nu. = $${nuToUSD.toFixed(4)} · 1 Nu. = ₹1.00 (pegged)`;
+    const apiTo    = toCur === 'BTN' ? 'INR' : toCur;
+    const rate     = data.rates[apiTo];
+    const converted = (amount * rate).toFixed(2);
+
+    output.innerHTML = `
+      <div class="currency-item">
+        <div class="currency-flag">${flagMap[fromCur]}</div>
+        <div class="currency-amount">${symMap[fromCur]} ${Number(amount).toLocaleString('en-IN')}</div>
+        <div class="currency-label">${nameMap[fromCur]}</div>
+      </div>
+      <div class="currency-item">
+        <div class="currency-flag">${flagMap[toCur]}</div>
+        <div class="currency-amount">${symMap[toCur]} ${Number(converted).toLocaleString('en-IN')}</div>
+        <div class="currency-label">${nameMap[toCur]}</div>
+      </div>`;
+    rateNote.textContent = `Rate: 1 ${fromCur} = ${rate.toFixed(4)} ${toCur}  ·  Live exchange rate`;
+
   } catch(e) {
-    const usdAmount = (amount * 0.012).toFixed(2);
-    let html = '';
-    if (target === 'both' || target === 'USD') html += `<div class="currency-item"><div class="currency-flag">🇺🇸</div><div class="currency-amount">$${usdAmount}</div><div class="currency-label">US Dollar</div></div>`;
-    if (target === 'both' || target === 'INR') html += `<div class="currency-item"><div class="currency-flag">🇮🇳</div><div class="currency-amount">₹${amount.toLocaleString('en-IN')}</div><div class="currency-label">Indian Rupee</div></div>`;
-    output.innerHTML = html;
+const fallback = {
+  BTN: { USD:0.012, INR:1.0,  AUD:0.018, EUR:0.011, GBP:0.0094, SGD:0.016, JPY:1.78,  CAD:0.016, CHF:0.010, CNY:0.086, AED:0.044, MYR:0.056, THB:0.41,  KRW:15.9  },
+  USD: { BTN:84.0, INR:84.0,  AUD:1.53,  EUR:0.92,  GBP:0.79,   SGD:1.34,  JPY:149.5, CAD:1.36,  CHF:0.89,  CNY:7.24,  AED:3.67,  MYR:4.72,  THB:35.1,  KRW:1340  },
+  INR: { BTN:1.0,  USD:0.012, AUD:0.018, EUR:0.011, GBP:0.0094, SGD:0.016, JPY:1.78,  CAD:0.016, CHF:0.010, CNY:0.086, AED:0.044, MYR:0.056, THB:0.41,  KRW:15.9  },
+  AUD: { BTN:55.0, USD:0.65,  INR:55.0,  EUR:0.60,  GBP:0.52,   SGD:0.88,  JPY:97.7,  CAD:0.89,  CHF:0.58,  CNY:4.73,  AED:2.40,  MYR:3.08,  THB:22.9,  KRW:875   },
+  EUR: { BTN:91.0, USD:1.08,  INR:91.0,  AUD:1.66,  GBP:0.86,   SGD:1.45,  JPY:161.5, CAD:1.47,  CHF:0.97,  CNY:7.83,  AED:3.97,  MYR:5.10,  THB:37.9,  KRW:1447  },
+  GBP: { BTN:106., USD:1.27,  INR:106.,  AUD:1.94,  EUR:1.17,   SGD:1.69,  JPY:188.5, CAD:1.71,  CHF:1.13,  CNY:9.14,  AED:4.63,  MYR:5.95,  THB:44.2,  KRW:1688  },
+  SGD: { BTN:62.5, USD:0.74,  INR:62.5,  AUD:1.14,  EUR:0.69,   GBP:0.59,  JPY:111.4, CAD:1.01,  CHF:0.66,  CNY:5.40,  AED:2.74,  MYR:3.52,  THB:26.1,  KRW:998   },
+  JPY: { BTN:0.56, USD:0.0067,INR:0.56,  AUD:0.010, EUR:0.0062, GBP:0.0053,SGD:0.0090,CAD:0.0091,CHF:0.0060,CNY:0.048, AED:0.025, MYR:0.032, THB:0.235, KRW:8.97  },
+  CAD: { BTN:61.8, USD:0.73,  INR:61.8,  AUD:1.12,  EUR:0.68,   GBP:0.58,  SGD:0.99,  JPY:110.0, CHF:0.65,  CNY:5.33,  AED:2.70,  MYR:3.47,  THB:25.8,  KRW:985   },
+  CHF: { BTN:94.5, USD:1.12,  INR:94.5,  AUD:1.72,  EUR:1.03,   GBP:0.88,  SGD:1.51,  JPY:168.0, CAD:1.53,  CNY:8.14,  AED:4.12,  MYR:5.30,  THB:39.3,  KRW:1503  },
+  CNY: { BTN:11.6, USD:0.138, INR:11.6,  AUD:0.211, EUR:0.128,  GBP:0.109, SGD:0.185, JPY:20.65, CAD:0.188, CHF:0.123, AED:0.507, MYR:0.652, THB:4.84,  KRW:185   },
+  AED: { BTN:22.9, USD:0.272, INR:22.9,  AUD:0.417, EUR:0.252,  GBP:0.216, SGD:0.365, JPY:40.7,  CAD:0.371, CHF:0.243, CNY:1.97,  MYR:1.285, THB:9.56,  KRW:365   },
+  MYR: { BTN:17.8, USD:0.212, INR:17.8,  AUD:0.325, EUR:0.196,  GBP:0.168, SGD:0.284, JPY:31.7,  CAD:0.289, CHF:0.189, CNY:1.533, AED:0.778, THB:7.44,  KRW:284   },
+  THB: { BTN:2.39, USD:0.0285,INR:2.39,  AUD:0.0436,EUR:0.0264, GBP:0.0226,SGD:0.0382,JPY:4.26,  CAD:0.0388,CHF:0.0254,CNY:0.206, AED:0.105, MYR:0.134, KRW:38.2  },
+  KRW: { BTN:0.063,USD:0.00075,INR:0.063,AUD:0.00114,EUR:0.00069,GBP:0.00059,SGD:0.001,JPY:0.1115,CAD:0.00102,CHF:0.00067,CNY:0.0054,AED:0.00274,MYR:0.00352,THB:0.0262 }
+};
+    const rate      = fallback[fromCur]?.[toCur] ?? 1;
+    const converted = (amount * rate).toFixed(2);
+
+    output.innerHTML = `
+      <div class="currency-item">
+        <div class="currency-flag">${flagMap[fromCur]}</div>
+        <div class="currency-amount">${symMap[fromCur]} ${Number(amount).toLocaleString('en-IN')}</div>
+        <div class="currency-label">${nameMap[fromCur]}</div>
+      </div>
+      <div class="currency-item">
+        <div class="currency-flag">${flagMap[toCur]}</div>
+        <div class="currency-amount">${symMap[toCur]} ${Number(converted).toLocaleString('en-IN')}</div>
+        <div class="currency-label">${nameMap[toCur]}</div>
+      </div>`;
     rateNote.textContent = 'Approximate rates used (live fetch unavailable).';
   }
 }
+
+// ── SAVINGS CURRENCY HELPERS ──
+function getSavingsCurrencySymbol() {
+  const sel = document.getElementById('savings-currency');
+  if (!sel) return 'Nu.';
+  return sel.options[sel.selectedIndex].getAttribute('data-sym') || 'Nu.';
+}
+
+function updateSavingsCurrencyLabel() {
+  const sel = document.getElementById('savings-currency');
+  const label = document.getElementById('savings-income-label');
+  if (!sel || !label) return;
+  const sym = sel.options[sel.selectedIndex].getAttribute('data-sym');
+  const code = sel.value;
+  label.textContent = `Monthly Income (${sym} ${code})`;
+  // Clear previous result when currency changes
+  const result = document.getElementById('savings-result');
+  if (result) result.classList.remove('show');
+}
+
 
 function applyPreset() {
   const val = document.getElementById('savings-preset').value;
@@ -747,65 +845,120 @@ function applyPreset() {
 function calculateSavings() {
   const income = parseFloat(document.getElementById('monthly-income').value);
   const pct = parseFloat(document.getElementById('savings-pct').value);
+  const sym = getSavingsCurrencySymbol();
   const resultBox = document.getElementById('savings-result');
   const output = document.getElementById('savings-output');
   const note = document.getElementById('savings-note');
   const tip = document.getElementById('savings-tip');
+
   if (!income || income <= 0 || !pct || pct <= 0 || pct > 100) {
     output.innerHTML = '<div class="tool-error">Please enter valid income and percentage.</div>';
     resultBox.classList.add('show'); return;
   }
+
   const monthly = income * (pct / 100);
-  const fmt = n => 'Nu. ' + Math.round(n).toLocaleString('en-IN');
+  const fmt = n => sym + ' ' + Math.round(n).toLocaleString('en-IN');
+
   output.innerHTML = `
-    <div class="savings-item"><div class="savings-year">1 Year</div><div class="savings-amount">${fmt(monthly*12)}</div></div>
-    <div class="savings-item"><div class="savings-year">3 Years</div><div class="savings-amount">${fmt(monthly*36)}</div></div>
-    <div class="savings-item"><div class="savings-year">5 Years</div><div class="savings-amount">${fmt(monthly*60)}</div></div>`;
+    <div class="savings-item"><div class="savings-year">1 Year</div><div class="savings-amount">${fmt(monthly * 12)}</div></div>
+    <div class="savings-item"><div class="savings-year">3 Years</div><div class="savings-amount">${fmt(monthly * 36)}</div></div>
+    <div class="savings-item"><div class="savings-year">5 Years</div><div class="savings-amount">${fmt(monthly * 60)}</div></div>`;
+
   note.textContent = `Saving ${fmt(monthly)} every month (${pct}% of ${fmt(income)})`;
-  tip.textContent = pct < 10 ? '💡 Try to save at least 10% — even small amounts grow over time!'
-    : pct < 20 ? '⭐ Good start! The recommended target is 20%. Can you increase a little more?'
+
+  tip.textContent = pct < 10
+    ? '💡 Try to save at least 10% — even small amounts grow over time!'
+    : pct < 20
+    ? '⭐ Good start! The recommended target is 20%. Can you increase a little more?'
     : '🏆 Excellent! You are saving at or above the recommended 20% — keep it up!';
+
   resultBox.classList.add('show');
 }
 
+// ── BUDGET CURRENCY HELPERS ──
+function getBudgetCurrencySymbol() {
+  const sel = document.getElementById('budget-currency');
+  if (!sel) return 'Nu.';
+  return sel.options[sel.selectedIndex].getAttribute('data-sym') || 'Nu.';
+}
+
+function updateBudgetCurrencyLabel() {
+  const sel = document.getElementById('budget-currency');
+  const label = document.getElementById('budget-income-label');
+  if (!sel || !label) return;
+  const sym = sel.options[sel.selectedIndex].getAttribute('data-sym');
+  const code = sel.value;
+  label.textContent = `Monthly Income (${sym} ${code})`;
+  // Recalculate immediately with new symbol if income already entered
+  calculateBudget();
+}
+
+
 function calculateBudget() {
   const income = parseFloat(document.getElementById('budget-income').value);
+  const sym = getBudgetCurrencySymbol();
   const tip = document.getElementById('budget-tip');
-  const fmt = n => 'Nu. ' + Math.round(n).toLocaleString('en-IN');
+  const fmt = n => sym + ' ' + Math.round(n).toLocaleString('en-IN');
+
   if (!income || income <= 0) {
-    document.getElementById('needs-amount').textContent = 'Nu. 0';
-    document.getElementById('wants-amount').textContent = 'Nu. 0';
-    document.getElementById('savings-amount').textContent = 'Nu. 0';
-    ['needs-bar','wants-bar','savings-bar'].forEach(id => document.getElementById(id).style.width = '0%');
-    tip.style.display = 'none'; return;
+    document.getElementById('needs-amount').textContent = sym + ' 0';
+    document.getElementById('wants-amount').textContent = sym + ' 0';
+    document.getElementById('savings-amount').textContent = sym + ' 0';
+    ['needs-bar','wants-bar','savings-bar'].forEach(id =>
+      document.getElementById(id).style.width = '0%');
+    tip.style.display = 'none';
+    return;
   }
+
   document.getElementById('needs-amount').textContent = fmt(income * 0.5);
   document.getElementById('wants-amount').textContent = fmt(income * 0.3);
   document.getElementById('savings-amount').textContent = fmt(income * 0.2);
+
   setTimeout(() => {
     document.getElementById('needs-bar').style.width = '50%';
     document.getElementById('wants-bar').style.width = '30%';
     document.getElementById('savings-bar').style.width = '20%';
   }, 100);
+
   tip.style.display = 'block';
   tip.textContent = income <= 20000
-    ? `💡 Even saving ${fmt(income*0.2)} monthly = ${fmt(income*0.2*12)} in a year!`
+    ? `💡 Even saving ${fmt(income * 0.2)} monthly = ${fmt(income * 0.2 * 12)} in a year!`
     : income <= 50000
-    ? `⭐ Put your ${fmt(income*0.2)} savings into a separate BNB or BoB account on payday.`
-    : `🏆 Consider putting part of your ${fmt(income*0.2)} into RSEB stocks or a fixed deposit.`;
+    ? `⭐ Put your ${fmt(income * 0.2)} savings into a separate account on payday.`
+    : `🏆 Consider putting part of your ${fmt(income * 0.2)} into fixed deposits or investments.`;
 }
 
-// ── SHEET PREVIEW MODAL ──
+
+// ── SHEET PREVIEW MODAL (full lightbox) ──
 function openSheetModal(src, title) {
   const overlay = document.getElementById('sheet-modal-overlay');
-  document.getElementById('sheet-modal-img').src = src;
-  document.getElementById('sheet-modal-title').textContent = title;
+  const img     = document.getElementById('sheet-modal-img');
+  const titleEl = document.getElementById('sheet-modal-title');
+
+  titleEl.textContent = title;
+
+  // Show a loading state first
+  img.style.opacity = '0';
+  img.style.transform = 'scale(0.97)';
   overlay.style.display = 'flex';
   document.body.style.overflow = 'hidden';
+
+  // Fade image in once loaded
+  img.onload = function () {
+    img.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    img.style.opacity = '1';
+    img.style.transform = 'scale(1)';
+  };
+  img.onerror = function () {
+    img.style.opacity = '1';
+  };
+  img.src = src;
 }
 
 function closeSheetModal() {
-  document.getElementById('sheet-modal-overlay').style.display = 'none';
+  const overlay = document.getElementById('sheet-modal-overlay');
+  overlay.style.display = 'none';
   document.body.style.overflow = '';
 }
+
 
