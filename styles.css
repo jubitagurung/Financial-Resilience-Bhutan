@@ -303,26 +303,23 @@ section, .overlay { display: none; }
   border: none;
 }
 
-/* ── MOBILE TABLEAU FIX ── */
 @media (max-width: 768px) {
   .tableau-container {
     width: 100%;
-    max-width: 100vw;
+    border-radius: 6px;
     overflow: hidden;
-    border-radius: 8px;
   }
   .tableau-scroll-wrap {
     width: 100%;
-    overflow-x: auto;
+    overflow-x: scroll;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
-    /* Scroll only INSIDE the wrap, not the whole page */
-    max-width: 100%;
+    scroll-snap-type: x mandatory;
   }
   .tableau-scroll-wrap iframe {
-    width: 900px;
-    min-width: 900px;
-    height: 700px;
+    width: 1000px;
+    min-width: 1000px;
+    height: 750px;
     border: none;
     display: block;
   }
@@ -1073,28 +1070,103 @@ footer span { color: var(--gold); }
 
 .planner-sheets-visual {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px; width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  width: 100%;
 }
 
 .psv-card {
   background: var(--card-bg);
   border: 1px solid rgba(201,168,76,0.2);
-  border-radius: 12px; overflow: hidden;
-  transition: transform 0.25s, box-shadow 0.25s;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
 }
 
-.psv-card:hover { transform: translateY(-5px); box-shadow: 0 14px 36px rgba(0,0,0,0.55); }
+.psv-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.55);
+  border-color: rgba(201,168,76,0.55);
+}
 
 .psv-img-wrap {
-  display: none;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  position: relative;
+  background: rgba(201,168,76,0.06);
+  display: block;
 }
 
-.psv-img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform 0.35s ease; }
-.psv-card:hover .psv-img { transform: scale(1.04); }
+.psv-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.psv-card:hover .psv-img {
+  transform: scale(1.05);
+}
+ .psv-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s;
+}
+
+.psv-card:hover .psv-overlay {
+  background: rgba(0,0,0,0.45);
+}
+
+.psv-zoom-icon {
+  font-size: 28px;
+  color: #fff;
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.25s, transform 0.25s;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+.psv-card:hover .psv-zoom-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.psv-img-wrap.img-missing .psv-img { display: none; }
+.psv-img-wrap.img-missing::after {
+  content: 'Preview not available';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--muted);
+  font-family: 'Cinzel', serif;
+  letter-spacing: 1px;
+}
+
 .psv-info { padding: 14px 16px; }
-.psv-label { font-family: 'Cinzel', serif; color: var(--gold); font-size: 13px; letter-spacing: 1px; margin-bottom: 6px; }
-.psv-desc { text-align: justify; font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+.psv-label {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  font-size: 13px;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.psv-desc {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.6;
+  text-align: justify;
+}
 
 @media (max-width: 600px) {
   .planner-sheets-visual { grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -1775,28 +1847,3 @@ footer span { color: var(--gold); }
   }
 }
 
-/* ── HIDDEN PREVIEW PLACEHOLDER ── */
-.psv-img-wrap {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  background: rgba(201,168,76,0.06);
-  border-bottom: 1px solid rgba(201,168,76,0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.psv-click-hint {
-  font-family: 'Cinzel', serif;
-  color: var(--gold);
-  font-size: 13px;
-  letter-spacing: 1.5px;
-  border: 1px dashed rgba(201,168,76,0.4);
-  padding: 12px 20px;
-  border-radius: 8px;
-  transition: background 0.2s;
-}
-
-.psv-card:hover .psv-click-hint {
-  background: rgba(201,168,76,0.12);
-}
