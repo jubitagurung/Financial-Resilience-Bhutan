@@ -132,6 +132,9 @@
   </div>
 </div>
 
+<p class="dashboard-note" style="display:none;" id="mobile-scroll-hint">
+  Scroll sideways to explore the full dashboard.
+</p>
    
     <p class="dashboard-note">
       Tip: Click on chart elements to filter and explore specific segments of the data.
@@ -143,6 +146,7 @@
      <button class="nav-btn" onclick="showSection('budget')">Next →</button>
   </div>
 </div>
+
   </section>
 
   <!-- ══ BUDGET ══ -->
@@ -325,18 +329,19 @@
   <!-- Cover -->
   <div class="psv-card" onclick="openSheetModal('cover.png', 'Cover Sheet')">
     <div class="psv-img-wrap">
-      <div class="psv-click-hint">Click to View</div>
+      <img class="psv-img" src="cover.png" alt="Cover Sheet" loading="lazy" onerror="this.parentNode.classList.add('img-missing')">
+      <div class="psv-overlay"><span class="psv-zoom-icon">⤢</span></div>
     </div>
     <div class="psv-info">
       <div class="psv-label">Cover</div>
       <div class="psv-desc">Introduction, Sonam's story, and step-by-step guide to using the workbook.</div>
     </div>
   </div>
-
         <!-- Budget Planner -->
-        <div class="psv-card" onclick="openSheetModal('budget_planner.png', 'Budget Planner')">
+     <div class="psv-card" onclick="openSheetModal('budget_planner.png', 'Budget Planner')">
     <div class="psv-img-wrap">
-      <div class="psv-click-hint">Click to View</div>
+      <img class="psv-img" src="budget_planner.png" alt="Budget Planner" loading="lazy" onerror="this.parentNode.classList.add('img-missing')">
+      <div class="psv-overlay"><span class="psv-zoom-icon">⤢</span></div>
     </div>
     <div class="psv-info">
       <div class="psv-label">Budget Planner</div>
@@ -345,9 +350,10 @@
   </div>
 
         <!-- Dashboard -->
-   <div class="psv-card" onclick="openSheetModal('dashboard.png', 'Dashboard')">
+    <div class="psv-card" onclick="openSheetModal('dashboard.png', 'Dashboard')">
     <div class="psv-img-wrap">
-      <div class="psv-click-hint">Click to View</div>
+      <img class="psv-img" src="dashboard.png" alt="Dashboard" loading="lazy" onerror="this.parentNode.classList.add('img-missing')">
+      <div class="psv-overlay"><span class="psv-zoom-icon">⤢</span></div>
     </div>
     <div class="psv-info">
       <div class="psv-label">Dashboard</div>
@@ -356,20 +362,22 @@
   </div>
 
         <!-- Expense Tracker -->
-  <div class="psv-card" onclick="openSheetModal('expense_tracker.png', 'Expense Tracker')">
+ <div class="psv-card" onclick="openSheetModal('expense_tracker.png', 'Expense Tracker')">
     <div class="psv-img-wrap">
-      <div class="psv-click-hint">Click to View</div>
+      <img class="psv-img" src="expense_tracker.png" alt="Expense Tracker" loading="lazy" onerror="this.parentNode.classList.add('img-missing')">
+      <div class="psv-overlay"><span class="psv-zoom-icon">⤢</span></div>
     </div>
     <div class="psv-info">
       <div class="psv-label">Expense Tracker</div>
-      <div class="psv-desc">Daily log for every Ngultrum spent date, category, and Needs/Wants/Savings tag.</div>
+      <div class="psv-desc">Daily log for every Ngultrum spent — date, category, and Needs/Wants/Savings tag.</div>
     </div>
   </div>
 
         <!-- Savings Goals -->
   <div class="psv-card" onclick="openSheetModal('savings_goals.png', 'Savings Goals')">
     <div class="psv-img-wrap">
-      <div class="psv-click-hint">Click to View</div>
+      <img class="psv-img" src="savings_goals.png" alt="Savings Goals" loading="lazy" onerror="this.parentNode.classList.add('img-missing')">
+      <div class="psv-overlay"><span class="psv-zoom-icon">⤢</span></div>
     </div>
     <div class="psv-info">
       <div class="psv-label">Savings Goals</div>
@@ -377,13 +385,14 @@
     </div>
   </div>
         <!-- Tips -->
-  <div class="psv-card" onclick="openSheetModal('tips.png', 'Tips & Principles')">
+ <div class="psv-card" onclick="openSheetModal('tips.png', 'Tips & Principles')">
     <div class="psv-img-wrap">
-      <div class="psv-click-hint">Click to View</div>
+      <img class="psv-img" src="tips.png" alt="Tips & Principles" loading="lazy" onerror="this.parentNode.classList.add('img-missing')">
+      <div class="psv-overlay"><span class="psv-zoom-icon">⤢</span></div>
     </div>
     <div class="psv-info">
       <div class="psv-label">Tips & Principles</div>
-      <div class="psv-desc">Sonam's practical saving strategies and the 50/30/20 rule explained for Bhutanese households.</div>
+      <div class="psv-desc">Sonam's practical saving strategies and the 50/30/20 rule for Bhutanese households.</div>
     </div>
   </div>
 
@@ -512,97 +521,204 @@
   </div>
 
   <!-- ══ TOOL 1: CURRENCY CONVERTER ══ -->
-  <div class="tool-panel active" id="panel-converter">
-    <div class="tool-card">
-      <div class="tool-title">🔄 Live Currency Converter</div>
-      <div class="tool-desc">Convert Bhutanese Ngultrum (Nu.) to USD or INR using live exchange rates. Useful for students studying abroad or planning international expenses.</div>
-      <div class="input-group">
-        <label class="tool-label">Amount in Ngultrum (Nu.)</label>
-<input type="number" id="nu-amount" placeholder="Enter amount e.g. 10000" min="0" style="width:100%;">
-      </div>
-      <div class="input-group">
-        <label class="tool-label">Convert To</label>
-        <select id="currency-target">
-          <option value="both">Both USD & INR</option>
-          <option value="USD">USD (US Dollar)</option>
-          <option value="INR">INR (Indian Rupee)</option>
+<div class="tool-panel active" id="panel-converter">
+  <div class="tool-card">
+    <div class="tool-title">🔄 Live Currency Converter</div>
+    <div class="tool-desc">Convert between Bhutanese Ngultrum (Nu.), USD, and INR using live exchange rates.</div>
+
+    <div class="input-group">
+      <label class="tool-label">Amount</label>
+      <input type="number" id="nu-amount" placeholder="Enter amount e.g. 1000" min="0" style="width:100%;">
+    </div>
+
+    <div class="input-group">
+      <label class="tool-label">From</label>
+<select id="currency-from">
+  <option value="BTN">🇧🇹  Nu. - Bhutanese Ngultrum</option>
+  <option value="USD">🇺🇸  USD - US Dollar</option>
+  <option value="INR">🇮🇳  INR - Indian Rupee</option>
+  <option value="AUD">🇦🇺  AUD - Australian Dollar</option>
+  <option value="EUR">🇪🇺  EUR - Euro</option>
+  <option value="GBP">🇬🇧  GBP - British Pound</option>
+  <option value="SGD">🇸🇬  SGD - Singapore Dollar</option>
+  <option value="JPY">🇯🇵  JPY - Japanese Yen</option>
+  <option value="CAD">🇨🇦  CAD - Canadian Dollar</option>
+  <option value="CHF">🇨🇭  CHF - Swiss Franc</option>
+  <option value="CNY">🇨🇳  CNY - Chinese Yuan</option>
+  <option value="AED">🇦🇪  AED - UAE Dirham</option>
+  <option value="MYR">🇲🇾  MYR - Malaysian Ringgit</option>
+  <option value="THB">🇹🇭  THB - Thai Baht</option>
+  <option value="KRW">🇰🇷  KRW - South Korean Won</option>
+</select>
+    </div>
+
+    <!-- Swap button -->
+    <div style="text-align:center; margin: -8px 0 16px;">
+      <button onclick="swapCurrencies()" style="
+        background: rgba(201,168,76,0.1);
+        border: 1px solid rgba(201,168,76,0.35);
+        color: var(--gold);
+        border-radius: 50%;
+        width: 38px; height: 38px;
+        font-size: 18px; cursor: pointer;
+        transition: background 0.2s;
+      " title="Swap currencies">⇅</button>
+    </div>
+
+    <div class="input-group">
+      <label class="tool-label">To</label>
+<select id="currency-to">
+  <option value="USD">🇺🇸  USD - US Dollar</option>
+  <option value="INR">🇮🇳  INR - Indian Rupee</option>
+  <option value="BTN">🇧🇹  Nu. - Bhutanese Ngultrum</option>
+  <option value="AUD">🇦🇺  AUD - Australian Dollar</option>
+  <option value="EUR">🇪🇺  EUR - Euro</option>
+  <option value="GBP">🇬🇧  GBP - British Pound</option>
+  <option value="SGD">🇸🇬  SGD - Singapore Dollar</option>
+  <option value="JPY">🇯🇵  JPY - Japanese Yen</option>
+  <option value="CAD">🇨🇦  CAD - Canadian Dollar</option>
+  <option value="CHF">🇨🇭  CHF - Swiss Franc</option>
+  <option value="CNY">🇨🇳  CNY - Chinese Yuan</option>
+  <option value="AED">🇦🇪  AED - UAE Dirham</option>
+  <option value="MYR">🇲🇾  MYR - Malaysian Ringgit</option>
+  <option value="THB">🇹🇭  THB - Thai Baht</option>
+  <option value="KRW">🇰🇷  KRW - South Korean Won</option>
+</select>
+</div>
+
+    <button class="calc-btn" onclick="convertCurrency()">Convert Now </button>
+
+    <div class="result-box" id="converter-result">
+      <div class="result-title">Conversion Result</div>
+      <div class="currency-grid" id="currency-output"></div>
+      <div class="rate-note" id="rate-note"></div>
+    </div>
+  </div>
+</div>
+
+  <!-- TOOL 2: SAVINGS CALCULATOR -->
+<div class="tool-panel" id="panel-savings">
+  <div class="tool-card">
+    <div class="tool-title">💰 Savings Projection Calculator</div>
+    <div class="tool-desc">Enter your monthly income and savings percentage to see how much you'll save over 1, 3, and 5 years.</div>
+
+    <div class="input-group">
+      <label class="tool-label">Currency</label>
+      <select id="savings-currency" onchange="updateSavingsCurrencyLabel()">
+        <option value="BTN" data-sym="Nu." data-flag="🇧🇹">🇧🇹  Nu. - Bhutanese Ngultrum</option>
+        <option value="USD" data-sym="$"   data-flag="🇺🇸">🇺🇸  USD - US Dollar</option>
+        <option value="AUD" data-sym="A$"  data-flag="🇦🇺">🇦🇺  AUD - Australian Dollar</option>
+        <option value="INR" data-sym="₹"   data-flag="🇮🇳">🇮🇳  INR - Indian Rupee</option>
+        <option value="EUR" data-sym="€"   data-flag="🇪🇺">🇪🇺  EUR - Euro</option>
+        <option value="GBP" data-sym="£"   data-flag="🇬🇧">🇬🇧  GBP - British Pound</option>
+        <option value="SGD" data-sym="S$"  data-flag="🇸🇬">🇸🇬  SGD - Singapore Dollar</option>
+        <option value="JPY" data-sym="¥"   data-flag="🇯🇵">🇯🇵  JPY - Japanese Yen</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label class="tool-label" id="savings-income-label">Monthly Income (Nu.)</label>
+      <input type="number" id="monthly-income" placeholder="Enter income e.g. 30000" min="0" style="width:100%;">
+    </div>
+
+    <div class="input-group">
+      <label class="tool-label">Savings Percentage (%)</label>
+      <div class="tool-input-row">
+        <input type="number" id="savings-pct" placeholder="e.g. 20" min="1" max="100">
+        <select id="savings-preset" onchange="applyPreset()">
+          <option value="">Quick Select</option>
+          <option value="10">10% (Minimum)</option>
+          <option value="20">20% (Recommended)</option>
+          <option value="30">30% (Aggressive)</option>
         </select>
       </div>
-      <button class="calc-btn" onclick="convertCurrency()">Convert Now →</button>
-      <div class="result-box" id="converter-result">
-        <div class="result-title">Conversion Result</div>
-        <div class="currency-grid" id="currency-output"></div>
-        <div class="rate-note" id="rate-note"></div>
-      </div>
+    </div>
+
+    <button class="calc-btn" onclick="calculateSavings()">Calculate Projections</button>
+
+    <div class="result-box" id="savings-result">
+      <div class="result-title">Your Savings Projections</div>
+      <div class="savings-grid" id="savings-output"></div>
+      <div class="savings-note" id="savings-note"></div>
+      <div class="tool-tip-box" id="savings-tip"></div>
     </div>
   </div>
+</div>
+</div>
 
-  <!-- ══ TOOL 2: SAVINGS CALCULATOR ══ -->
-  <div class="tool-panel" id="panel-savings">
-    <div class="tool-card">
-      <div class="tool-title">💰 Savings Projection Calculator</div>
-      <div class="tool-desc">Enter your monthly income and savings percentage to see how much you'll save over 1, 3, and 5 years.</div>
-      <div class="input-group">
-        <label class="tool-label">Monthly Income (Nu.)</label>
-        <input type="number" id="monthly-income" placeholder="Enter income e.g. 30000" min="0" style="width:100%;">
+
+ <!-- ══ TOOL 3: 50/30/20 CALCULATOR ══ -->
+<div class="tool-panel" id="panel-budget">
+  <div class="tool-card">
+    <div class="tool-title">📊 50/30/20 Budget Calculator</div>
+    <div class="tool-desc">Enter your monthly income and instantly see your 50% needs, 30% wants, and 20% savings split.</div>
+
+    <div class="input-group">
+      <label class="tool-label">Currency</label>
+      <select id="budget-currency" onchange="updateBudgetCurrencyLabel()">
+        <option value="BTN" data-sym="Nu." >🇧🇹  Nu. - Bhutanese Ngultrum</option>
+        <option value="USD" data-sym="$"  >🇺🇸  USD - US Dollar</option>
+        <option value="AUD" data-sym="A$" >🇦🇺  AUD - Australian Dollar</option>
+        <option value="INR" data-sym="₹"  >🇮🇳  INR - Indian Rupee</option>
+        <option value="EUR" data-sym="€"  >🇪🇺  EUR - Euro</option>
+        <option value="GBP" data-sym="£"  >🇬🇧  GBP - British Pound</option>
+        <option value="SGD" data-sym="S$" >🇸🇬  SGD - Singapore Dollar</option>
+        <option value="JPY" data-sym="¥"  >🇯🇵  JPY - Japanese Yen</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label class="tool-label" id="budget-income-label">Monthly Income (Nu.)</label>
+      <input type="number" id="budget-income" placeholder="Enter income e.g. 40000" min="0"
+        oninput="calculateBudget()" style="width:100%;">
+    </div>
+
+    <div class="result-box" id="budget-result" style="display:block;">
+      <div class="result-title">Your 50/30/20 Split</div>
+      <div class="budget-splits">
+        <div class="budget-split-item">
+          <div class="split-header">
+            <span class="split-label">🏠 Needs (Rent, Food, Utilities)</span>
+            <span class="split-pct">50%</span>
+          </div>
+          <div class="split-header" style="margin-top:-6px;margin-bottom:8px;">
+            <span class="split-amount" id="needs-amount">Nu. 0</span>
+          </div>
+          <div class="split-bar-track">
+            <div class="split-bar-fill needs" id="needs-bar" style="width:0%"></div>
+          </div>
         </div>
-
-      <div class="input-group">
-        <label class="tool-label">Savings Percentage (%)</label>
-        <div class="tool-input-row">
-          <input type="number" id="savings-pct" placeholder="e.g. 20" min="1" max="100">
-          <select id="savings-preset" onchange="applyPreset()">
-            <option value="">— Quick Select —</option>
-            <option value="10">10% (Minimum)</option>
-            <option value="20">20% (Recommended)</option>
-            <option value="30">30% (Aggressive)</option>
-          </select>
+        <hr style="border:none;border-top:1px solid rgba(201,168,76,0.12);margin:14px 0;">
+        <div class="budget-split-item">
+          <div class="split-header">
+            <span class="split-label">🎉 Wants (Entertainment, Dining)</span>
+            <span class="split-pct">30%</span>
+          </div>
+          <div class="split-header" style="margin-top:-6px;margin-bottom:8px;">
+            <span class="split-amount" id="wants-amount">Nu. 0</span>
+          </div>
+          <div class="split-bar-track">
+            <div class="split-bar-fill wants" id="wants-bar" style="width:0%"></div>
+          </div>
+        </div>
+        <hr style="border:none;border-top:1px solid rgba(201,168,76,0.12);margin:14px 0;">
+        <div class="budget-split-item">
+          <div class="split-header">
+            <span class="split-label">💚 Savings (Emergency, Goals)</span>
+            <span class="split-pct">20%</span>
+          </div>
+          <div class="split-header" style="margin-top:-6px;margin-bottom:8px;">
+            <span class="split-amount" id="savings-amount">Nu. 0</span>
+          </div>
+          <div class="split-bar-track">
+            <div class="split-bar-fill savings-bar-fill" id="savings-bar" style="width:0%"></div>
+          </div>
         </div>
       </div>
-      <button class="calc-btn" onclick="calculateSavings()">Calculate Projections →</button>
-      <div class="result-box" id="savings-result">
-        <div class="result-title">Your Savings Projections</div>
-        <div class="savings-grid" id="savings-output"></div>
-        <div class="savings-note" id="savings-note"></div>
-        <div class="tool-tip-box" id="savings-tip"></div>
-      </div>
+      <div class="tool-tip-box" id="budget-tip" style="display:none;"></div>
     </div>
   </div>
-
-  <!-- ══ TOOL 3: 50/30/20 CALCULATOR ══ -->
-  <div class="tool-panel" id="panel-budget">
-    <div class="tool-card">
-      <div class="tool-title">📊 50/30/20 Budget Calculator</div>
-      <div class="tool-desc">Enter your monthly income and instantly see your 50% needs, 30% wants, and 20% savings split.</div>
-      <div class="input-group">
-        <label class="tool-label">Monthly Income (Nu.)</label>
-<input type="number" id="budget-income" placeholder="Enter income e.g. 40000" min="0" oninput="calculateBudget()" style="width:100%;">
-      </div>
-      <div class="result-box" id="budget-result" style="display:block;">
-        <div class="result-title">Your 50/30/20 Split</div>
-        <div class="budget-splits">
-          <div class="budget-split-item">
-            <div class="split-header"><span class="split-label">🏠 Needs (Rent, Food, Utilities)</span><span class="split-pct">50%</span></div>
-            <div class="split-header" style="margin-top:-6px;margin-bottom:8px;"><span class="split-amount" id="needs-amount">Nu. 0</span></div>
-            <div class="split-bar-track"><div class="split-bar-fill needs" id="needs-bar" style="width:0%"></div></div>
-          </div>
-          <hr style="border:none;border-top:1px solid rgba(201,168,76,0.12);margin:14px 0;">
-          <div class="budget-split-item">
-            <div class="split-header"><span class="split-label">🎉 Wants (Entertainment, Dining)</span><span class="split-pct">30%</span></div>
-            <div class="split-header" style="margin-top:-6px;margin-bottom:8px;"><span class="split-amount" id="wants-amount">Nu. 0</span></div>
-            <div class="split-bar-track"><div class="split-bar-fill wants" id="wants-bar" style="width:0%"></div></div>
-          </div>
-          <hr style="border:none;border-top:1px solid rgba(201,168,76,0.12);margin:14px 0;">
-          <div class="budget-split-item">
-            <div class="split-header"><span class="split-label">💚 Savings (Emergency, Goals)</span><span class="split-pct">20%</span></div>
-            <div class="split-header" style="margin-top:-6px;margin-bottom:8px;"><span class="split-amount" id="savings-amount">Nu. 0</span></div>
-            <div class="split-bar-track"><div class="split-bar-fill savings-bar-fill" id="savings-bar" style="width:0%"></div></div>
-          </div>
-        </div>
-        <div class="tool-tip-box" id="budget-tip" style="display:none;"></div>
-      </div>
-    </div>
-  </div>
+</div>
 
   <div style="margin-top:32px;">
     <div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
