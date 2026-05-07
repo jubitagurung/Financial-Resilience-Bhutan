@@ -564,12 +564,14 @@ function showResults() {
   });
 
   // ── SAVE TO LOCALSTORAGE SAFELY ──
-  try {
+try {
     localStorage.setItem('sbb_last_quiz', JSON.stringify({
       score, total, percent: pct, points: totalPoints,
       date: new Date().toLocaleDateString('en-BT', { day: 'numeric', month: 'short', year: 'numeric' })
     }));
-  } catch (e) {}
+  } catch (e) {
+    console.warn('Score could not be saved locally:', e);
+  }
 
   if (pct === 100) launchConfetti();
 }
@@ -618,7 +620,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 2. Welcome / Welcome Back toast (top center)
   let hasVisited = false;
-  try { hasVisited = localStorage.getItem('sbb_visited'); } catch(e) {}
+  try { hasVisited = localStorage.getItem('sbb_visited'); } catch(e) { console.warn('localStorage unavailable'); }
 
   const msg = hasVisited
     ? '👋 Welcome Back to SmartBudget Bhutan!'
