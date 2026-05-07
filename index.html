@@ -27,15 +27,16 @@
       <a onclick="showSection('budget')" id="nav-budget">Budget</a>
       <a onclick="showSection('planner')" id="nav-planner">Budget Planner</a>
       <a onclick="showSection('quiz')" id="nav-quiz">Quiz</a>
+      <a onclick="showSection('tools')" id="nav-tools">Tools</a>
       <a onclick="showSection('about')" id="nav-about">About</a>
+   
     </div>
   </nav>
 
   <!-- ══ HOME ══ -->
   <div class="overlay active" id="home">
-    <h1>Financial Resilience at the Household Level</h1>
-    <p class="subtitle"><strong>Intern Project: Smart Budget Bhutan</strong></p>
-
+   <h1>Building More Financial Resilience at the Household Level</h1>
+<p class="subtitle"><strong>Intern Project: Smart Budget Bhutan (SBB)</strong></p>
     <!-- QUIZ INVITE TOAST -->
     <div class="quiz-toast" id="quiz-toast">
       <button class="toast-dismiss" onclick="dismissToast()" aria-label="Dismiss">✕</button>
@@ -43,7 +44,7 @@
         <div class="toast-dot"></div> QUIZ
       </div>
       <div class="toast-title">Test Your Financial Knowledge</div>
-      <div class="toast-body">Ready? Take our 8-question financial literacy quiz..</div>
+      <div class="toast-body">Ready? Take our 12-question financial literacy quiz.</div>
       <button class="toast-btn" onclick="showSection('quiz'); dismissToast();">Start the Challenge →</button>
     </div>
 
@@ -71,25 +72,22 @@
     <div class="home-unified-frame">
 
       <div class="huf-intro">
-        <h2 class="story-title">Why I Built SmartBudget Bhutan</h2>
-
+     <h2 class="story-title">Why I Built the Smart Budget Bhutan (SBB) Platform</h2>
         <div class="huf-quote-box">
           Financial resilience is not about how much you earn:
           <span style="color:var(--gold); font-style:italic;">it is about how well you manage what you have.</span>
         </div>
 
         <div class="huf-story-body">
-          <p>I am Jubita Gurung of 3rd year student at Gedu College of Business Studies, did my internship at Bhutan Data Scientist Pvt.
-            Ltd. (BDS). During this time, I worked on a project focused on financial resilience at the household level
-            in urban Bhutan.</p>
+          <p>I am Jubita Gurung. During my third year at Gedu College of Business Studies, I completed a six-month internship at Bhutan Data Scientist Pvt. Ltd. (BDS), where I worked on a project focused on financial resilience at the household level in urban Bhutan.</p>
           <p>Growing up and studying in Bhutan, I had personally experienced both the importance and the challenges of
             managing money wisely at a young age. As students, most of us did not have a regular source of income and
-            relied on pocket money from our parents along with a small monthly stipend of around Nu. 3,000.</p>
+            relied on pocket money from our parents along with a small monthly stipend of around Nu. 2,500.</p>
           <p>Like many others, I often ran out of money in the middle of the month. Even small needs of Nu. 100 or Nu.
             200 became difficult to manage when my bank balance reached zero.</p>
-          <p>This experience inspired me to create SmartBudget Bhutan, a platform designed to help students, employees,
+          <p>This experience inspired me to create the Smart Budget Bhutan (SBB) platform, designed to help students, employees,
             and individuals build stronger financial habits and make better financial decisions.</p>
-          <p>Through this website, I aimed to promote financial awareness by providing practical tools such as budget
+          <p>Through the SBB platform, I aimed to promote financial awareness by providing practical tools such as budget
             planner templates, basic budgeting methods, interactive quizzes, and simple learning resources.</p>
         </div>
 
@@ -100,7 +98,6 @@
         </div>
       </div>
     </div>
-  </div>
   </div>
 
   <!--DASHBOARD -->
@@ -114,17 +111,29 @@
       in Bhutanese households. Filter by income group or expense category to drill deeper into the data.
     </div>
 
-    <div class="tableau-container">
-  <div class="tableau-scroll-wrap">
+  <div class="tableau-container">
+  <div class="tableau-scroll-wrap" style="position:relative;">
+    <div id="tableau-loader" style="
+      position:absolute; inset:0;
+      background:rgba(10,8,2,0.92);
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      gap:14px; z-index:2; border-radius:8px;">
+      <div class="ai-loading"><span></span><span></span><span></span></div>
+      <div style="color:var(--muted); font-size:13px; letter-spacing:1px;">Loading Dashboard…</div>
+    </div>
     <iframe
       src="https://public.tableau.com/views/FinancialResilienceattheHouseholdLevelinUrbanBhutan/IntroducingSmartBudgetBhutan2?:showVizHome=no&:embed=true"
-      width="100%" height="650" frameborder="0" allowfullscreen>
+      width="100%" height="650" frameborder="0" allowfullscreen
+      onload="document.getElementById('tableau-loader').style.display='none'">
     </iframe>
   </div>
 </div>
-    
-   
 
+<p class="dashboard-note" style="display:none;" id="mobile-scroll-hint">
+  Scroll sideways to explore the full dashboard.
+</p>
+   
     <p class="dashboard-note">
       Tip: Click on chart elements to filter and explore specific segments of the data.
     </p>
@@ -135,6 +144,7 @@
      <button class="nav-btn" onclick="showSection('budget')">Next →</button>
   </div>
 </div>
+
   </section>
 
   <!-- ══ BUDGET ══ -->
@@ -213,8 +223,8 @@
     </div>
     <div style="margin-top:32px;">
   <div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
-    <button class="nav-btn" onclick="showSection('budget')">← Previous</button>
-    <button class="nav-btn" onclick="showSection('planner')">Next →</button>
+    <button class="nav-btn" onclick="showSection('dashboard')">← Previous</button>
+<button class="nav-btn" onclick="showSection('planner')">Next →</button>
   </div>
 </div>
 
@@ -262,8 +272,11 @@
   <!-- 5. CTA -->
   <div class="pmb-section pmb-cta">
     <div class="pmb-cta-title">Ready to take control of your finances?</div>
-    <div class="pmb-cta-sub">Download the free SmartBudget Planner and start your journey today, just like Sonam did.</div>
-    <a class="planner-dl-btn large" href="SmartBudget_Planner_Sample.xlsx" download>⬇ Download SmartBudget Planner: Free</a>
+    <div class="pmb-cta-sub">Download the free SmartBudget Global Planner and start your journey today, just like these people did.</div>
+    <a class="planner-dl-btn" href="SmartBudget_Global_planner.xlsx" download
+       onclick="if(!this.href||this.href.endsWith('undefined')){event.preventDefault();alert('Download file coming soon! Contact gurungjubita212@gmail.com to request a copy.');}">
+      ⬇ Download Free
+    </a>  
   </div>
 
   <!-- 6. HOW TO USE -->
@@ -292,9 +305,15 @@
       </div>
       <div class="pmb-step">
         <div class="pmb-step-num">5</div>
-        <div><strong>Tips & amp; Principles</strong>: Read Sonam's practical saving strategies
+        <div><strong>Tips &amp; Principles</strong>: Read Sonam's practical saving strategies
           adapted for Bhutanese households.</div>
       </div>
+
+      <div class="pmb-step">
+    <div class="pmb-step-num">7</div>
+    <div><strong>Currency Converter</strong>: Need to check exchange rates? Head to the <a onclick="showSection('tools')" style="color:var(--gold); cursor:pointer; text-decoration:underline;">Tools section</a> on this website for a live currency converter, useful when planning expenses across borders.</div>
+  </div>
+</div>
     </div>
   </div>
 
@@ -305,73 +324,75 @@
       <h3>What's Inside: Sheet by Sheet</h3>
       <div class="planner-sheets-visual">
 
-        <!-- Cover -->
-        <div class="psv-card">
-          <div class="psv-img-wrap">
-            <img src="cover.png" alt="Cover sheet preview" class="psv-img">
-          </div>
-          <div class="psv-info">
-            <div class="psv-label">Cover</div>
-            <div class="psv-desc">Introduction, Sonam's story, and step-by-step guide to using the workbook.</div>
-          </div>
-        </div>
-
+  <!-- Cover -->
+  <div class="psv-card" onclick="openSheetModal('cover.png', 'Cover Sheet')">
+    <div class="psv-img-wrap">
+      <img class="psv-img" src="cover.png" alt="Cover Sheet" loading="lazy" onerror="this.parentNode.classList.add('img-missing')">
+      <div class="psv-overlay"><span class="psv-zoom-icon">⤢</span></div>
+    </div>
+    <div class="psv-info">
+      <div class="psv-label">Cover</div>
+      <div class="psv-desc">Introduction, Sonam's story, and step-by-step guide to using the workbook.</div>
+    </div>
+  </div>
         <!-- Budget Planner -->
-        <div class="psv-card">
-          <div class="psv-img-wrap">
-            <img src="budget_planner.png" alt="Budget Planner sheet preview" class="psv-img">
-          </div>
-          <div class="psv-info">
-            <div class="psv-label">Budget Planner</div>
-            <div class="psv-desc">Main 50/30/20 sheet. Enter income, set budgets for Needs, Wants, and Savings.</div>
-          </div>
-        </div>
+     <div class="psv-card" onclick="openSheetModal('budget_planner.png', 'Budget Planner')">
+    <div class="psv-img-wrap">
+      <img class="psv-img" src="budget_planner.png" alt="Budget Planner" loading="lazy" onerror="this.parentNode.classList.add('img-missing')">
+      <div class="psv-overlay"><span class="psv-zoom-icon">⤢</span></div>
+    </div>
+    <div class="psv-info">
+      <div class="psv-label">Budget Planner</div>
+      <div class="psv-desc">Main 50/30/20 sheet. Enter income, set budgets for Needs, Wants, and Savings.</div>
+    </div>
+  </div>
 
         <!-- Dashboard -->
-        <div class="psv-card">
-          <div class="psv-img-wrap">
-            <img src="dashboard.png" alt="Dashboard sheet preview" class="psv-img">
-          </div>
-          <div class="psv-info">
-            <div class="psv-label">Dashboard</div>
-            <div class="psv-desc">Auto-calculated visual summary. See your budget vs. actuals at a glance.</div>
-          </div>
-        </div>
+    <div class="psv-card" onclick="openSheetModal('dashboard.png', 'Dashboard')">
+    <div class="psv-img-wrap">
+      <img class="psv-img" src="dashboard.png" alt="Dashboard" loading="lazy" onerror="this.parentNode.classList.add('img-missing')">
+      <div class="psv-overlay"><span class="psv-zoom-icon">⤢</span></div>
+    </div>
+    <div class="psv-info">
+      <div class="psv-label">Dashboard</div>
+      <div class="psv-desc">Auto-calculated visual summary. See your budget vs. actuals at a glance.</div>
+    </div>
+  </div>
 
         <!-- Expense Tracker -->
-        <div class="psv-card">
-          <div class="psv-img-wrap">
-            <img src="expense_tracker.png" alt="Expense Tracker sheet preview" class="psv-img">
-          </div>
-          <div class="psv-info">
-            <div class="psv-label">Expense Tracker</div>
-            <div class="psv-desc">Daily log for every Ngultrum spent date, category, and Needs/Wants/Savings tag.</div>
-          </div>
-        </div>
+ <div class="psv-card" onclick="openSheetModal('expense_tracker.png', 'Expense Tracker')">
+    <div class="psv-img-wrap">
+      <img class="psv-img" src="expense_tracker.png" alt="Expense Tracker" loading="lazy" onerror="this.parentNode.classList.add('img-missing')">
+      <div class="psv-overlay"><span class="psv-zoom-icon">⤢</span></div>
+    </div>
+    <div class="psv-info">
+      <div class="psv-label">Expense Tracker</div>
+      <div class="psv-desc">Daily log for every Ngultrum spent — date, category, and Needs/Wants/Savings tag.</div>
+    </div>
+  </div>
 
         <!-- Savings Goals -->
-        <div class="psv-card">
-          <div class="psv-img-wrap">
-            <img src="savings_goals.png" alt="Savings Goals sheet preview" class="psv-img">
-          </div>
-          <div class="psv-info">
-            <div class="psv-label">Savings Goals</div>
-            <div class="psv-desc">Set targets with deadlines and watch your progress percentage grow automatically.
-            </div>
-          </div>
-        </div>
-
+  <div class="psv-card" onclick="openSheetModal('savings_goals.png', 'Savings Goals')">
+    <div class="psv-img-wrap">
+      <img class="psv-img" src="savings_goals.png" alt="Savings Goals" loading="lazy" onerror="this.parentNode.classList.add('img-missing')">
+      <div class="psv-overlay"><span class="psv-zoom-icon">⤢</span></div>
+    </div>
+    <div class="psv-info">
+      <div class="psv-label">Savings Goals</div>
+      <div class="psv-desc">Set targets with deadlines and watch your progress percentage grow automatically.</div>
+    </div>
+  </div>
         <!-- Tips -->
-        <div class="psv-card">
-          <div class="psv-img-wrap">
-            <img src="tips.png" alt="Tips sheet preview" class="psv-img">
-          </div>
-          <div class="psv-info">
-            <div class="psv-label">Tips & Principles</div>
-            <div class="psv-desc">Sonam's practical saving strategies and the 50/30/20 rule explained for Bhutanese
-              households.</div>
-          </div>
-        </div>
+ <div class="psv-card" onclick="openSheetModal('tips.png', 'Tips & Principles')">
+    <div class="psv-img-wrap">
+      <img class="psv-img" src="tips.png" alt="Tips & Principles" loading="lazy" onerror="this.parentNode.classList.add('img-missing')">
+      <div class="psv-overlay"><span class="psv-zoom-icon">⤢</span></div>
+    </div>
+    <div class="psv-info">
+      <div class="psv-label">Tips & Principles</div>
+      <div class="psv-desc">Sonam's practical saving strategies and the 50/30/20 rule for Bhutanese households.</div>
+    </div>
+  </div>
 
       </div>
     </div>
@@ -410,8 +431,8 @@
     <div id="quiz-start">
       <div class="quiz-start-card">
         <p>During my internship, I surveyed real urban Bhutanese households and uncovered some surprising patterns in
-          how families manage money. These 8 questions are drawn directly from those findings and see how your financial
-          knowledge stacks up against real local data.</p>
+         how families manage money. These 12 questions, including real-life scenarios are drawn directly from those
+         findings. See how your financial knowledge stacks up against real local data.</p>
         <button class="btn-primary" onclick="startQuiz()">Begin Quiz</button>
       </div>
     </div>
@@ -447,13 +468,7 @@
         <div class="quiz-result-title" id="result-title"></div>
         <div class="quiz-result-subtitle" id="result-subtitle"></div>
       </div>
-
-      <div class="quiz-ai-feedback-box" id="ai-feedback-box">
-        <h4>AI Financial Coach Feedback</h4>
-        <div class="quiz-ai-feedback-text" id="ai-feedback-text">
-          <div class="ai-loading"><span></span><span></span><span></span></div>
-        </div>
-      </div>
+      
 
       <div class="quiz-result-breakdown" id="result-breakdown">
         <h4> Question Breakdown</h4>
@@ -483,13 +498,234 @@
     </div>
 <div style="margin-top:32px;">
 
-<div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
+<div id="quiz-nav-buttons" style="display:none; gap:12px; justify-content:center; margin-top:40px;">
   <button class="nav-btn" onclick="showSection('planner')">← Previous</button>
   <button class="nav-btn" onclick="showSection('about')">Next →</button>
 </div>
 
 </div>
   </section>
+
+    <!-- ══ TOOLS ══ -->
+<section id="tools">
+  <h2>Financial Tools</h2>
+  <p class="section-tagline"><strong>Currency Converter · Savings Calculator · 50/30/20 Calculator</strong></p>
+
+  <!-- TABS -->
+  <div class="tool-tabs">
+    <button class="tab-btn active" onclick="switchTab('converter', this)">🔄 Currency Converter</button>
+    <button class="tab-btn" onclick="switchTab('savings', this)">💰 Savings Calculator</button>
+    <button class="tab-btn" onclick="switchTab('budget', this)">📊 50/30/20 Calculator</button>
+  </div>
+
+  <!-- ══ TOOL 1: CURRENCY CONVERTER ══ -->
+<div class="tool-panel active" id="panel-converter">
+  <div class="tool-card">
+    <div class="tool-title">🔄 Live Currency Converter</div>
+    <div class="tool-desc">Convert between Bhutanese Ngultrum (Nu.), USD, and INR using live exchange rates.</div>
+
+    <div class="input-group">
+      <label class="tool-label">Amount</label>
+      <input type="number" id="nu-amount" placeholder="Enter amount e.g. 1000" min="0" style="width:100%;">
+    </div>
+
+    <div class="input-group">
+      <label class="tool-label">From</label>
+<select id="currency-from">
+  <option value="BTN">🇧🇹  Nu. - Bhutanese Ngultrum</option>
+  <option value="USD">🇺🇸  USD - US Dollar</option>
+  <option value="INR">🇮🇳  INR - Indian Rupee</option>
+  <option value="AUD">🇦🇺  AUD - Australian Dollar</option>
+  <option value="EUR">🇪🇺  EUR - Euro</option>
+  <option value="GBP">🇬🇧  GBP - British Pound</option>
+  <option value="SGD">🇸🇬  SGD - Singapore Dollar</option>
+  <option value="JPY">🇯🇵  JPY - Japanese Yen</option>
+  <option value="CAD">🇨🇦  CAD - Canadian Dollar</option>
+  <option value="CHF">🇨🇭  CHF - Swiss Franc</option>
+  <option value="CNY">🇨🇳  CNY - Chinese Yuan</option>
+  <option value="AED">🇦🇪  AED - UAE Dirham</option>
+  <option value="MYR">🇲🇾  MYR - Malaysian Ringgit</option>
+  <option value="THB">🇹🇭  THB - Thai Baht</option>
+  <option value="KRW">🇰🇷  KRW - South Korean Won</option>
+</select>
+    </div>
+
+    <!-- Swap button -->
+    <div style="text-align:center; margin: -8px 0 16px;">
+      <button onclick="swapCurrencies()" style="
+        background: rgba(201,168,76,0.1);
+        border: 1px solid rgba(201,168,76,0.35);
+        color: var(--gold);
+        border-radius: 50%;
+        width: 38px; height: 38px;
+        font-size: 18px; cursor: pointer;
+        transition: background 0.2s;
+      " title="Swap currencies">⇅</button>
+    </div>
+
+    <div class="input-group">
+      <label class="tool-label">To</label>
+<select id="currency-to">
+  <option value="USD">🇺🇸  USD - US Dollar</option>
+  <option value="INR">🇮🇳  INR - Indian Rupee</option>
+  <option value="BTN">🇧🇹  Nu. - Bhutanese Ngultrum</option>
+  <option value="AUD">🇦🇺  AUD - Australian Dollar</option>
+  <option value="EUR">🇪🇺  EUR - Euro</option>
+  <option value="GBP">🇬🇧  GBP - British Pound</option>
+  <option value="SGD">🇸🇬  SGD - Singapore Dollar</option>
+  <option value="JPY">🇯🇵  JPY - Japanese Yen</option>
+  <option value="CAD">🇨🇦  CAD - Canadian Dollar</option>
+  <option value="CHF">🇨🇭  CHF - Swiss Franc</option>
+  <option value="CNY">🇨🇳  CNY - Chinese Yuan</option>
+  <option value="AED">🇦🇪  AED - UAE Dirham</option>
+  <option value="MYR">🇲🇾  MYR - Malaysian Ringgit</option>
+  <option value="THB">🇹🇭  THB - Thai Baht</option>
+  <option value="KRW">🇰🇷  KRW - South Korean Won</option>
+</select>
+</div>
+
+    <button class="calc-btn" onclick="convertCurrency()">Convert Now </button>
+
+    <div class="result-box" id="converter-result">
+      <div class="result-title">Conversion Result</div>
+      <div class="currency-grid" id="currency-output"></div>
+      <div class="rate-note" id="rate-note"></div>
+    </div>
+  </div>
+</div>
+
+  <!-- TOOL 2: SAVINGS CALCULATOR -->
+<div class="tool-panel" id="panel-savings">
+  <div class="tool-card">
+    <div class="tool-title">💰 Savings Projection Calculator</div>
+    <div class="tool-desc">Enter your monthly income and savings percentage to see how much you'll save over 1, 3, and 5 years.</div>
+
+    <div class="input-group">
+      <label class="tool-label">Currency</label>
+      <select id="savings-currency" onchange="updateSavingsCurrencyLabel()">
+        <option value="BTN" data-sym="Nu." data-flag="🇧🇹">🇧🇹  Nu. - Bhutanese Ngultrum</option>
+        <option value="USD" data-sym="$"   data-flag="🇺🇸">🇺🇸  USD - US Dollar</option>
+        <option value="AUD" data-sym="A$"  data-flag="🇦🇺">🇦🇺  AUD - Australian Dollar</option>
+        <option value="INR" data-sym="₹"   data-flag="🇮🇳">🇮🇳  INR - Indian Rupee</option>
+        <option value="EUR" data-sym="€"   data-flag="🇪🇺">🇪🇺  EUR - Euro</option>
+        <option value="GBP" data-sym="£"   data-flag="🇬🇧">🇬🇧  GBP - British Pound</option>
+        <option value="SGD" data-sym="S$"  data-flag="🇸🇬">🇸🇬  SGD - Singapore Dollar</option>
+        <option value="JPY" data-sym="¥"   data-flag="🇯🇵">🇯🇵  JPY - Japanese Yen</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label class="tool-label" id="savings-income-label">Monthly Income (Nu.)</label>
+      <input type="number" id="monthly-income" placeholder="Enter income e.g. 30000" min="0" style="width:100%;">
+    </div>
+
+    <div class="input-group">
+      <label class="tool-label">Savings Percentage (%)</label>
+      <div class="tool-input-row">
+        <input type="number" id="savings-pct" placeholder="e.g. 20" min="1" max="100">
+        <select id="savings-preset" onchange="applyPreset()">
+          <option value="">Quick Select</option>
+          <option value="10">10% (Minimum)</option>
+          <option value="20">20% (Recommended)</option>
+          <option value="30">30% (Aggressive)</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="calc-btn" onclick="calculateSavings()">Calculate Projections</button>
+
+    <div class="result-box" id="savings-result">
+      <div class="result-title">Your Savings Projections</div>
+      <div class="savings-grid" id="savings-output"></div>
+      <div class="savings-note" id="savings-note"></div>
+      <div class="tool-tip-box" id="savings-tip"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+ <!-- ══ TOOL 3: 50/30/20 CALCULATOR ══ -->
+<div class="tool-panel" id="panel-budget">
+  <div class="tool-card">
+    <div class="tool-title">📊 50/30/20 Budget Calculator</div>
+    <div class="tool-desc">Enter your monthly income and instantly see your 50% needs, 30% wants, and 20% savings split.</div>
+
+    <div class="input-group">
+      <label class="tool-label">Currency</label>
+      <select id="budget-currency" onchange="updateBudgetCurrencyLabel()">
+        <option value="BTN" data-sym="Nu." >🇧🇹  Nu. - Bhutanese Ngultrum</option>
+        <option value="USD" data-sym="$"  >🇺🇸  USD - US Dollar</option>
+        <option value="AUD" data-sym="A$" >🇦🇺  AUD - Australian Dollar</option>
+        <option value="INR" data-sym="₹"  >🇮🇳  INR - Indian Rupee</option>
+        <option value="EUR" data-sym="€"  >🇪🇺  EUR - Euro</option>
+        <option value="GBP" data-sym="£"  >🇬🇧  GBP - British Pound</option>
+        <option value="SGD" data-sym="S$" >🇸🇬  SGD - Singapore Dollar</option>
+        <option value="JPY" data-sym="¥"  >🇯🇵  JPY - Japanese Yen</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label class="tool-label" id="budget-income-label">Monthly Income (Nu.)</label>
+      <input type="number" id="budget-income" placeholder="Enter income e.g. 40000" min="0"
+        oninput="calculateBudget()" style="width:100%;">
+    </div>
+
+    <div class="result-box" id="budget-result" style="display:block;">
+      <div class="result-title">Your 50/30/20 Split</div>
+      <div class="budget-splits">
+        <div class="budget-split-item">
+          <div class="split-header">
+            <span class="split-label">🏠 Needs (Rent, Food, Utilities)</span>
+            <span class="split-pct">50%</span>
+          </div>
+          <div class="split-header" style="margin-top:-6px;margin-bottom:8px;">
+            <span class="split-amount" id="needs-amount">Nu. 0</span>
+          </div>
+          <div class="split-bar-track">
+            <div class="split-bar-fill needs" id="needs-bar" style="width:0%"></div>
+          </div>
+        </div>
+        <hr style="border:none;border-top:1px solid rgba(201,168,76,0.12);margin:14px 0;">
+        <div class="budget-split-item">
+          <div class="split-header">
+            <span class="split-label">🎉 Wants (Entertainment, Dining)</span>
+            <span class="split-pct">30%</span>
+          </div>
+          <div class="split-header" style="margin-top:-6px;margin-bottom:8px;">
+            <span class="split-amount" id="wants-amount">Nu. 0</span>
+          </div>
+          <div class="split-bar-track">
+            <div class="split-bar-fill wants" id="wants-bar" style="width:0%"></div>
+          </div>
+        </div>
+        <hr style="border:none;border-top:1px solid rgba(201,168,76,0.12);margin:14px 0;">
+        <div class="budget-split-item">
+          <div class="split-header">
+            <span class="split-label">💚 Savings (Emergency, Goals)</span>
+            <span class="split-pct">20%</span>
+          </div>
+          <div class="split-header" style="margin-top:-6px;margin-bottom:8px;">
+            <span class="split-amount" id="savings-amount">Nu. 0</span>
+          </div>
+          <div class="split-bar-track">
+            <div class="split-bar-fill savings-bar-fill" id="savings-bar" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="tool-tip-box" id="budget-tip" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+
+  <div style="margin-top:32px;">
+    <div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
+      <button class="nav-btn" onclick="showSection('quiz')">← Previous</button>
+      <button class="nav-btn" onclick="showSection('about')">Next →</button>
+    </div>
+  </div>
+</section>
+
 
   <!-- ══ ABOUT ══ -->
   <section id="about">
@@ -540,7 +776,7 @@
 
         <div class="platform-card">
           <div class="platform-header">
-            <div class="platform-icon"></div>
+            <div class="platform-icon">🏦</div>
             <div>
               <div class="platform-name">Bank of Bhutan</div>
               <div class="platform-tag">Savings,Fixed Deposits,Loans</div>
@@ -553,7 +789,7 @@
 
         <div class="platform-card">
           <div class="platform-header">
-            <div class="platform-icon"></div>
+            <div class="platform-icon">🏛️</div>
             <div>
               <div class="platform-name">Bhutan National Bank</div>
               <div class="platform-tag">Savings,Recurring Deposits,Cards</div>
@@ -566,7 +802,7 @@
 
         <div class="platform-card">
           <div class="platform-header">
-            <div class="platform-icon"></div>
+            <div class="platform-icon">🌾</div>
             <div>
               <div class="platform-name">Bhutan Development Bank</div>
               <div class="platform-tag">Rural Savings,Agriculture Loans,SME</div>
@@ -579,7 +815,7 @@
 
         <div class="platform-card">
           <div class="platform-header">
-            <div class="platform-icon"></div>
+            <div class="platform-icon">💰</div>
             <div>
               <div class="platform-name">T Bank</div>
               <div class="platform-tag">Fixed Deposits,Recurring Savings,Loans</div>
@@ -592,7 +828,7 @@
 
         <div class="platform-card">
           <div class="platform-header">
-            <div class="platform-icon"></div>
+            <div class="platform-icon">🤝</div>
             <div>
               <div class="platform-name">Druk PNB Bank</div>
               <div class="platform-tag">Savings,Personal Loans,NRI Banking</div>
@@ -605,7 +841,7 @@
 
         <div class="platform-card">
           <div class="platform-header">
-            <div class="platform-icon"></div>
+            <div class="platform-icon">🛡️</div>
             <div>
               <div class="platform-name">NPPF</div>
               <div class="platform-tag">Pension,Provident Fund,Housing Loans</div>
@@ -619,7 +855,7 @@
 
         <div class="platform-card">
           <div class="platform-header">
-            <div class="platform-icon"></div>
+            <div class="platform-icon">📈</div>
             <div>
               <div class="platform-name">Royal Securities Exchange of Bhutan</div>
               <div class="platform-tag">Stock Market,Listed Companies,Equity</div>
@@ -632,7 +868,7 @@
 
         <div class="platform-card">
           <div class="platform-header">
-            <div class="platform-icon"></div>
+            <div class="platform-icon">📱</div>
             <div>
               <div class="platform-name">DK Bank (Digital Kidu)</div>
               <div class="platform-tag">Digital Banking,Cardless,Inclusive</div>
@@ -681,10 +917,11 @@
     </div>
     <div style="margin-top:32px;">
  <div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
-  <button class="nav-btn" onclick="showSection('quiz')">← Previous</button>
+  <button class="nav-btn" onclick="showSection('tools')">← Previous</button>
 </div>
   </div>
   </section>
+
   <footer>
     <p>© 2026 <span>Smart Budget Bhutan</span> · Bhutan Data Scientist Pvt. Ltd. · All rights reserved</p>
   </footer>
@@ -732,7 +969,30 @@
   </div>
 </div>
 
+<!-- SHEET PREVIEW MODAL -->
+<div id="sheet-modal-overlay" onclick="closeSheetModal()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:10000; overflow-y:auto; padding:40px 20px; align-items:center; justify-content:center;">
+  <div id="sheet-modal" onclick="event.stopPropagation()" style="
+    position:relative; max-width:900px; width:100%;
+    background:rgba(14,10,2,0.98);
+    border:1px solid rgba(201,168,76,0.35);
+    border-top:4px solid #c9a84c;
+    border-radius:16px; padding:28px; text-align:center;
+    margin:0 auto;">
+    <button onclick="closeSheetModal()" style="
+      position:absolute; top:14px; right:18px;
+      background:transparent; border:none;
+      color:#a89e84; font-size:22px; cursor:pointer;">✕</button>
+    <div id="sheet-modal-title" style="
+      font-family:'Cinzel',serif; color:#c9a84c;
+      font-size:16px; letter-spacing:1px; margin-bottom:16px;"></div>
+    <img id="sheet-modal-img" src="" alt="Sheet Preview" style="
+      width:100%; border-radius:8px;
+      object-fit:contain; max-height:80vh;">
+  </div>
+</div>
+
   <script src="script.js"></script>
+  
 </body>
 
 </html>

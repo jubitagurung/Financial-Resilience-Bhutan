@@ -18,10 +18,13 @@ function showSection(id) {
   const t = document.getElementById('nav-toggle');
   if (t) { t.classList.remove('open'); t.setAttribute('aria-expanded', 'false'); }
 
+  const stepMap = { home: 1, quiz: 2, planner: 3 };
+  if (stepMap[id]) updateJourneyBar(stepMap[id]);
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// hamburger toggle
+// ── HAMBURGER TOGGLE ──
 (function () {
   const toggle = document.getElementById('nav-toggle');
   const menu   = document.getElementById('nav-menu');
@@ -50,7 +53,7 @@ function showSection(id) {
   });
 })();
 
-// ══ TOAST ══
+// ── TOAST ──
 function dismissToast() {
   const t = document.getElementById('quiz-toast');
   if (!t) return;
@@ -67,7 +70,7 @@ function showToastOnHome() {
   setTimeout(() => dismissToast(), 12000);
 }
 
-// ══ JOURNEY BAR ══
+// ── JOURNEY BAR ──
 function updateJourneyBar(activeStep) {
   const steps = document.querySelectorAll('.jg-step');
   steps.forEach((s, i) => {
@@ -77,7 +80,7 @@ function updateJourneyBar(activeStep) {
   });
 }
 
-// ══ CONFETTI ══
+// ── CONFETTI ──
 function launchConfetti() {
   const wrap = document.getElementById('confetti-wrap');
   if (!wrap) return;
@@ -97,7 +100,7 @@ function launchConfetti() {
   setTimeout(() => { wrap.style.display = 'none'; }, 5000);
 }
 
-// ══ PLANNER PUSH BLOCK ══
+// ── PLANNER PUSH BLOCK ──
 function setPlannnerPush(score, total) {
   const pct = Math.round(score / total * 100);
   const titleEl = document.getElementById('ppb-title');
@@ -120,7 +123,7 @@ function setPlannnerPush(score, total) {
   }
 }
 
-// ══ PLANNER WELCOME BANNER ══
+// ── PLANNER WELCOME BANNER ──
 function setPlannerBanner(score, total) {
   const banner = document.getElementById('planner-welcome-banner');
   const text   = document.getElementById('planner-banner-text');
@@ -144,18 +147,25 @@ function setPlannerBanner(score, total) {
 // ══════════════════════════════════════════════
 // ── QUIZ ENGINE ──
 // ══════════════════════════════════════════════
+
 const QUESTIONS = [
   {
     q: "According to the 50/30/20 budgeting rule, what percentage of income should go towards savings?",
     options: ["10%", "20%", "30%", "50%"],
     correct: 1,
-    explanation: "The 50/30/20 rule allocates 50% to needs, 30% to wants, and 20% to savings. This framework helps ensure you consistently build financial resilience."
+    points: 10,
+    explanation: "The 50/30/20 rule allocates 50% to needs, 30% to wants, and 20% to savings. This framework helps ensure you consistently build financial resilience.",
+    tip: "💡 Try automating your savings transfer on payday so it happens before you can spend it.",
+    example: "If you earn Nu. 30,000/month, Nu. 6,000 should go straight to savings."
   },
   {
     q: "A household earns Nu. 40,000 per month. Using the 50/30/20 rule, what should their monthly savings target be?",
     options: ["Nu. 4,000", "Nu. 6,000", "Nu. 8,000", "Nu. 12,000"],
     correct: 2,
-    explanation: "20% of Nu. 40,000 = Nu. 8,000. This is the recommended savings target for a middle-income household in urban Bhutan."
+    points: 10,
+    explanation: "20% of Nu. 40,000 = Nu. 8,000. This is the recommended savings target for a middle-income household in urban Bhutan.",
+    tip: "💡 Open a dedicated savings account so this amount is out of sight, out of mind.",
+    example: "20% × Nu. 40,000 = Nu. 8,000/month = Nu. 96,000 saved in a year!"
   },
   {
     q: "What is 'lifestyle creep' in personal finance?",
@@ -166,25 +176,37 @@ const QUESTIONS = [
       "Taking on debt to maintain a lifestyle"
     ],
     correct: 2,
-    explanation: "Lifestyle creep means your expenses grow as your income grows, leaving no room for increased savings. The key habit is to save the difference when your income rises."
+    points: 10,
+    explanation: "Lifestyle creep means your expenses grow as your income grows, leaving no room for increased savings. The key habit is to save the difference when your income rises.",
+    tip: "💡 When you get a raise, increase your savings by at least 50% of the raise amount.",
+    example: "Sonam got a Nu. 5,000 raise but started spending Nu. 5,000 more — her savings never grew."
   },
   {
     q: "How many months of living expenses should you ideally have in an emergency fund?",
     options: ["1 month", "2 months", "3–6 months", "12 months"],
     correct: 2,
-    explanation: "Financial advisors recommend keeping 3–6 months of living expenses in an emergency fund. This cushion protects against job loss, medical bills, or urgent repairs."
+    points: 10,
+    explanation: "Financial advisors recommend keeping 3–6 months of living expenses in an emergency fund. This cushion protects against job loss, medical bills, or urgent repairs.",
+    tip: "💡 Start small — even Nu. 500/month builds to Nu. 6,000 in a year.",
+    example: "If your monthly expenses are Nu. 20,000, aim for Nu. 60,000–120,000 in emergency savings."
   },
   {
     q: "Which of the following is a 'need' in the 50/30/20 budgeting framework?",
     options: ["Streaming services", "Dining at restaurants", "Rent and electricity", "Gym membership"],
     correct: 2,
-    explanation: "Needs are essential expenses you cannot live without — rent, food, utilities, and transport. Streaming services, dining out, and gym memberships are typically 'wants'."
+    points: 10,
+    explanation: "Needs are essential expenses you cannot live without — rent, food, utilities, and transport. Streaming services, dining out, and gym memberships are typically 'wants'.",
+    tip: "💡 List your fixed bills — these are your needs. Everything else is likely a want.",
+    example: "Rent, electricity, groceries, and transport to work = Needs. Netflix = Want."
   },
   {
     q: "A family saves Nu. 500 per month starting today. How much will they have saved after 1 year?",
     options: ["Nu. 5,000", "Nu. 6,000", "Nu. 7,200", "Nu. 8,000"],
     correct: 1,
-    explanation: "Nu. 500 × 12 months = Nu. 6,000. Even small consistent amounts build meaningful savings — the key is consistency, not size."
+    points: 10,
+    explanation: "Nu. 500 × 12 months = Nu. 6,000. Even small consistent amounts build meaningful savings — the key is consistency, not size.",
+    tip: "💡 Even small amounts add up. Consistency beats size every time.",
+    example: "Nu. 500 × 12 = Nu. 6,000. That's a school fee, an emergency fund, or a holiday covered."
   },
   {
     q: "Why is it recommended to keep your savings in a separate bank account from your spending account?",
@@ -195,7 +217,10 @@ const QUESTIONS = [
       "It is required by Bhutanese banking law"
     ],
     correct: 2,
-    explanation: "Keeping savings in a separate account creates a mental and physical barrier between your spending money and your saved money — reducing the temptation to dip into savings."
+    points: 10,
+    explanation: "Keeping savings in a separate account creates a mental and physical barrier between your spending money and your saved money — reducing the temptation to dip into savings.",
+    tip: "💡 Use BNB or Bank of Bhutan to open a free second savings account today.",
+    example: "Pema kept savings in her main account — she spent it all within 2 weeks without noticing."
   },
   {
     q: "Which of these strategies is an example of 'paying yourself first'?",
@@ -206,125 +231,204 @@ const QUESTIONS = [
       "Investing in the stock market every quarter"
     ],
     correct: 1,
-    explanation: "'Pay yourself first' means automatically moving your savings to a separate account as soon as you receive your salary — before spending on anything else. This makes saving automatic, not optional."
+    points: 10,
+    explanation: "'Pay yourself first' means automatically moving your savings to a separate account as soon as you receive your salary before spending on anything else. This makes saving automatic, not optional.",
+    tip: "💡 Set up an automatic transfer on the day your salary arrives so saving is never optional.",
+    example: "Karma receives salary on the 1st, she immediately moves Nu. 4,000 to savings before spending."
+  },
+  {
+    q: "🏠 SCENARIO: Tshering earns Nu. 25,000/month. Her rent is Nu. 8,000, groceries Nu. 4,000, phone Nu. 500, and transport Nu. 1,500. She spends Nu. 6,000 on eating out and shopping. How much can she realistically save?",
+    options: ["Nu. 2,000", "Nu. 5,000", "Nu. 8,000", "She cannot save anything"],
+    correct: 1,
+    points: 15,
+    explanation: "Total fixed costs: Nu. 14,000. Discretionary spending: Nu. 6,000. That leaves Nu. 5,000 available to save each month.",
+    tip: "💡 Track discretionary spending for just one week most people are shocked by what they find.",
+    example: "Total fixed costs: Nu. 14,000. Wants: Nu. 6,000. Remaining: Nu. 5,000 available to save."
+  },
+  {
+    q: "🚨 SCENARIO: Dorji lost his job unexpectedly. He has Nu. 10,000 in savings and monthly expenses of Nu. 15,000. How many weeks can he survive without income?",
+    options: ["About 2.5 weeks", "About 3 weeks", "Exactly 1 month", "About 6 weeks"],
+    correct: 0,
+    points: 15,
+    explanation: "Nu. 10,000 ÷ Nu. 15,000 = 0.67 months ≈ about 2.5 weeks. Without an emergency fund, even a short job gap creates a crisis.",
+    tip: "💡 This is why a 3–6 month emergency fund matters. Start building yours today.",
+    example: "Nu. 10,000 ÷ Nu. 15,000 = 0.67 months ≈ about 2.5 weeks. Extremely vulnerable!"
+  },
+  {
+    q: "📈 SCENARIO: Sonam gets a salary raise of Nu. 8,000/month. She currently saves nothing. What is the BEST financial move?",
+    options: [
+      "Spend the full raise she deserves it",
+      "Save Nu. 1,600 (20%) and spend the rest",
+      "Save the entire Nu. 8,000 raise for 6 months",
+      "Use the raise to take out a bigger loan"
+    ],
+    correct: 1,
+    points: 15,
+    explanation: "Saving 20% of the raise applies the 50/30/20 rule to new income painless because she never had that money before.",
+    tip: "💡 Saving 20% of a raise is painless you never had that money before, so you won't miss it.",
+    example: "Nu. 1,600/month × 12 months = Nu. 19,200 saved in year one just from the raise!"
+  },
+  {
+    q: "🛒 SCENARIO: Kinley has Nu. 3,000 left after bills. He wants new shoes (Nu. 2,500) but also has no emergency fund. What should he do?",
+    options: [
+      "Buy the shoes, he needs them",
+      "Buy the shoes on credit and pay later",
+      "Save the Nu. 3,000 and wait to buy shoes next month",
+      "Split it: Nu. 1,500 to savings, skip shoes this month"
+    ],
+    correct: 2,
+    points: 15,
+    explanation: "Building an emergency fund takes priority over discretionary purchases. Delaying wants now prevents a financial crisis later.",
+    tip: "💡 Delaying wants to build an emergency fund first is the foundation of financial resilience.",
+    example: "After 4 months of saving Nu. 3,000, Kinley has Nu. 12,000 emergency fund AND can buy shoes."
   }
 ];
 
+// ── STATE ──
 let currentQ = 0;
 let score = 0;
+let totalPoints = 0;
+let streak = 0;
+let bestStreak = 0;
 let answers = [];
-let answeredQuestions = []; // tracks selected index per question (null = not yet answered)
+let answeredQuestions = [];
 
+// ── START ──
 function startQuiz() {
-  currentQ = 0;
-  score = 0;
+  currentQ = 0; score = 0; totalPoints = 0; streak = 0; bestStreak = 0;
   answers = [];
   answeredQuestions = new Array(QUESTIONS.length).fill(null);
 
-  document.getElementById("quiz-start").style.display = "none";
-  document.getElementById("quiz-question").style.display = "block";
-  document.getElementById("quiz-results").style.display = "none";
+  document.getElementById('quiz-start').style.display = 'none';
+  document.getElementById('quiz-question').style.display = 'block';
+  document.getElementById('quiz-results').style.display = 'none';
 
-  // Remove any leftover prev button from a previous run
-  const oldPrev = document.getElementById("q-prev-btn");
-  if (oldPrev) oldPrev.remove();
-
+  const old = document.getElementById('q-prev-btn');
+  if (old) old.remove();
   renderQuestion();
 }
 
+// ── RENDER QUESTION ──
 function renderQuestion() {
   const q = QUESTIONS[currentQ];
   const total = QUESTIONS.length;
-  const pct = (currentQ / total) * 100;
+  const pct = ((currentQ + 1) / total) * 100;
 
-  document.getElementById("q-counter").textContent = `Question ${currentQ + 1} of ${total}`;
-  document.getElementById("q-progress-fill").style.width = pct + "%";
-  document.getElementById("q-number").textContent = `QUESTION ${currentQ + 1}`;
-  document.getElementById("q-text").textContent = q.q;
+  document.getElementById('q-counter').textContent = `Question ${currentQ + 1} of ${total}`;
+  document.getElementById('q-progress-fill').style.width = pct + '%';
+  document.getElementById('q-number').textContent = `QUESTION ${currentQ + 1}`;
+  document.getElementById('q-text').textContent = q.q;
 
-  // Recalculate score from answeredQuestions
+  let ptsBadge = document.getElementById('q-points-badge');
+  if (!ptsBadge) {
+    ptsBadge = document.createElement('div');
+    ptsBadge.id = 'q-points-badge';
+    ptsBadge.className = 'q-points-badge';
+    document.getElementById('q-number').after(ptsBadge);
+  }
+  ptsBadge.innerHTML = `+${q.points} pts &nbsp;|&nbsp; 🔥 Streak: <span id="streak-live">${streak}</span>`;
+
   score = answeredQuestions.filter((a, i) => a !== null && a === QUESTIONS[i].correct).length;
-  document.getElementById("q-score-live").textContent = `Score: ${score}`;
+  totalPoints = answeredQuestions.reduce((sum, a, i) => {
+    if (a !== null && a === QUESTIONS[i].correct) return sum + QUESTIONS[i].points;
+    return sum;
+  }, 0);
+  document.getElementById('q-score-live').textContent = `Score: ${score} · ${totalPoints} pts`;
 
-  // Build options
-  const optionsEl = document.getElementById("q-options");
-  optionsEl.innerHTML = "";
-  const letters = ["A", "B", "C", "D"];
+  const optionsEl = document.getElementById('q-options');
+  optionsEl.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
   const prevAnswer = answeredQuestions[currentQ];
 
   q.options.forEach((opt, i) => {
-    const btn = document.createElement("button");
-    btn.className = "quiz-option";
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
     btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${opt}</span>`;
-
     if (prevAnswer !== null) {
-      // Already answered — restore visual state, lock options
-      btn.classList.add("disabled");
-      if (i === q.correct) btn.classList.add("correct");
-      else if (i === prevAnswer && prevAnswer !== q.correct) btn.classList.add("wrong");
+      btn.classList.add('disabled');
+      if (i === q.correct) btn.classList.add('correct');
+      else if (i === prevAnswer && prevAnswer !== q.correct) btn.classList.add('wrong');
     } else {
       btn.onclick = () => selectAnswer(i);
     }
     optionsEl.appendChild(btn);
   });
 
-  // Restore or hide feedback
-  const feedback = document.getElementById("q-feedback");
+  const feedback = document.getElementById('q-feedback');
   if (prevAnswer !== null) {
     const isCorrect = prevAnswer === q.correct;
-    feedback.className = "quiz-feedback " + (isCorrect ? "correct-fb" : "wrong-fb");
-    feedback.innerHTML = (isCorrect ? "✅ " : "❌ ") + q.explanation;
-    feedback.style.display = "block";
+    feedback.className = 'quiz-feedback ' + (isCorrect ? 'correct-fb' : 'wrong-fb');
+    feedback.innerHTML = `
+      <div class="fb-main">${isCorrect ? '✅' : '❌'} ${q.explanation}</div>
+      <div class="fb-example">📌 <strong>Example:</strong> ${q.example}</div>
+      <div class="fb-tip">${q.tip}</div>
+    `;
+    feedback.style.display = 'block';
   } else {
-    feedback.style.display = "none";
-    feedback.className = "quiz-feedback";
-    feedback.innerHTML = "";
+    feedback.style.display = 'none';
+    feedback.innerHTML = '';
   }
 
-  // Next button
-  const nextBtn = document.getElementById("q-next-btn");
-  nextBtn.style.display = prevAnswer !== null ? "inline-block" : "none";
-  nextBtn.textContent = currentQ < QUESTIONS.length - 1 ? "Next Question →" : "See My Results →";
+  const nextBtn = document.getElementById('q-next-btn');
+  nextBtn.style.display = prevAnswer !== null ? 'inline-block' : 'none';
+  nextBtn.textContent = currentQ < QUESTIONS.length - 1 ? 'Next Question →' : 'See My Results →';
 
-  // Previous button — create once, reuse
-  let prevBtn = document.getElementById("q-prev-btn");
+  let prevBtn = document.getElementById('q-prev-btn');
   if (!prevBtn) {
-    prevBtn = document.createElement("button");
-    prevBtn.id = "q-prev-btn";
-    prevBtn.className = "quiz-next-btn";
-    prevBtn.style.marginRight = "10px";
-    prevBtn.textContent = "← Previous";
+    prevBtn = document.createElement('button');
+    prevBtn.id = 'q-prev-btn';
+    prevBtn.className = 'quiz-next-btn';
+    prevBtn.style.marginRight = '10px';
+    prevBtn.textContent = '← Previous';
     prevBtn.onclick = prevQuestion;
     nextBtn.parentNode.insertBefore(prevBtn, nextBtn);
   }
-  prevBtn.style.display = currentQ > 0 ? "inline-block" : "none";
+  prevBtn.style.display = currentQ > 0 ? 'inline-block' : 'none';
 
-  // Fade animation
-  const card = document.getElementById("quiz-q-card");
-  card.classList.remove("fade-in");
+    // Wrap both buttons in a flex row
+  let btnRow = document.getElementById('q-btn-row');
+  if (!btnRow) {
+    btnRow = document.createElement('div');
+    btnRow.id = 'q-btn-row';
+    btnRow.style.cssText = 'display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:22px;';
+    const card = document.getElementById('quiz-q-card');
+    card.appendChild(btnRow);
+    btnRow.appendChild(prevBtn);
+    btnRow.appendChild(nextBtn);
+  }
+
+  const card = document.getElementById('quiz-q-card');
+  card.classList.remove('fade-in');
   void card.offsetWidth;
-  card.classList.add("fade-in");
+  card.classList.add('fade-in');
 }
 
+// ── SELECT ANSWER ──
 function selectAnswer(selectedIndex) {
   const q = QUESTIONS[currentQ];
-  const opts = document.querySelectorAll(".quiz-option");
-
-  // Save answer
   answeredQuestions[currentQ] = selectedIndex;
-
-  // Lock all options
-  opts.forEach(o => o.classList.add("disabled"));
+  const opts = document.querySelectorAll('.quiz-option');
+  opts.forEach(o => o.classList.add('disabled'));
 
   const isCorrect = selectedIndex === q.correct;
 
-  // Highlight correct / wrong
+
+
   opts.forEach((o, i) => {
-    if (i === q.correct) o.classList.add("correct");
-    else if (i === selectedIndex && !isCorrect) o.classList.add("wrong");
+    if (i === q.correct) o.classList.add('correct');
+    else if (i === selectedIndex && !isCorrect) o.classList.add('wrong');
   });
 
-  // Store full answer object
+  if (isCorrect) {
+    streak++;
+    if (streak > bestStreak) bestStreak = streak;
+    if (streak >= 3) showStreakToast(streak);
+  } else {
+    streak = 0;
+  }
+  const streakEl = document.getElementById('streak-live');
+  if (streakEl) streakEl.textContent = streak;
+
   answers[currentQ] = {
     question: q.q,
     selectedIndex,
@@ -332,30 +436,49 @@ function selectAnswer(selectedIndex) {
     isCorrect,
     selectedText: q.options[selectedIndex],
     correctText: q.options[q.correct],
-    explanation: q.explanation
+    explanation: q.explanation,
+    example: q.example,
+    tip: q.tip,
+    points: q.points
   };
 
-  // Show feedback
-  const feedback = document.getElementById("q-feedback");
-  feedback.className = "quiz-feedback " + (isCorrect ? "correct-fb" : "wrong-fb");
-  feedback.innerHTML = (isCorrect ? "✅ " : "❌ ") + q.explanation;
-  feedback.style.display = "block";
+  const feedback = document.getElementById('q-feedback');
+  feedback.className = 'quiz-feedback ' + (isCorrect ? 'correct-fb' : 'wrong-fb');
+  feedback.innerHTML = `
+    <div class="fb-main">${isCorrect ? '✅' : '❌'} ${q.explanation}</div>
+    <div class="fb-example">📌 <strong>Example:</strong> ${q.example}</div>
+    <div class="fb-tip">${q.tip}</div>
+  `;
+  feedback.style.display = 'block';
 
-  // Update live score
   score = answeredQuestions.filter((a, i) => a !== null && a === QUESTIONS[i].correct).length;
-  document.getElementById("q-score-live").textContent = `Score: ${score}`;
+  totalPoints = answeredQuestions.reduce((sum, a, i) => {
+    if (a !== null && a === QUESTIONS[i].correct) return sum + QUESTIONS[i].points;
+    return sum;
+  }, 0);
+  document.getElementById('q-score-live').textContent = `Score: ${score} · ${totalPoints} pts`;
 
-  // Show next button
-  const nextBtn = document.getElementById("q-next-btn");
-  nextBtn.style.display = "inline-block";
-  nextBtn.textContent = currentQ < QUESTIONS.length - 1 ? "Next Question →" : "See My Results →";
+  const nextBtn = document.getElementById('q-next-btn');
+  nextBtn.style.display = 'inline-block';
+  nextBtn.textContent = currentQ < QUESTIONS.length - 1 ? 'Next Question →' : 'See My Results →';
+}
+
+// ── STREAK TOAST ──
+function showStreakToast(n) {
+  let t = document.getElementById('streak-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'streak-toast';
+    t.className = 'streak-toast';
+    document.body.appendChild(t);
+  }
+  t.innerHTML = `🔥 ${n} in a row! Streak Bonus!`;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
 }
 
 function prevQuestion() {
-  if (currentQ > 0) {
-    currentQ--;
-    renderQuestion();
-  }
+  if (currentQ > 0) { currentQ--; renderQuestion(); }
 }
 
 function nextQuestion() {
@@ -363,150 +486,110 @@ function nextQuestion() {
     currentQ++;
     renderQuestion();
   } else {
-    // Build final answers array from answeredQuestions
     answers = QUESTIONS.map((q, i) => ({
       question: q.q,
       selectedIndex: answeredQuestions[i],
       correctIndex: q.correct,
       isCorrect: answeredQuestions[i] === q.correct,
-      selectedText: answeredQuestions[i] !== null ? q.options[answeredQuestions[i]] : "Not answered",
+      selectedText: answeredQuestions[i] !== null ? q.options[answeredQuestions[i]] : 'Not answered',
       correctText: q.options[q.correct],
-      explanation: q.explanation
+      explanation: q.explanation,
+      example: q.example,
+      tip: q.tip,
+      points: q.points
     }));
     score = answers.filter(a => a.isCorrect).length;
+    totalPoints = answers.reduce((sum, a) => sum + (a.isCorrect ? a.points : 0), 0);
     showResults();
   }
 }
 
+// ── RESULTS ──
 function showResults() {
-  document.getElementById("quiz-question").style.display = "none";
-  document.getElementById("quiz-results").style.display = "block";
+  document.getElementById('quiz-question').style.display = 'none';
+  document.getElementById('quiz-results').style.display = 'block';
+  document.getElementById('quiz-nav-buttons').style.display = 'flex';
 
-  const pct = Math.round((score / QUESTIONS.length) * 100);
-  document.getElementById("result-score").textContent = `${score}/${QUESTIONS.length}`;
+  const total = QUESTIONS.length;
+  const maxPoints = QUESTIONS.reduce((s, q) => s + q.points, 0);
+  const pct = Math.round(score / total * 100);
 
-  const resultData = {
-    score: score,
-    total: QUESTIONS.length,
-    percent: pct,
-    date: new Date().toLocaleDateString('en-BT', { day:'numeric', month:'short', year:'numeric' })
-  };
-  localStorage.setItem('sbb_last_quiz', JSON.stringify(resultData));
+  document.getElementById('result-score').textContent = `${score}/${total}`;
+
+  let ptsSummary = document.getElementById('pts-summary');
+  if (!ptsSummary) {
+    ptsSummary = document.createElement('div');
+    ptsSummary.id = 'pts-summary';
+    ptsSummary.className = 'pts-summary';
+    document.querySelector('.quiz-score-ring-wrap').insertAdjacentElement('afterend', ptsSummary);
+  }
+  ptsSummary.innerHTML = `
+    <div class="pts-row">
+      <div class="pts-item"><div class="pts-val">${totalPoints}</div><div class="pts-lbl">Total Points</div></div>
+      <div class="pts-item"><div class="pts-val">${maxPoints}</div><div class="pts-lbl">Max Points</div></div>
+      <div class="pts-item"><div class="pts-val">🔥 ${bestStreak}</div><div class="pts-lbl">Best Streak</div></div>
+      <div class="pts-item"><div class="pts-val">${score}/${total}</div><div class="pts-lbl">Correct</div></div>
+    </div>
+  `;
 
   let title, subtitle;
-  if (pct === 100) { title = "Financial Expert!"; subtitle = "Perfect score — you are ready to teach others!"; }
-  else if (pct >= 75) { title = "Great Knowledge!"; subtitle = "Strong foundation — a few areas to sharpen."; }
-  else if (pct >= 50) { title = "Good Start!"; subtitle = "You know the basics — keep building on them."; }
-  else { title = "Keep Learning!"; subtitle = "Explore the Budget and Saving sections to strengthen your skills."; }
+  if (pct === 100)    { title = 'Financial Expert!';  subtitle = 'Perfect score: you are ready to teach others!'; }
+  else if (pct >= 75) { title = 'Great Knowledge!';   subtitle = 'Strong foundation: a few areas to sharpen.'; }
+  else if (pct >= 50) { title = 'Good Start!';        subtitle = 'You know the basics: keep building on them.'; }
+  else                { title = 'Keep Learning!';     subtitle = 'Explore the Budget and Saving sections to strengthen your skills.'; }
 
-  document.getElementById("result-title").textContent = title;
-  document.getElementById("result-subtitle").textContent = subtitle;
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-subtitle').textContent = subtitle;
 
-  // Planner push block
-  setPlannnerPush(score, QUESTIONS.length);
-  setPlannerBanner(score, QUESTIONS.length);
+  setPlannnerPush(score, total);
+  setPlannerBanner(score, total);
 
-  // Breakdown
-  const breakdownEl = document.getElementById("breakdown-list");
-  breakdownEl.innerHTML = "";
+  // ── QUESTION BREAKDOWN ──
+  const breakdownEl = document.getElementById('breakdown-list');
+  breakdownEl.innerHTML = '';
   answers.forEach((a, i) => {
-    const div = document.createElement("div");
-    div.className = "breakdown-item";
+    const div = document.createElement('div');
+    div.className = 'breakdown-item';
     div.innerHTML = `
-      <div class="breakdown-icon">${a.isCorrect ? "✅" : "❌"}</div>
+      <div class="breakdown-icon">${a.isCorrect ? '✅' : '❌'}</div>
       <div class="breakdown-q">
-        <strong>Q${i + 1}: ${a.question.substring(0, 60)}${a.question.length > 60 ? "…" : ""}</strong>
+        <strong>Q${i + 1}: ${a.question.substring(0, 70)}${a.question.length > 70 ? '…' : ''}</strong>
         ${a.isCorrect
-          ? `<span style="color:var(--green)">Correct: ${a.correctText}</span>`
+          ? `<span style="color:var(--green)">Correct: ${a.correctText} (+${a.points} pts)</span>`
           : `<span style="color:#f0955a">Your answer: ${a.selectedText} &nbsp;|&nbsp; Correct: ${a.correctText}</span>`
         }
+        <span class="bd-tip">${a.tip}</span>
       </div>`;
     breakdownEl.appendChild(div);
   });
 
-  // AI Feedback
-  fetchAIFeedback(score, QUESTIONS.length, answers);
-}
-
-async function fetchAIFeedback(score, total, answers) {
-  const wrongTopics = answers.filter(a => !a.isCorrect).map(a => a.question).join("; ");
-  const prompt = `A user just completed a financial literacy quiz about household budgeting in Bhutan.
-Score: ${score}/${total} (${Math.round(score/total*100)}%)
-${wrongTopics ? `Questions they got wrong: ${wrongTopics}` : "They got all questions correct!"}
-
-Write a brief, warm, encouraging 3–4 sentence coaching message. Acknowledge their score, mention 1–2 specific areas to focus on (or celebrate if perfect), and give one practical action they can take today. Use Ngultrum (Nu.) if referencing amounts. Keep it concise and motivating. Do not use markdown formatting.`;
-
+  // ── SAVE TO LOCALSTORAGE SAFELY ──
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        system: "You are a warm, encouraging financial literacy coach specializing in household budgeting for urban Bhutanese families. Give concise, practical, personalized coaching feedback.",
-        messages: [{ role: "user", content: prompt }]
-      })
-    });
-    const data = await res.json();
-    const text = data.content?.[0]?.text || "Great effort! Review the Budget and Saving sections to continue building your financial skills.";
-    document.getElementById("ai-feedback-text").textContent = text;
-  } catch (e) {
-    document.getElementById("ai-feedback-text").textContent = "Great effort on the quiz! Review the Budget and Saving sections to reinforce any areas you found challenging — every step toward financial literacy builds a stronger future.";
-  }
+    localStorage.setItem('sbb_last_quiz', JSON.stringify({
+      score, total, percent: pct, points: totalPoints,
+      date: new Date().toLocaleDateString('en-BT', { day: 'numeric', month: 'short', year: 'numeric' })
+    }));
+  } catch (e) {}
+
+  if (pct === 100) launchConfetti();
 }
 
+// ── RESET QUIZ ──
 function resetQuiz() {
-  document.getElementById("quiz-results").style.display = "none";
-  document.getElementById("quiz-start").style.display = "block";
+  document.getElementById('quiz-results').style.display = 'none';
+  document.getElementById('quiz-start').style.display = 'block';
+  document.getElementById('quiz-nav-buttons').style.display = 'none';
 
-  // Clean up prev button so it doesn't duplicate on next run
-  const prevBtn = document.getElementById("q-prev-btn");
+  const prevBtn = document.getElementById('q-prev-btn');
   if (prevBtn) prevBtn.remove();
-
-  currentQ = 0;
-  score = 0;
+  const ptsSummary = document.getElementById('pts-summary');
+  if (ptsSummary) ptsSummary.remove();
+  currentQ = 0; score = 0; totalPoints = 0; streak = 0; bestStreak = 0;
   answers = [];
-  answeredQuestions = [];
+  answeredQuestions = new Array(QUESTIONS.length).fill(null);
 }
 
-// ══ LAST QUIZ RESULT BANNER (on page load) ══
-document.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem('sbb_last_quiz');
-  if (!saved) return;
-
-  const r = JSON.parse(saved);
-  const banner = document.createElement('div');
-  banner.id = 'prev-score-banner';
-  banner.innerHTML = `
-    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
-      <span style="color:#c9a84c; font-family:'Cinzel',serif; font-size:12px; letter-spacing:1px;">LAST QUIZ RESULT</span>
-      <button onclick="document.getElementById('prev-score-banner').remove()" style="background:transparent; border:none; color:#a89e84; cursor:pointer; font-size:14px; padding:0;">✕</button>
-    </div>
-    <div>Score: <strong style="color:#c9a84c">${r.score}/${r.total} (${r.percent}%)</strong></div>
-    <div style="font-size:11px;">${r.date}</div>
-  `;
-  banner.style.cssText = `
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: rgba(10,8,2,0.95);
-    border: 1px solid rgba(201,168,76,0.4);
-    border-left: 4px solid #c9a84c;
-    border-radius: 10px;
-    padding: 14px 18px;
-    font-size: 13px;
-    color: #a89e84;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-    max-width: 320px;
-  `;
-  document.body.appendChild(banner);
-});
-
-// ══ SONAM MODAL ══
+// ── SONAM MODAL ──
 function openSonamModal() {
   const overlay = document.getElementById('sonam-modal-overlay');
   overlay.style.display = 'block';
@@ -520,5 +603,362 @@ function closeSonamModal() {
 }
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeSonamModal();
+  if (e.key === 'Escape') {
+    closeSonamModal();
+    closeSheetModal();
+  }
 });
+// ══════════════════════════════════════════════
+// ── SINGLE DOMContentLoaded — all init here ──
+// ══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+
+  // 1. Show quiz invite toast after 3s (bottom right)
+  setTimeout(() => showToastOnHome(), 3000);
+
+  // 2. Welcome / Welcome Back toast (top center)
+  let hasVisited = false;
+  try { hasVisited = localStorage.getItem('sbb_visited'); } catch(e) {}
+
+  const msg = hasVisited
+    ? '👋 Welcome Back to SmartBudget Bhutan!'
+    : '🎉 Welcome to SmartBudget Bhutan!';
+  const sub = hasVisited
+    ? 'Great to see you again. Keep building those financial habits!'
+    : 'Your journey to financial resilience starts here.';
+
+  const welcomeToast = document.createElement('div');
+  welcomeToast.id = 'welcome-toast';
+  welcomeToast.style.cssText = `
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(12,9,2,0.97);
+    border: 1px solid rgba(201,168,76,0.35);
+    border-top: 3px solid #c9a84c;
+    border-radius: 12px;
+    padding: 16px 40px 16px 20px;
+    z-index: 9998;
+    min-width: 280px;
+    max-width: 360px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+  `;
+  welcomeToast.innerHTML = `
+    <div style="font-family:'Cinzel',serif; color:#c9a84c; font-size:13px; letter-spacing:1px; margin-bottom:5px;">${msg}</div>
+    <div style="font-size:12px; color:#a89e84; line-height:1.55;">${sub}</div>
+    <button onclick="document.getElementById('welcome-toast').remove()" style="
+      position:absolute; top:8px; right:10px;
+      background:transparent; border:none;
+      color:#a89e84; cursor:pointer; font-size:13px;">✕</button>
+  `;
+  document.body.appendChild(welcomeToast);
+  setTimeout(() => {
+    const el = document.getElementById('welcome-toast');
+    if (el) el.remove();
+  }, 5000);
+
+  try { localStorage.setItem('sbb_visited', 'true'); } catch(e) {}
+
+  // 3. Last quiz result banner (bottom LEFT — no clash with quiz toast)
+  let saved = null;
+  try { saved = localStorage.getItem('sbb_last_quiz'); } catch(e) { return; }
+  if (!saved) return;
+
+  let r;
+  try { r = JSON.parse(saved); } catch(e) { return; }
+
+  const banner = document.createElement('div');
+  banner.id = 'prev-score-banner';
+  banner.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+      <span style="color:#c9a84c; font-family:'Cinzel',serif; font-size:12px; letter-spacing:1px;">LAST QUIZ RESULT</span>
+      <button onclick="document.getElementById('prev-score-banner').remove()" style="background:transparent; border:none; color:#a89e84; cursor:pointer; font-size:14px; padding:0;">✕</button>
+    </div>
+    <div>Score: <strong style="color:#c9a84c">${r.score}/${r.total} (${r.percent}%)</strong></div>
+    <div style="font-size:11px;">${r.date}</div>
+  `;
+  banner.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(10,8,2,0.95);
+    border: 1px solid rgba(201,168,76,0.4);
+    border-left: 4px solid #c9a84c;
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: #a89e84;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    max-width: 280px;
+  `;
+  document.body.appendChild(banner);
+
+   if (window.innerWidth <= 768) {
+    document.getElementById('mobile-scroll-hint').style.display = 'block';
+  }
+
+});
+
+// ══ FINANCIAL TOOLS ══
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── SWAP CURRENCIES ──
+function swapCurrencies() {
+  const fromEl = document.getElementById('currency-from');
+  const toEl   = document.getElementById('currency-to');
+  const temp   = fromEl.value;
+  fromEl.value = toEl.value;
+  toEl.value   = temp;
+}
+
+// ── CURRENCY CONVERTER ──
+async function convertCurrency() {
+  const amount    = parseFloat(document.getElementById('nu-amount').value);
+  const fromCur   = document.getElementById('currency-from').value;
+  const toCur     = document.getElementById('currency-to').value;
+  const resultBox = document.getElementById('converter-result');
+  const output    = document.getElementById('currency-output');
+  const rateNote  = document.getElementById('rate-note');
+
+  if (!amount || amount <= 0) {
+    output.innerHTML = '<div class="tool-error">Please enter a valid amount.</div>';
+    resultBox.classList.add('show'); return;
+  }
+  if (fromCur === toCur) {
+    output.innerHTML = '<div class="tool-error">Please select two different currencies.</div>';
+    resultBox.classList.add('show'); return;
+  }
+
+  output.innerHTML = '<div class="tool-loading">Fetching live rates…</div>';
+  resultBox.classList.add('show');
+
+const flagMap = {
+  BTN:'🇧🇹', USD:'🇺🇸', INR:'🇮🇳', AUD:'🇦🇺', EUR:'🇪🇺',
+  GBP:'🇬🇧', SGD:'🇸🇬', JPY:'🇯🇵', CAD:'🇨🇦', CHF:'🇨🇭',
+  CNY:'🇨🇳', AED:'🇦🇪', MYR:'🇲🇾', THB:'🇹🇭', KRW:'🇰🇷'
+};
+const nameMap = {
+  BTN:'Ngultrum', USD:'US Dollar',    INR:'Indian Rupee',
+  AUD:'Australian Dollar', EUR:'Euro', GBP:'British Pound',
+  SGD:'Singapore Dollar',  JPY:'Japanese Yen', CAD:'Canadian Dollar',
+  CHF:'Swiss Franc', CNY:'Chinese Yuan', AED:'UAE Dirham',
+  MYR:'Malaysian Ringgit', THB:'Thai Baht', KRW:'Korean Won'
+};
+const symMap = {
+  BTN:'Nu.', USD:'$',  INR:'₹',  AUD:'A$', EUR:'€',
+  GBP:'£',  SGD:'S$', JPY:'¥',  CAD:'C$', CHF:'Fr',
+  CNY:'¥',  AED:'د.إ', MYR:'RM', THB:'฿', KRW:'₩'
+};
+
+  try {
+    const apiFrom = fromCur === 'BTN' ? 'INR' : fromCur;
+    const res  = await fetch(`https://api.exchangerate-api.com/v4/latest/${apiFrom}`);
+    const data = await res.json();
+    const apiTo    = toCur === 'BTN' ? 'INR' : toCur;
+    const rate     = data.rates[apiTo];
+    const converted = (amount * rate).toFixed(2);
+
+    output.innerHTML = `
+      <div class="currency-item">
+        <div class="currency-flag">${flagMap[fromCur]}</div>
+        <div class="currency-amount">${symMap[fromCur]} ${Number(amount).toLocaleString('en-IN')}</div>
+        <div class="currency-label">${nameMap[fromCur]}</div>
+      </div>
+      <div class="currency-item">
+        <div class="currency-flag">${flagMap[toCur]}</div>
+        <div class="currency-amount">${symMap[toCur]} ${Number(converted).toLocaleString('en-IN')}</div>
+        <div class="currency-label">${nameMap[toCur]}</div>
+      </div>`;
+    rateNote.textContent = `Rate: 1 ${fromCur} = ${rate.toFixed(4)} ${toCur}  ·  Live exchange rate`;
+
+  } catch(e) {
+const fallback = {
+  BTN: { USD:0.012, INR:1.0,  AUD:0.018, EUR:0.011, GBP:0.0094, SGD:0.016, JPY:1.78,  CAD:0.016, CHF:0.010, CNY:0.086, AED:0.044, MYR:0.056, THB:0.41,  KRW:15.9  },
+  USD: { BTN:84.0, INR:84.0,  AUD:1.53,  EUR:0.92,  GBP:0.79,   SGD:1.34,  JPY:149.5, CAD:1.36,  CHF:0.89,  CNY:7.24,  AED:3.67,  MYR:4.72,  THB:35.1,  KRW:1340  },
+  INR: { BTN:1.0,  USD:0.012, AUD:0.018, EUR:0.011, GBP:0.0094, SGD:0.016, JPY:1.78,  CAD:0.016, CHF:0.010, CNY:0.086, AED:0.044, MYR:0.056, THB:0.41,  KRW:15.9  },
+  AUD: { BTN:55.0, USD:0.65,  INR:55.0,  EUR:0.60,  GBP:0.52,   SGD:0.88,  JPY:97.7,  CAD:0.89,  CHF:0.58,  CNY:4.73,  AED:2.40,  MYR:3.08,  THB:22.9,  KRW:875   },
+  EUR: { BTN:91.0, USD:1.08,  INR:91.0,  AUD:1.66,  GBP:0.86,   SGD:1.45,  JPY:161.5, CAD:1.47,  CHF:0.97,  CNY:7.83,  AED:3.97,  MYR:5.10,  THB:37.9,  KRW:1447  },
+  GBP: { BTN:106., USD:1.27,  INR:106.,  AUD:1.94,  EUR:1.17,   SGD:1.69,  JPY:188.5, CAD:1.71,  CHF:1.13,  CNY:9.14,  AED:4.63,  MYR:5.95,  THB:44.2,  KRW:1688  },
+  SGD: { BTN:62.5, USD:0.74,  INR:62.5,  AUD:1.14,  EUR:0.69,   GBP:0.59,  JPY:111.4, CAD:1.01,  CHF:0.66,  CNY:5.40,  AED:2.74,  MYR:3.52,  THB:26.1,  KRW:998   },
+  JPY: { BTN:0.56, USD:0.0067,INR:0.56,  AUD:0.010, EUR:0.0062, GBP:0.0053,SGD:0.0090,CAD:0.0091,CHF:0.0060,CNY:0.048, AED:0.025, MYR:0.032, THB:0.235, KRW:8.97  },
+  CAD: { BTN:61.8, USD:0.73,  INR:61.8,  AUD:1.12,  EUR:0.68,   GBP:0.58,  SGD:0.99,  JPY:110.0, CHF:0.65,  CNY:5.33,  AED:2.70,  MYR:3.47,  THB:25.8,  KRW:985   },
+  CHF: { BTN:94.5, USD:1.12,  INR:94.5,  AUD:1.72,  EUR:1.03,   GBP:0.88,  SGD:1.51,  JPY:168.0, CAD:1.53,  CNY:8.14,  AED:4.12,  MYR:5.30,  THB:39.3,  KRW:1503  },
+  CNY: { BTN:11.6, USD:0.138, INR:11.6,  AUD:0.211, EUR:0.128,  GBP:0.109, SGD:0.185, JPY:20.65, CAD:0.188, CHF:0.123, AED:0.507, MYR:0.652, THB:4.84,  KRW:185   },
+  AED: { BTN:22.9, USD:0.272, INR:22.9,  AUD:0.417, EUR:0.252,  GBP:0.216, SGD:0.365, JPY:40.7,  CAD:0.371, CHF:0.243, CNY:1.97,  MYR:1.285, THB:9.56,  KRW:365   },
+  MYR: { BTN:17.8, USD:0.212, INR:17.8,  AUD:0.325, EUR:0.196,  GBP:0.168, SGD:0.284, JPY:31.7,  CAD:0.289, CHF:0.189, CNY:1.533, AED:0.778, THB:7.44,  KRW:284   },
+  THB: { BTN:2.39, USD:0.0285,INR:2.39,  AUD:0.0436,EUR:0.0264, GBP:0.0226,SGD:0.0382,JPY:4.26,  CAD:0.0388,CHF:0.0254,CNY:0.206, AED:0.105, MYR:0.134, KRW:38.2  },
+  KRW: { BTN:0.063,USD:0.00075,INR:0.063,AUD:0.00114,EUR:0.00069,GBP:0.00059,SGD:0.001,JPY:0.1115,CAD:0.00102,CHF:0.00067,CNY:0.0054,AED:0.00274,MYR:0.00352,THB:0.0262 }
+};
+    const rate      = fallback[fromCur]?.[toCur] ?? 1;
+    const converted = (amount * rate).toFixed(2);
+
+    output.innerHTML = `
+      <div class="currency-item">
+        <div class="currency-flag">${flagMap[fromCur]}</div>
+        <div class="currency-amount">${symMap[fromCur]} ${Number(amount).toLocaleString('en-IN')}</div>
+        <div class="currency-label">${nameMap[fromCur]}</div>
+      </div>
+      <div class="currency-item">
+        <div class="currency-flag">${flagMap[toCur]}</div>
+        <div class="currency-amount">${symMap[toCur]} ${Number(converted).toLocaleString('en-IN')}</div>
+        <div class="currency-label">${nameMap[toCur]}</div>
+      </div>`;
+    rateNote.textContent = 'Approximate rates used (live fetch unavailable).';
+  }
+}
+
+// ── SAVINGS CURRENCY HELPERS ──
+function getSavingsCurrencySymbol() {
+  const sel = document.getElementById('savings-currency');
+  if (!sel) return 'Nu.';
+  return sel.options[sel.selectedIndex].getAttribute('data-sym') || 'Nu.';
+}
+
+function updateSavingsCurrencyLabel() {
+  const sel = document.getElementById('savings-currency');
+  const label = document.getElementById('savings-income-label');
+  if (!sel || !label) return;
+  const sym = sel.options[sel.selectedIndex].getAttribute('data-sym');
+  const code = sel.value;
+  label.textContent = `Monthly Income (${sym} ${code})`;
+  // Clear previous result when currency changes
+  const result = document.getElementById('savings-result');
+  if (result) result.classList.remove('show');
+}
+
+
+function applyPreset() {
+  const val = document.getElementById('savings-preset').value;
+  if (val) document.getElementById('savings-pct').value = val;
+}
+
+function calculateSavings() {
+  const income = parseFloat(document.getElementById('monthly-income').value);
+  const pct = parseFloat(document.getElementById('savings-pct').value);
+  const sym = getSavingsCurrencySymbol();
+  const resultBox = document.getElementById('savings-result');
+  const output = document.getElementById('savings-output');
+  const note = document.getElementById('savings-note');
+  const tip = document.getElementById('savings-tip');
+
+  if (!income || income <= 0 || !pct || pct <= 0 || pct > 100) {
+    output.innerHTML = '<div class="tool-error">Please enter valid income and percentage.</div>';
+    resultBox.classList.add('show'); return;
+  }
+
+  const monthly = income * (pct / 100);
+  const fmt = n => sym + ' ' + Math.round(n).toLocaleString('en-IN');
+
+  output.innerHTML = `
+    <div class="savings-item"><div class="savings-year">1 Year</div><div class="savings-amount">${fmt(monthly * 12)}</div></div>
+    <div class="savings-item"><div class="savings-year">3 Years</div><div class="savings-amount">${fmt(monthly * 36)}</div></div>
+    <div class="savings-item"><div class="savings-year">5 Years</div><div class="savings-amount">${fmt(monthly * 60)}</div></div>`;
+
+  note.textContent = `Saving ${fmt(monthly)} every month (${pct}% of ${fmt(income)})`;
+
+  tip.textContent = pct < 10
+    ? '💡 Try to save at least 10% — even small amounts grow over time!'
+    : pct < 20
+    ? '⭐ Good start! The recommended target is 20%. Can you increase a little more?'
+    : '🏆 Excellent! You are saving at or above the recommended 20% — keep it up!';
+
+  resultBox.classList.add('show');
+}
+
+// ── BUDGET CURRENCY HELPERS ──
+function getBudgetCurrencySymbol() {
+  const sel = document.getElementById('budget-currency');
+  if (!sel) return 'Nu.';
+  return sel.options[sel.selectedIndex].getAttribute('data-sym') || 'Nu.';
+}
+
+function updateBudgetCurrencyLabel() {
+  const sel = document.getElementById('budget-currency');
+  const label = document.getElementById('budget-income-label');
+  if (!sel || !label) return;
+  const sym = sel.options[sel.selectedIndex].getAttribute('data-sym');
+  const code = sel.value;
+  label.textContent = `Monthly Income (${sym} ${code})`;
+  // Recalculate immediately with new symbol if income already entered
+  calculateBudget();
+}
+
+
+function calculateBudget() {
+  const income = parseFloat(document.getElementById('budget-income').value);
+  const sym = getBudgetCurrencySymbol();
+  const tip = document.getElementById('budget-tip');
+  const fmt = n => sym + ' ' + Math.round(n).toLocaleString('en-IN');
+
+  if (!income || income <= 0) {
+    document.getElementById('needs-amount').textContent = sym + ' 0';
+    document.getElementById('wants-amount').textContent = sym + ' 0';
+    document.getElementById('savings-amount').textContent = sym + ' 0';
+    ['needs-bar','wants-bar','savings-bar'].forEach(id =>
+      document.getElementById(id).style.width = '0%');
+    tip.style.display = 'none';
+    return;
+  }
+
+  document.getElementById('needs-amount').textContent = fmt(income * 0.5);
+  document.getElementById('wants-amount').textContent = fmt(income * 0.3);
+  document.getElementById('savings-amount').textContent = fmt(income * 0.2);
+
+  setTimeout(() => {
+    document.getElementById('needs-bar').style.width = '50%';
+    document.getElementById('wants-bar').style.width = '30%';
+    document.getElementById('savings-bar').style.width = '20%';
+  }, 100);
+
+  tip.style.display = 'block';
+  tip.textContent = income <= 20000
+    ? `💡 Even saving ${fmt(income * 0.2)} monthly = ${fmt(income * 0.2 * 12)} in a year!`
+    : income <= 50000
+    ? `⭐ Put your ${fmt(income * 0.2)} savings into a separate account on payday.`
+    : `🏆 Consider putting part of your ${fmt(income * 0.2)} into fixed deposits or investments.`;
+}
+
+
+// ── SHEET PREVIEW MODAL (full lightbox) ──
+function openSheetModal(src, title) {
+  const overlay = document.getElementById('sheet-modal-overlay');
+  const img     = document.getElementById('sheet-modal-img');
+  const titleEl = document.getElementById('sheet-modal-title');
+
+  titleEl.textContent = title;
+
+  // Show a loading state first
+  img.style.opacity = '0';
+  img.style.transform = 'scale(0.97)';
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+
+  // Fade image in once loaded
+  img.onload = function () {
+    img.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    img.style.opacity = '1';
+    img.style.transform = 'scale(1)';
+  };
+  img.onerror = function () {
+    img.style.opacity = '1';
+  };
+  img.src = src;
+}
+
+function closeSheetModal() {
+  const overlay = document.getElementById('sheet-modal-overlay');
+  overlay.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+
