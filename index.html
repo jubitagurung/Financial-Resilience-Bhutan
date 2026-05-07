@@ -22,22 +22,21 @@
     </button>
 
     <div class="nav-menu" id="nav-menu">
-      <a onclick="showSection('home')" id="nav-home" class="active-link">Home</a>
-      <a onclick="showSection('dashboard')" id="nav-dashboard">Dashboard</a>
-      <a onclick="showSection('budget')" id="nav-budget">Budget</a>
-      <a onclick="showSection('planner')" id="nav-planner">Budget Planner</a>
-      <a onclick="showSection('quiz')" id="nav-quiz">Quiz</a>
-      <a onclick="showSection('tools')" id="nav-tools">Tools</a>
-      <a onclick="showSection('about')" id="nav-about">About</a>
+<a href="#" onclick="showSection('home'); return false;" id="nav-home" class="active-link" role="button">Home</a>
+<a href="#" onclick="showSection('dashboard'); return false;" id="nav-dashboard" role="button">Dashboard</a>
+<a href="#" onclick="showSection('budget'); return false;" id="nav-budget" role="button">Budget</a>
+<a href="#" onclick="showSection('planner'); return false;" id="nav-planner" role="button">SBB Planner</a>
+<a href="#" onclick="showSection('quiz'); return false;" id="nav-quiz" role="button">Quiz</a>
+<a href="#" onclick="showSection('tools'); return false;" id="nav-tools" role="button">Tools</a>
+<a href="#" onclick="showSection('about'); return false;" id="nav-about" role="button">About</a>
    
     </div>
   </nav>
 
   <!-- ══ HOME ══ -->
   <div class="overlay active" id="home">
-    <h1>Financial Resilience at the Household Level</h1>
-    <p class="subtitle"><strong>Intern Project: Smart Budget Bhutan</strong></p>
-
+   <h1>Building More Financial Resilience at the Household Level</h1>
+<p class="subtitle"><strong>Intern Project: Smart Budget Bhutan (SBB)</strong></p>
     <!-- QUIZ INVITE TOAST -->
     <div class="quiz-toast" id="quiz-toast">
       <button class="toast-dismiss" onclick="dismissToast()" aria-label="Dismiss">✕</button>
@@ -73,8 +72,7 @@
     <div class="home-unified-frame">
 
       <div class="huf-intro">
-        <h2 class="story-title">Why I Built SmartBudget Bhutan</h2>
-
+     <h2 class="story-title">Why I Built the Smart Budget Bhutan (SBB) Platform</h2>
         <div class="huf-quote-box">
           Financial resilience is not about how much you earn:
           <span style="color:var(--gold); font-style:italic;">it is about how well you manage what you have.</span>
@@ -87,9 +85,9 @@
             relied on pocket money from our parents along with a small monthly stipend of around Nu. 2,500.</p>
           <p>Like many others, I often ran out of money in the middle of the month. Even small needs of Nu. 100 or Nu.
             200 became difficult to manage when my bank balance reached zero.</p>
-          <p>This experience inspired me to create SmartBudget Bhutan, a platform designed to help students, employees,
+          <p>This experience inspired me to create the Smart Budget Bhutan (SBB) platform, designed to help students, employees,
             and individuals build stronger financial habits and make better financial decisions.</p>
-          <p>Through this website, I aimed to promote financial awareness by providing practical tools such as budget
+          <p>Through the SBB platform, I aimed to promote financial awareness by providing practical tools such as budget
             planner templates, basic budgeting methods, interactive quizzes, and simple learning resources.</p>
         </div>
 
@@ -106,11 +104,23 @@
   <section id="dashboard">
     <h2>Financial Resilience Dashboard</h2>
     <p class="section-tagline"><strong>Interactive Tableau Visualization</strong></p>
-    <div class="dashboard-desc">
-      This dashboard visualizes real household financial data collected from urban Bhutanese families. It explores
-      income distribution, monthly expense breakdowns, and savings behaviour across different income brackets. Use it to
-      identify patterns, stress points, and opportunities for financial improvement
-      in Bhutanese households. Filter by income group or expense category to drill deeper into the data.
+<div class="dashboard-desc">
+      With the goal of understanding how urban Bhutanese households manage their finances, I designed a structured 
+      survey covering income sources, monthly expenses, saving habits, and financial stress points. Over the next 
+      <strong>2 weeks</strong>, I reached out to as many people as I could across urban Bhutan and was able to 
+      collect <strong>47 responses</strong> from real households.
+      <br><br>
+      You can 
+      <a href="https://your-google-form-link-here" target="_blank" style="color:var(--gold); text-decoration:underline; font-weight:700;">
+        view the full survey here ↗
+      </a> 
+      to see exactly what questions were asked and how the data was structured.
+      <br><br>
+      With this data in hand, I built the Tableau dashboard below to turn those raw responses into clear, 
+      visual insights, exploring income distribution, monthly expense breakdowns, and savings behaviour 
+      across different income brackets. Use it to identify patterns, stress points, and opportunities for 
+      financial improvement in Bhutanese households. Filter by income group or expense category to drill 
+      deeper into the data.
     </div>
 
   <div class="tableau-container">
@@ -153,11 +163,19 @@
   <section id="budget">
     <h2>Budget Examples</h2>
     <p class="section-tagline"><strong>Monthly Household Budgets in Bhutan</strong></p>
-    <p class="budget-intro">
-      These sample budgets are based on real urban Bhutanese household data. Each plan follows the
-      recommended <strong>50/30/20 rule</strong> 50% needs, 30% wants, 20% savings adapted for local income levels and
-      costs of living.
+<p class="budget-intro">
+      After analysing the survey responses, one of the clearest findings was that most households 
+      struggled not because they lacked income, but because they had no simple framework to guide 
+      how they spent and saved it. This told me that what people needed most was a straightforward, 
+      easy-to-remember budgeting rule they could apply immediately.
+      <br><br>
+      That is when I discovered the <strong>50/30/20 rule</strong> a proven budgeting method that 
+      divides your monthly income into three clear categories: <strong>50% for needs</strong> such as 
+      rent, food, and utilities, <strong>30% for wants</strong> such as dining out and entertainment, 
+      and <strong>20% for savings</strong>. The sample budgets below are based on real urban Bhutanese 
+      household data and show how this rule applies across different income levels.
     </p>
+
     <div class="budget-rule">Recommended Framework: 50% Needs, 30% Wants, 20% Savings</div>
     <div class="budget-container">
       <div class="budget-card low" onclick="showSection('planner')" style="cursor:pointer;" title="Open Budget Planner">
@@ -234,13 +252,13 @@
 
   <!-- ══ BUDGET PLANNER ══ -->
   <section id="planner">
-    <h2>Budget Planner</h2>
-    <p class="section-tagline"><strong>SmartBudget Planner, Interactive Sample & Free Download</strong></p>
+<h2>SBB Planner</h2>
+<p class="section-tagline"><strong>SmartBudget Planner, Interactive Sample & Free Download</strong></p>
   <div class="planner-master-box">
 
   <!-- 1. INTRO STRIP -->
   <div class="pmb-intro">
-    <strong>As a student, I personally experienced running out of money before the end of the month. I created this planner so that other people don't have to go through that same stress. It is free, practical, and designed for real Bhutanese incomes.</strong>
+<strong>As a student, I personally experienced running out of money before the end of the month. I created the SBB Planner so that other people don't have to go through that same stress. It is free, practical, and designed for real Bhutanese incomes.</strong>
   </div>
 
   <!-- 2. WELCOME BANNER (shown after quiz by JS) -->
@@ -253,37 +271,28 @@
     <div class="pmb-download-left">
       <div class="pmb-dl-icon">📊</div>
       <div>
-        <div class="pmb-dl-title">SmartBudget Planner Sample</div>
-        <div class="pmb-dl-desc">Full Excel workbook with 6 sheets: Cover, Budget Planner, Dashboard, Expense
+       <div class="pmb-dl-title">SmartBudget Planner Sample</div>
+       <div class="pmb-dl-desc">Full Excel workbook with 6 sheets: Cover, Budget Planner, Dashboard, Expense
           Tracker, Savings Goals, and Tips &amp; Principles</div>
-      </div>
     </div>
+
     <a class="planner-dl-btn" href="SmartBudget_Planner_Sample.xlsx" download>⬇ Download Free</a>
   </div>
 
   <!-- 4. SONAM STORY QUOTE -->
-  <div class="pmb-section pmb-story" id="sonam-story-trigger"
-    onclick="openSonamModal()" title="Click to read Sonam's full story">
+<div class="pmb-section pmb-story" id="sonam-story-trigger"
+    onclick="openSonamModal()" title="Click to read this budgeting story">
     <span class="pmb-story-quote">"Why can't I save anything?"</span>
-    <span class="pmb-story-text"> — Sonam Choden, 27, Thimphu. She used this planner and saved
-      <strong>Nu. 18,000 in 3 months.</strong>
+    <span class="pmb-story-text"> — A common question heard during the survey. One participant 
+      who started using the SBB Planner went on to save
+      <strong>Nu. 18,000 in just 3 months.</strong>
     </span>
-    <span class="pmb-story-cta">Read her story →</span>
-  </div>
-
-  <!-- 5. CTA -->
-  <div class="pmb-section pmb-cta">
-    <div class="pmb-cta-title">Ready to take control of your finances?</div>
-    <div class="pmb-cta-sub">Download the free SmartBudget Global Planner and start your journey today, just like these people did.</div>
-    <a class="planner-dl-btn" href="SmartBudget_Global_planner.xlsx" download
-       onclick="if(!this.href||this.href.endsWith('undefined')){event.preventDefault();alert('Download file coming soon! Contact gurungjubita212@gmail.com to request a copy.');}">
-      ⬇ Download Free
-    </a>  
+    <span class="pmb-story-cta">Read the full story →</span>
   </div>
 
   <!-- 6. HOW TO USE -->
   <div class="pmb-section">
-    <div class="pmb-how-title">How to Use This Workbook</div>
+<div class="pmb-how-title">How to Use the SBB Planner</div>
     <div class="pmb-steps">
       <div class="pmb-step">
         <div class="pmb-step-num">1</div>
@@ -311,10 +320,14 @@
           adapted for Bhutanese households.</div>
       </div>
 
+        <div class="pmb-step">
+        <div class="pmb-step-num">6</div>
+        <div><strong>Review Monthly</strong>: At the end of each month, compare your budgeted amounts against your actual spending. Adjust next month's plan based on what you overspent or underspent.</div>
+      </div>
       <div class="pmb-step">
-    <div class="pmb-step-num">7</div>
-    <div><strong>Currency Converter</strong>: Need to check exchange rates? Head to the <a onclick="showSection('tools')" style="color:var(--gold); cursor:pointer; text-decoration:underline;">Tools section</a> on this website for a live currency converter, useful when planning expenses across borders.</div>
-  </div>
+        <div class="pmb-step-num">7</div>
+        <div><strong>Currency Converter</strong>: Need to check exchange rates? Head to the <a onclick="showSection('tools')" style="color:var(--gold); cursor:pointer; text-decoration:underline;">Tools section</a> on this website for a live currency converter, useful when planning expenses across borders.</div>
+      </div>
 </div>
     </div>
   </div>
@@ -323,7 +336,7 @@
 
     <!-- SHEET PREVIEWS -->
     <div class="planner-sheets-wrap">
-      <h3>What's Inside: Sheet by Sheet</h3>
+     <h3>What's Inside the SBB Planner: Sheet by Sheet</h3>
       <div class="planner-sheets-visual">
 
   <!-- Cover -->
@@ -369,7 +382,7 @@
     </div>
     <div class="psv-info">
       <div class="psv-label">Expense Tracker</div>
-      <div class="psv-desc">Daily log for every Ngultrum spent — date, category, and Needs/Wants/Savings tag.</div>
+      <div class="psv-desc">Daily log for every Ngultrum spent date, category, and Needs/Wants/Savings tag.</div>
     </div>
   </div>
 
@@ -401,7 +414,7 @@
 
     <!-- SONAM 5-STEP PLAN -->
     <div class="planner-steps-wrap">
-      <h3>Sonam's 5-Step Savings Starter Plan</h3>
+    <h3>5-Step Savings Starter Plan</h3>
       <div class="sonam-steps">
         <div class="sonam-step"><span class="sonam-num">1</span><span>Calculate your real income and all monthly
             expenses, fixed and variable.</span></div>
@@ -431,10 +444,17 @@
     <p class="quiz-tagline">Based on Real Survey Data from Urban Bhutanese Households</p>
     <!-- START SCREEN -->
     <div id="quiz-start">
-      <div class="quiz-start-card">
-        <p>During my internship, I surveyed real urban Bhutanese households and uncovered some surprising patterns in
-         how families manage money. These 12 questions, including real-life scenarios are drawn directly from those
-         findings. See how your financial knowledge stacks up against real local data.</p>
+<div class="quiz-start-card">
+        <p>One of the most important findings from the survey was that many urban Bhutanese households 
+        were struggling financially not due to low income, but due to a lack of basic financial knowledge 
+        things like how to allocate income, what an emergency fund is, and how to avoid lifestyle creep. 
+        <br><br>
+        That finding is exactly why I created this quiz. It is designed to help you test your own financial 
+        knowledge, learn something new from every question, and come back to try again as many times as you 
+        need. The more you practise, the stronger your financial resilience becomes. 
+        <br><br>
+        The 12 questions below are drawn directly from real patterns and gaps identified in the survey data 
+        from urban Bhutanese households, including real-life scenarios you may recognise from your own life.</p>
         <button class="btn-primary" onclick="startQuiz()">Begin Quiz</button>
       </div>
     </div>
@@ -443,7 +463,7 @@
     <div id="quiz-question">
       <div class="quiz-progress-bar-wrap">
         <div class="quiz-progress-label">
-          <span id="q-counter">Question 1 of 8</span>
+          <span id="q-counter">Question 1 of 12</span>
           <span id="q-score-live">Score: 0</span>
         </div>
         <div class="quiz-progress-track">
@@ -502,7 +522,7 @@
 
 <div id="quiz-nav-buttons" style="display:none; gap:12px; justify-content:center; margin-top:40px;">
   <button class="nav-btn" onclick="showSection('planner')">← Previous</button>
-  <button class="nav-btn" onclick="showSection('about')">Next →</button>
+  <button class="nav-btn" onclick="showSection('tools')">Next →</button>
 </div>
 
 </div>
@@ -511,9 +531,20 @@
     <!-- ══ TOOLS ══ -->
 <section id="tools">
   <h2>Financial Tools</h2>
-  <p class="section-tagline"><strong>Currency Converter · Savings Calculator · 50/30/20 Calculator</strong></p>
+    <p class="section-tagline"><strong>Currency Converter · Savings Calculator · 50/30/20 Calculator</strong></p>
+
+    <div class="dashboard-desc">
+      Alongside the research and data work, I also built these three interactive financial tools 
+      as a hands-on exercise in JavaScript development. Building them from scratch taught me a great 
+      deal — including how to fetch and handle live data from external APIs, how to validate and 
+      respond to user input dynamically, and how to build clean, interactive interfaces entirely 
+      through code. It was one of the most practical and rewarding parts of the whole project, and 
+      I hope you find the tools just as useful to use as they were educational to build.
+    </div>
 
   <!-- TABS -->
+
+    <!-- TABS -->
   <div class="tool-tabs">
     <button class="tab-btn active" onclick="switchTab('converter', this)">🔄 Currency Converter</button>
     <button class="tab-btn" onclick="switchTab('savings', this)">💰 Savings Calculator</button>
@@ -734,15 +765,18 @@
     <h2>About This Project</h2>
     <p class="section-tagline">Research · Data · Impact</p>
     <div class="about-container">
-      <div class="about-card" onclick="showSection('dashboard')" style="cursor:pointer;" title="View Dashboard">
-        <h3>Project Background</h3>
-        <p>I am an intern at Bhutan Data Scientist Pvt. Ltd. (BDS), working on financial resilience at the household
-          level in urban Bhutan.</p>
-        <p>This project analyzes real household data to understand income, expenses, savings behaviour, and financial
-          stress points among Bhutanese families with the goal of making insights accessible and actionable.</p>
+    <div class="about-card">
+          <h3>Project Background</h3>
+        <p>Smart Budget Bhutan (SBB) was developed as a research and data project at Bhutan Data Scientist 
+        Pvt. Ltd. (BDS), focused on understanding financial resilience at the household level in urban Bhutan.</p>
+        <p>The project analyses real household data to understand income, expenses, savings behaviour, and 
+        financial stress points among Bhutanese families with the goal of turning those insights into 
+        practical tools and resources that are accessible and actionable for everyone.</p>
       </div>
-      <div class="about-card" onclick="showSection('dashboard')" style="cursor:pointer;" title="View Dashboard">
-        <h3>Objectives</h3>
+
+      
+        <div class="about-card">
+          <h3>Objectives</h3>
         <ul>
           <li>Identify key financial challenges in urban Bhutanese households</li>
           <li>Visualize income, expense, and saving patterns clearly</li>
@@ -751,8 +785,7 @@
           <li>Make complex financial insights accessible to everyone</li>
         </ul>
       </div>
-      <div class="about-card" onclick="showSection('dashboard')" style="cursor:pointer;" title="View Dashboard">
-        <h3>Tools & Technology</h3>
+      <div class="about-card">        <h3>Tools & Technology</h3>
         <p style="margin-bottom:14px">This project uses a modern data-to-web pipeline to turn raw household data into
           clear, actionable insights.</p>
         <p style="color:var(--text); font-size:13px; margin-bottom:8px">Data & Visualization</p>
@@ -896,12 +929,16 @@
   <div class="contact-grid">
 
     <!-- Your Card -->
-    <div class="contact-card">
-      <div class="contact-role">Project Intern</div>
+<div class="contact-card">
+      <div class="contact-role">Project Creator</div>
       <div class="contact-name">Jubita Gurung</div>
-      <div class="contact-detail">📍 Gedu College of Business Studies</div>
-      <div class="contact-detail">✉️ gurungjubita212@gmail.com</div>
-      <div class="contact-detail">📞 +975 77490081</div>
+      <div class="contact-detail">📍 Gedu College of Business Studies, Bhutan</div>
+      <div class="contact-detail">
+        🔗 <a href="https://www.linkedin.com/in/jubita-gurung-263bb5396/" 
+        target="_blank" rel="noopener"
+        style="color:var(--gold); text-decoration:underline;">
+        Connect on LinkedIn ↗</a>
+      </div>
     </div>
 
     <!-- BDS Card -->
@@ -910,8 +947,8 @@
       <div class="contact-name">Bhutan DataScientist Pvt. Ltd.</div>
       <div class="contact-detail">📍 Thimphu, Bhutan</div>
       <div class="contact-detail">✉️ info@datascientists.com</div>
-      <div class="contact-detail">🌐 <a href="https://datascientists.bt/" target="_blank" 
-        style="color:var(--gold);">www.bds.bt</a></div>
+      <div class="contact-detail">🌐 <a href="https://datascientists.bt" target="_blank" 
+        style="color:var(--gold);">www.datascientists.bt</a></div>
     </div>
 
   </div>
@@ -946,8 +983,8 @@
     ">✕</button>
 
 
-    <div style="font-size:11px; letter-spacing:3px; color:#e25f0e; font-family:'Cinzel',serif; text-transform:uppercase; margin-bottom:6px;">Sonam's Story</div>
-    <div style="font-family:'Cinzel',serif; color:#c9a84c; font-size:16px; letter-spacing:1px; margin-bottom:20px;">— Sonam Choden, 27, Thimphu</div>
+    <div style="font-size:11px; letter-spacing:3px; color:#e25f0e; font-family:'Cinzel',serif; text-transform:uppercase; margin-bottom:6px;">A Real Budgeting Story</div>
+    <div style="font-family:'Cinzel',serif; color:#c9a84c; font-size:16px; letter-spacing:1px; margin-bottom:20px;">— From the SBB Survey Findings</div>
 
 <iframe
   src="Sonam's Story.pdf"
