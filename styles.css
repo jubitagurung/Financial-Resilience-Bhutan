@@ -685,9 +685,11 @@ section, .overlay { display: none; }
 .quiz-next-btn:hover { background: var(--gold); color: var(--deep); }
 
 /* ── RESULTS SCREEN ── */
-#quiz-results { display: none; max-width: 700px; width: 100%; text-align: center; }
+#quiz-results { display: none; max-width: 700px; width: 100%; text-align: center; text-align: center; }
 
 .quiz-score-ring-wrap { margin-bottom: 28px; }
+#quiz-results { max-width: 700px; width: 100%; text-align: center; }
+
 
 .quiz-score-circle {
   width: 140px; height: 140px;
@@ -1846,4 +1848,11 @@ footer span { color: var(--gold); }
     text-align: center;
   }
 }
+
+/* ── QUIZ RESULTS VISIBILITY FIX ── */
+#quiz-results[style*="block"] {
+  display: block !important;
+}
+
+
 
