@@ -453,7 +453,25 @@
         <br><br>
         The 12 questions below are drawn directly from real patterns and gaps identified in the survey data 
         from urban Bhutanese households, including real-life scenarios you may recognise from your own life.</p>
-        <button class="btn-primary" onclick="startQuiz()">Begin Quiz</button>
+        <div style="margin-bottom: 16px;">
+  <input type="text" id="player-name-input" maxlength="30" placeholder="Enter your name…" style="
+    width: 100%;
+    padding: 12px 18px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 6px;
+    color: #f0ead6;
+    font-size: 15px;
+    font-family: 'Lato', sans-serif;
+    outline: none;
+    text-align: center;
+    letter-spacing: 1px;
+  ">
+  <div id="name-error" style="color:#e25f0e; font-size:12px; margin-top:6px; display:none;">
+    Please enter your name to begin.
+  </div>
+</div>
+<button class="btn-primary" onclick="startQuizWithName()">Begin Quiz</button>
       </div>
     </div>
 
@@ -479,7 +497,7 @@
     </div>
 
     <!-- RESULTS SCREEN -->
-    <div id="quiz-results">
+    <div id="quiz-results" style="width:100%; max-width:700px;">
       <div class="quiz-score-ring-wrap">
         <div class="quiz-score-circle">
           <div class="quiz-score-number" id="result-score">0/8</div>
@@ -495,9 +513,14 @@
         <div id="breakdown-list"></div>
       </div>
 
-      <!-- DYNAMIC PLANNER PUSH BLOCK (injected by JS after quiz) -->
-      <div class="planner-push-block" id="planner-push-block">
-        <div class="ppb-badge">Step 3 of 3: Final Step</div>
+     <div style="text-align:center; margin-top: 12px;">
+        <button class="quiz-retry-btn" onclick="resetQuiz()">Try Again</button>
+        <button class="quiz-retry-btn" onclick="showMyHistory()" style="margin-left:10px;">My History</button>
+      </div>
+      <div id="history-container" style="max-width:700px; width:100%; margin-top:16px;"></div>
+
+      <!-- DYNAMIC PLANNER PUSH BLOCK -->
+      <div class="planner-push-block" id="planner-push-block" style="margin-top:20px;">
         <div class="ppb-title" id="ppb-title">Now Put Your Knowledge to Work</div>
         <div class="ppb-desc" id="ppb-desc">Use the SmartBudget Planner to apply what you've learned.</div>
         <div class="ppb-features">
@@ -511,9 +534,6 @@
         </button>
       </div>
 
-      <div style="text-align:center; margin-top: 12px;">
-        <button class="quiz-retry-btn" onclick="resetQuiz()">Try Again</button>
-      </div>
 
     </div>
 <div style="margin-top:32px;">
