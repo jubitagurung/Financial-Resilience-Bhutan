@@ -6,7 +6,6 @@ This project focuses on improving financial awareness and resilience by helping 
 
 ## Live Demo
 [Click here to view the website]  
-https://aesthetic-florentine-cd71f0.netlify.app/
 
 ## Tools Used
 - Excel / VS Code  
