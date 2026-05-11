@@ -454,19 +454,10 @@
         The 12 questions below are drawn directly from real patterns and gaps identified in the survey data 
         from urban Bhutanese households, including real-life scenarios you may recognise from your own life.</p>
         <div style="margin-bottom: 16px;">
-  <input type="text" id="player-name-input" maxlength="30" placeholder="Enter your name…" style="
-    width: 100%;
-    padding: 12px 18px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(201,168,76,0.4);
-    border-radius: 6px;
-    color: #f0ead6;
-    font-size: 15px;
-    font-family: 'Lato', sans-serif;
-    outline: none;
-    text-align: center;
-    letter-spacing: 1px;
-  ">
+ <div>
+<input type="text" id="player-name-input" maxlength="30" placeholder="Enter your name…" class="quiz-name-input">
+</div>
+
   <div id="name-error" style="color:#e25f0e; font-size:12px; margin-top:6px; display:none;">
     Please enter your name to begin.
   </div>
@@ -496,6 +487,7 @@
       </div>
     </div>
 
+ 
     <!-- RESULTS SCREEN -->
     <div id="quiz-results" style="width:100%; max-width:700px;">
       <div class="quiz-score-ring-wrap">
@@ -507,34 +499,24 @@
         <div class="quiz-result-subtitle" id="result-subtitle"></div>
       </div>
       
+<div class="quiz-circle-btns">
+  <button class="quiz-circle-btn retry" onclick="resetQuiz()">
+    <span>🔄</span>
+    Try Again
+  </button>
+  <button class="quiz-circle-btn history" onclick="showMyHistory()">
+    <span>📋</span>
+    My History
+  </button>
+</div>
+<div id="history-container" style="max-width:700px; width:100%; margin-top:16px;"></div>
+
 
       <div class="quiz-result-breakdown" id="result-breakdown">
         <h4> Question Breakdown</h4>
         <div id="breakdown-list"></div>
       </div>
-
-     <div style="text-align:center; margin-top: 12px;">
-        <button class="quiz-retry-btn" onclick="resetQuiz()">Try Again</button>
-        <button class="quiz-retry-btn" onclick="showMyHistory()" style="margin-left:10px;">My History</button>
-      </div>
-      <div id="history-container" style="max-width:700px; width:100%; margin-top:16px;"></div>
-
-      <!-- DYNAMIC PLANNER PUSH BLOCK -->
-      <div class="planner-push-block" id="planner-push-block" style="margin-top:20px;">
-        <div class="ppb-title" id="ppb-title">Now Put Your Knowledge to Work</div>
-        <div class="ppb-desc" id="ppb-desc">Use the SmartBudget Planner to apply what you've learned.</div>
-        <div class="ppb-features">
-          <span class="ppb-feat">50/30/20 Template</span>
-          <span class="ppb-feat">Expense Tracker</span>
-          <span class="ppb-feat">Savings Goals</span>
-          <span class="ppb-feat">Free Download</span>
-        </div>
-        <button class="ppb-btn" onclick="showSection('planner')">
-          Explore Budget Planner →
-        </button>
-      </div>
-
-
+      
     </div>
 <div style="margin-top:32px;">
 
