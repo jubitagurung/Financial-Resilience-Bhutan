@@ -293,6 +293,22 @@ let bestStreak = 0;
 let answers = [];
 let answeredQuestions = [];
 
+function startQuizWithName() {
+  const input = document.getElementById('player-name-input');
+  const error = document.getElementById('name-error');
+  const name  = input.value.trim();
+
+  if (!name) {
+    error.style.display = 'block';
+    input.focus();
+    return;
+  }
+
+  error.style.display = 'none';
+  sessionStorage.setItem('sbb_player_name', name);
+  startQuiz();
+}
+
 // ── START ──
 function startQuiz() {
   currentQ = 0; score = 0; totalPoints = 0; streak = 0; bestStreak = 0;
@@ -301,10 +317,18 @@ function startQuiz() {
 
   document.getElementById('quiz-start').style.display = 'none';
   document.getElementById('quiz-question').style.display = 'block';
-  document.getElementById('quiz-results').style.display = 'none';
+
+  // Properly hide results when starting
+  const resultsEl = document.getElementById('quiz-results');
+  resultsEl.style.cssText = 'display: none !important;';
+
+  document.getElementById('quiz-nav-buttons').style.display = 'none';
 
   const old = document.getElementById('q-prev-btn');
   if (old) old.remove();
+  const oldRow = document.getElementById('q-btn-row');
+  if (oldRow) oldRow.remove();
+
   renderQuestion();
 }
 
@@ -373,19 +397,18 @@ function renderQuestion() {
   nextBtn.style.display = prevAnswer !== null ? 'inline-block' : 'none';
   nextBtn.textContent = currentQ < QUESTIONS.length - 1 ? 'Next Question →' : 'See My Results →';
 
+  // ── PREV BUTTON ──
   let prevBtn = document.getElementById('q-prev-btn');
   if (!prevBtn) {
     prevBtn = document.createElement('button');
     prevBtn.id = 'q-prev-btn';
     prevBtn.className = 'quiz-next-btn';
-    prevBtn.style.marginRight = '10px';
     prevBtn.textContent = '← Previous';
     prevBtn.onclick = prevQuestion;
-    nextBtn.parentNode.insertBefore(prevBtn, nextBtn);
   }
   prevBtn.style.display = currentQ > 0 ? 'inline-block' : 'none';
 
-    // Wrap both buttons in a flex row
+  // ── BUTTON ROW ──
   let btnRow = document.getElementById('q-btn-row');
   if (!btnRow) {
     btnRow = document.createElement('div');
@@ -411,8 +434,6 @@ function selectAnswer(selectedIndex) {
   opts.forEach(o => o.classList.add('disabled'));
 
   const isCorrect = selectedIndex === q.correct;
-
-
 
   opts.forEach((o, i) => {
     if (i === q.correct) o.classList.add('correct');
@@ -506,8 +527,18 @@ function nextQuestion() {
 
 // ── RESULTS ──
 function showResults() {
+  // Hide question screen and start screen
   document.getElementById('quiz-question').style.display = 'none';
-  document.getElementById('quiz-results').style.display = 'block';
+  document.getElementById('quiz-start').style.display = 'none';
+
+  // Show results using setProperty with !important so CSS cannot override it
+  const resultsEl = document.getElementById('quiz-results');
+  resultsEl.removeAttribute('style');
+  resultsEl.style.setProperty('display', 'block', 'important');
+  resultsEl.style.width = '100%';
+  resultsEl.style.maxWidth = '700px';
+
+  // Show nav buttons
   document.getElementById('quiz-nav-buttons').style.display = 'flex';
 
   const total = QUESTIONS.length;
@@ -516,6 +547,7 @@ function showResults() {
 
   document.getElementById('result-score').textContent = `${score}/${total}`;
 
+  // ── POINTS SUMMARY ──
   let ptsSummary = document.getElementById('pts-summary');
   if (!ptsSummary) {
     ptsSummary = document.createElement('div');
@@ -532,6 +564,7 @@ function showResults() {
     </div>
   `;
 
+  // ── TITLE & SUBTITLE ──
   let title, subtitle;
   if (pct === 100)    { title = 'Financial Expert!';  subtitle = 'Perfect score: you are ready to teach others!'; }
   else if (pct >= 75) { title = 'Great Knowledge!';   subtitle = 'Strong foundation: a few areas to sharpen.'; }
@@ -563,8 +596,8 @@ function showResults() {
     breakdownEl.appendChild(div);
   });
 
-  // ── SAVE TO LOCALSTORAGE SAFELY ──
-try {
+  // ── SAVE TO LOCALSTORAGE ──
+  try {
     localStorage.setItem('sbb_last_quiz', JSON.stringify({
       score, total, percent: pct, points: totalPoints,
       date: new Date().toLocaleDateString('en-BT', { day: 'numeric', month: 'short', year: 'numeric' })
@@ -574,18 +607,30 @@ try {
   }
 
   if (pct === 100) launchConfetti();
+
+  // ── SAVE TO FLASK BACKEND ──
+  const playerName = sessionStorage.getItem('sbb_player_name');
+  if (playerName) {
+    saveQuizResult(playerName, score, QUESTIONS.length, totalPoints, bestStreak);
+  }
 }
 
 // ── RESET QUIZ ──
 function resetQuiz() {
-  document.getElementById('quiz-results').style.display = 'none';
+  // Properly hide results
+  const resultsEl = document.getElementById('quiz-results');
+  resultsEl.style.cssText = 'display: none !important;';
+
   document.getElementById('quiz-start').style.display = 'block';
   document.getElementById('quiz-nav-buttons').style.display = 'none';
 
   const prevBtn = document.getElementById('q-prev-btn');
   if (prevBtn) prevBtn.remove();
+  const btnRow = document.getElementById('q-btn-row');
+  if (btnRow) btnRow.remove();
   const ptsSummary = document.getElementById('pts-summary');
   if (ptsSummary) ptsSummary.remove();
+
   currentQ = 0; score = 0; totalPoints = 0; streak = 0; bestStreak = 0;
   answers = [];
   answeredQuestions = new Array(QUESTIONS.length).fill(null);
@@ -610,15 +655,16 @@ document.addEventListener('keydown', e => {
     closeSheetModal();
   }
 });
+
 // ══════════════════════════════════════════════
 // ── SINGLE DOMContentLoaded — all init here ──
 // ══════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
 
-  // 1. Show quiz invite toast after 3s (bottom right)
+  // 1. Show quiz invite toast after 3s
   setTimeout(() => showToastOnHome(), 3000);
 
-  // 2. Welcome / Welcome Back toast (top center)
+  // 2. Welcome / Welcome Back toast
   let hasVisited = false;
   try { hasVisited = localStorage.getItem('sbb_visited'); } catch(e) { console.warn('localStorage unavailable'); }
 
@@ -662,7 +708,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   try { localStorage.setItem('sbb_visited', 'true'); } catch(e) {}
 
-  // 3. Last quiz result banner (bottom LEFT — no clash with quiz toast)
+  // 3. Last quiz result banner (bottom left)
   let saved = null;
   try { saved = localStorage.getItem('sbb_last_quiz'); } catch(e) { return; }
   if (!saved) return;
@@ -700,10 +746,10 @@ document.addEventListener('DOMContentLoaded', () => {
   `;
   document.body.appendChild(banner);
 
-   if (window.innerWidth <= 768) {
-    document.getElementById('mobile-scroll-hint').style.display = 'block';
+  if (window.innerWidth <= 768) {
+    const hint = document.getElementById('mobile-scroll-hint');
+    if (hint) hint.style.display = 'block';
   }
-
 });
 
 // ══ FINANCIAL TOOLS ══
@@ -744,30 +790,30 @@ async function convertCurrency() {
   output.innerHTML = '<div class="tool-loading">Fetching live rates…</div>';
   resultBox.classList.add('show');
 
-const flagMap = {
-  BTN:'🇧🇹', USD:'🇺🇸', INR:'🇮🇳', AUD:'🇦🇺', EUR:'🇪🇺',
-  GBP:'🇬🇧', SGD:'🇸🇬', JPY:'🇯🇵', CAD:'🇨🇦', CHF:'🇨🇭',
-  CNY:'🇨🇳', AED:'🇦🇪', MYR:'🇲🇾', THB:'🇹🇭', KRW:'🇰🇷'
-};
-const nameMap = {
-  BTN:'Ngultrum', USD:'US Dollar',    INR:'Indian Rupee',
-  AUD:'Australian Dollar', EUR:'Euro', GBP:'British Pound',
-  SGD:'Singapore Dollar',  JPY:'Japanese Yen', CAD:'Canadian Dollar',
-  CHF:'Swiss Franc', CNY:'Chinese Yuan', AED:'UAE Dirham',
-  MYR:'Malaysian Ringgit', THB:'Thai Baht', KRW:'Korean Won'
-};
-const symMap = {
-  BTN:'Nu.', USD:'$',  INR:'₹',  AUD:'A$', EUR:'€',
-  GBP:'£',  SGD:'S$', JPY:'¥',  CAD:'C$', CHF:'Fr',
-  CNY:'¥',  AED:'د.إ', MYR:'RM', THB:'฿', KRW:'₩'
-};
+  const flagMap = {
+    BTN:'🇧🇹', USD:'🇺🇸', INR:'🇮🇳', AUD:'🇦🇺', EUR:'🇪🇺',
+    GBP:'🇬🇧', SGD:'🇸🇬', JPY:'🇯🇵', CAD:'🇨🇦', CHF:'🇨🇭',
+    CNY:'🇨🇳', AED:'🇦🇪', MYR:'🇲🇾', THB:'🇹🇭', KRW:'🇰🇷'
+  };
+  const nameMap = {
+    BTN:'Ngultrum', USD:'US Dollar', INR:'Indian Rupee',
+    AUD:'Australian Dollar', EUR:'Euro', GBP:'British Pound',
+    SGD:'Singapore Dollar', JPY:'Japanese Yen', CAD:'Canadian Dollar',
+    CHF:'Swiss Franc', CNY:'Chinese Yuan', AED:'UAE Dirham',
+    MYR:'Malaysian Ringgit', THB:'Thai Baht', KRW:'Korean Won'
+  };
+  const symMap = {
+    BTN:'Nu.', USD:'$', INR:'₹', AUD:'A$', EUR:'€',
+    GBP:'£', SGD:'S$', JPY:'¥', CAD:'C$', CHF:'Fr',
+    CNY:'¥', AED:'د.إ', MYR:'RM', THB:'฿', KRW:'₩'
+  };
 
   try {
     const apiFrom = fromCur === 'BTN' ? 'INR' : fromCur;
     const res  = await fetch(`https://api.exchangerate-api.com/v4/latest/${apiFrom}`);
     const data = await res.json();
-    const apiTo    = toCur === 'BTN' ? 'INR' : toCur;
-    const rate     = data.rates[apiTo];
+    const apiTo = toCur === 'BTN' ? 'INR' : toCur;
+    const rate  = data.rates[apiTo];
     const converted = (amount * rate).toFixed(2);
 
     output.innerHTML = `
@@ -784,23 +830,23 @@ const symMap = {
     rateNote.textContent = `Rate: 1 ${fromCur} = ${rate.toFixed(4)} ${toCur}  ·  Live exchange rate`;
 
   } catch(e) {
-const fallback = {
-  BTN: { USD:0.012, INR:1.0,  AUD:0.018, EUR:0.011, GBP:0.0094, SGD:0.016, JPY:1.78,  CAD:0.016, CHF:0.010, CNY:0.086, AED:0.044, MYR:0.056, THB:0.41,  KRW:15.9  },
-  USD: { BTN:84.0, INR:84.0,  AUD:1.53,  EUR:0.92,  GBP:0.79,   SGD:1.34,  JPY:149.5, CAD:1.36,  CHF:0.89,  CNY:7.24,  AED:3.67,  MYR:4.72,  THB:35.1,  KRW:1340  },
-  INR: { BTN:1.0,  USD:0.012, AUD:0.018, EUR:0.011, GBP:0.0094, SGD:0.016, JPY:1.78,  CAD:0.016, CHF:0.010, CNY:0.086, AED:0.044, MYR:0.056, THB:0.41,  KRW:15.9  },
-  AUD: { BTN:55.0, USD:0.65,  INR:55.0,  EUR:0.60,  GBP:0.52,   SGD:0.88,  JPY:97.7,  CAD:0.89,  CHF:0.58,  CNY:4.73,  AED:2.40,  MYR:3.08,  THB:22.9,  KRW:875   },
-  EUR: { BTN:91.0, USD:1.08,  INR:91.0,  AUD:1.66,  GBP:0.86,   SGD:1.45,  JPY:161.5, CAD:1.47,  CHF:0.97,  CNY:7.83,  AED:3.97,  MYR:5.10,  THB:37.9,  KRW:1447  },
-  GBP: { BTN:106., USD:1.27,  INR:106.,  AUD:1.94,  EUR:1.17,   SGD:1.69,  JPY:188.5, CAD:1.71,  CHF:1.13,  CNY:9.14,  AED:4.63,  MYR:5.95,  THB:44.2,  KRW:1688  },
-  SGD: { BTN:62.5, USD:0.74,  INR:62.5,  AUD:1.14,  EUR:0.69,   GBP:0.59,  JPY:111.4, CAD:1.01,  CHF:0.66,  CNY:5.40,  AED:2.74,  MYR:3.52,  THB:26.1,  KRW:998   },
-  JPY: { BTN:0.56, USD:0.0067,INR:0.56,  AUD:0.010, EUR:0.0062, GBP:0.0053,SGD:0.0090,CAD:0.0091,CHF:0.0060,CNY:0.048, AED:0.025, MYR:0.032, THB:0.235, KRW:8.97  },
-  CAD: { BTN:61.8, USD:0.73,  INR:61.8,  AUD:1.12,  EUR:0.68,   GBP:0.58,  SGD:0.99,  JPY:110.0, CHF:0.65,  CNY:5.33,  AED:2.70,  MYR:3.47,  THB:25.8,  KRW:985   },
-  CHF: { BTN:94.5, USD:1.12,  INR:94.5,  AUD:1.72,  EUR:1.03,   GBP:0.88,  SGD:1.51,  JPY:168.0, CAD:1.53,  CNY:8.14,  AED:4.12,  MYR:5.30,  THB:39.3,  KRW:1503  },
-  CNY: { BTN:11.6, USD:0.138, INR:11.6,  AUD:0.211, EUR:0.128,  GBP:0.109, SGD:0.185, JPY:20.65, CAD:0.188, CHF:0.123, AED:0.507, MYR:0.652, THB:4.84,  KRW:185   },
-  AED: { BTN:22.9, USD:0.272, INR:22.9,  AUD:0.417, EUR:0.252,  GBP:0.216, SGD:0.365, JPY:40.7,  CAD:0.371, CHF:0.243, CNY:1.97,  MYR:1.285, THB:9.56,  KRW:365   },
-  MYR: { BTN:17.8, USD:0.212, INR:17.8,  AUD:0.325, EUR:0.196,  GBP:0.168, SGD:0.284, JPY:31.7,  CAD:0.289, CHF:0.189, CNY:1.533, AED:0.778, THB:7.44,  KRW:284   },
-  THB: { BTN:2.39, USD:0.0285,INR:2.39,  AUD:0.0436,EUR:0.0264, GBP:0.0226,SGD:0.0382,JPY:4.26,  CAD:0.0388,CHF:0.0254,CNY:0.206, AED:0.105, MYR:0.134, KRW:38.2  },
-  KRW: { BTN:0.063,USD:0.00075,INR:0.063,AUD:0.00114,EUR:0.00069,GBP:0.00059,SGD:0.001,JPY:0.1115,CAD:0.00102,CHF:0.00067,CNY:0.0054,AED:0.00274,MYR:0.00352,THB:0.0262 }
-};
+    const fallback = {
+      BTN: { USD:0.012, INR:1.0,  AUD:0.018, EUR:0.011, GBP:0.0094, SGD:0.016, JPY:1.78,  CAD:0.016, CHF:0.010, CNY:0.086, AED:0.044, MYR:0.056, THB:0.41,  KRW:15.9  },
+      USD: { BTN:84.0, INR:84.0,  AUD:1.53,  EUR:0.92,  GBP:0.79,   SGD:1.34,  JPY:149.5, CAD:1.36,  CHF:0.89,  CNY:7.24,  AED:3.67,  MYR:4.72,  THB:35.1,  KRW:1340  },
+      INR: { BTN:1.0,  USD:0.012, AUD:0.018, EUR:0.011, GBP:0.0094, SGD:0.016, JPY:1.78,  CAD:0.016, CHF:0.010, CNY:0.086, AED:0.044, MYR:0.056, THB:0.41,  KRW:15.9  },
+      AUD: { BTN:55.0, USD:0.65,  INR:55.0,  EUR:0.60,  GBP:0.52,   SGD:0.88,  JPY:97.7,  CAD:0.89,  CHF:0.58,  CNY:4.73,  AED:2.40,  MYR:3.08,  THB:22.9,  KRW:875   },
+      EUR: { BTN:91.0, USD:1.08,  INR:91.0,  AUD:1.66,  GBP:0.86,   SGD:1.45,  JPY:161.5, CAD:1.47,  CHF:0.97,  CNY:7.83,  AED:3.97,  MYR:5.10,  THB:37.9,  KRW:1447  },
+      GBP: { BTN:106., USD:1.27,  INR:106.,  AUD:1.94,  EUR:1.17,   SGD:1.69,  JPY:188.5, CAD:1.71,  CHF:1.13,  CNY:9.14,  AED:4.63,  MYR:5.95,  THB:44.2,  KRW:1688  },
+      SGD: { BTN:62.5, USD:0.74,  INR:62.5,  AUD:1.14,  EUR:0.69,   GBP:0.59,  JPY:111.4, CAD:1.01,  CHF:0.66,  CNY:5.40,  AED:2.74,  MYR:3.52,  THB:26.1,  KRW:998   },
+      JPY: { BTN:0.56, USD:0.0067,INR:0.56,  AUD:0.010, EUR:0.0062, GBP:0.0053,SGD:0.0090,CAD:0.0091,CHF:0.0060,CNY:0.048, AED:0.025, MYR:0.032, THB:0.235, KRW:8.97  },
+      CAD: { BTN:61.8, USD:0.73,  INR:61.8,  AUD:1.12,  EUR:0.68,   GBP:0.58,  SGD:0.99,  JPY:110.0, CHF:0.65,  CNY:5.33,  AED:2.70,  MYR:3.47,  THB:25.8,  KRW:985   },
+      CHF: { BTN:94.5, USD:1.12,  INR:94.5,  AUD:1.72,  EUR:1.03,   GBP:0.88,  SGD:1.51,  JPY:168.0, CAD:1.53,  CNY:8.14,  AED:4.12,  MYR:5.30,  THB:39.3,  KRW:1503  },
+      CNY: { BTN:11.6, USD:0.138, INR:11.6,  AUD:0.211, EUR:0.128,  GBP:0.109, SGD:0.185, JPY:20.65, CAD:0.188, CHF:0.123, AED:0.507, MYR:0.652, THB:4.84,  KRW:185   },
+      AED: { BTN:22.9, USD:0.272, INR:22.9,  AUD:0.417, EUR:0.252,  GBP:0.216, SGD:0.365, JPY:40.7,  CAD:0.371, CHF:0.243, CNY:1.97,  MYR:1.285, THB:9.56,  KRW:365   },
+      MYR: { BTN:17.8, USD:0.212, INR:17.8,  AUD:0.325, EUR:0.196,  GBP:0.168, SGD:0.284, JPY:31.7,  CAD:0.289, CHF:0.189, CNY:1.533, AED:0.778, THB:7.44,  KRW:284   },
+      THB: { BTN:2.39, USD:0.0285,INR:2.39,  AUD:0.0436,EUR:0.0264, GBP:0.0226,SGD:0.0382,JPY:4.26,  CAD:0.0388,CHF:0.0254,CNY:0.206, AED:0.105, MYR:0.134, KRW:38.2  },
+      KRW: { BTN:0.063,USD:0.00075,INR:0.063,AUD:0.00114,EUR:0.00069,GBP:0.00059,SGD:0.001,JPY:0.1115,CAD:0.00102,CHF:0.00067,CNY:0.0054,AED:0.00274,MYR:0.00352,THB:0.0262 }
+    };
     const rate      = fallback[fromCur]?.[toCur] ?? 1;
     const converted = (amount * rate).toFixed(2);
 
@@ -833,11 +879,9 @@ function updateSavingsCurrencyLabel() {
   const sym = sel.options[sel.selectedIndex].getAttribute('data-sym');
   const code = sel.value;
   label.textContent = `Monthly Income (${sym} ${code})`;
-  // Clear previous result when currency changes
   const result = document.getElementById('savings-result');
   if (result) result.classList.remove('show');
 }
-
 
 function applyPreset() {
   const val = document.getElementById('savings-preset').value;
@@ -891,10 +935,8 @@ function updateBudgetCurrencyLabel() {
   const sym = sel.options[sel.selectedIndex].getAttribute('data-sym');
   const code = sel.value;
   label.textContent = `Monthly Income (${sym} ${code})`;
-  // Recalculate immediately with new symbol if income already entered
   calculateBudget();
 }
-
 
 function calculateBudget() {
   const income = parseFloat(document.getElementById('budget-income').value);
@@ -930,22 +972,18 @@ function calculateBudget() {
     : `🏆 Consider putting part of your ${fmt(income * 0.2)} into fixed deposits or investments.`;
 }
 
-
-// ── SHEET PREVIEW MODAL (full lightbox) ──
+// ── SHEET PREVIEW MODAL ──
 function openSheetModal(src, title) {
   const overlay = document.getElementById('sheet-modal-overlay');
   const img     = document.getElementById('sheet-modal-img');
   const titleEl = document.getElementById('sheet-modal-title');
 
   titleEl.textContent = title;
-
-  // Show a loading state first
   img.style.opacity = '0';
   img.style.transform = 'scale(0.97)';
   overlay.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 
-  // Fade image in once loaded
   img.onload = function () {
     img.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
     img.style.opacity = '1';
@@ -963,4 +1001,67 @@ function closeSheetModal() {
   document.body.style.overflow = '';
 }
 
+// ══ SBB BACKEND ══
+const SBB_API = "http://127.0.0.1:5000";
 
+async function saveQuizResult(name, score, total, points, streak) {
+  try {
+    const res = await fetch(`${SBB_API}/save`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, score, total, points, streak })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+    console.log("Score saved:", data.entry);
+    return data.entry;
+  } catch (err) {
+    console.warn("Could not save score:", err.message);
+    return null;
+  }
+}
+
+async function loadUserHistory(name, containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = `<p style="color:var(--muted);font-size:13px;">Loading…</p>`;
+  try {
+    const res  = await fetch(`${SBB_API}/history?name=${encodeURIComponent(name)}`);
+    const data = await res.json();
+    if (!data.found) {
+      el.innerHTML = `<p style="color:var(--muted);font-size:13px;">No results found for "${name}".</p>`;
+      return;
+    }
+    const best = data.best;
+    el.innerHTML = `
+      <div class="pts-summary" style="margin-bottom:16px;">
+        <div class="pts-row">
+          <div class="pts-item"><div class="pts-val">${data.attempts}</div><div class="pts-lbl">Attempts</div></div>
+          <div class="pts-item"><div class="pts-val">${best.points}</div><div class="pts-lbl">Best Points</div></div>
+          <div class="pts-item"><div class="pts-val">${best.pct}%</div><div class="pts-lbl">Best Score</div></div>
+          <div class="pts-item"><div class="pts-val">🔥 ${best.streak}</div><div class="pts-lbl">Best Streak</div></div>
+        </div>
+      </div>
+      ${data.results.map((r, i) => `
+        <div class="breakdown-item">
+          <div class="breakdown-icon">${r.pct === 100 ? '🏆' : r.pct >= 75 ? '⭐' : r.pct >= 50 ? '📈' : '📚'}</div>
+          <div class="breakdown-q">
+            <strong>Attempt ${i + 1} · ${r.date} ${r.time}</strong>
+            <span style="color:var(--green)">${r.score}/${r.total} correct · ${r.points} pts · ${r.pct}%</span>
+            ${r.streak ? `<span class="bd-tip">🔥 Best streak: ${r.streak}</span>` : ''}
+          </div>
+        </div>`).join('')}`;
+  } catch (err) {
+    el.innerHTML = `<p style="color:#e25f0e;font-size:13px;">Cannot reach server. Is Flask running?</p>`;
+  }
+}
+
+function showMyHistory() {
+  const name = sessionStorage.getItem("sbb_player_name");
+  if (!name) {
+    alert("No name found. Please start the quiz first and enter your name.");
+    return;
+  }
+  console.log("Loading history for:", name);
+  loadUserHistory(name, "history-container");
+}
