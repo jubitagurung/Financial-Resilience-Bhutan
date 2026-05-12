@@ -319,8 +319,7 @@ function startQuiz() {
   document.getElementById('quiz-question').style.display = 'block';
 
   // Properly hide results when starting
-  const resultsEl = document.getElementById('quiz-results');
-  resultsEl.style.cssText = 'display: none !important;';
+ document.getElementById('quiz-results').classList.remove('visible');
 
   document.getElementById('quiz-nav-buttons').style.display = 'none';
 
@@ -532,11 +531,9 @@ function showResults() {
   document.getElementById('quiz-start').style.display = 'none';
 
   // Show results using setProperty with !important so CSS cannot override it
-  const resultsEl = document.getElementById('quiz-results');
-  resultsEl.removeAttribute('style');
-  resultsEl.style.setProperty('display', 'block', 'important');
-  resultsEl.style.width = '100%';
-  resultsEl.style.maxWidth = '700px';
+const resultsEl = document.getElementById('quiz-results');
+resultsEl.removeAttribute('style');
+resultsEl.classList.add('visible');
 
   // Show nav buttons
   document.getElementById('quiz-nav-buttons').style.display = 'flex';
@@ -618,8 +615,7 @@ function showResults() {
 // ── RESET QUIZ ──
 function resetQuiz() {
   // Properly hide results
-  const resultsEl = document.getElementById('quiz-results');
-  resultsEl.style.cssText = 'display: none !important;';
+ document.getElementById('quiz-results').classList.remove('visible');
 
   document.getElementById('quiz-start').style.display = 'block';
   document.getElementById('quiz-nav-buttons').style.display = 'none';
