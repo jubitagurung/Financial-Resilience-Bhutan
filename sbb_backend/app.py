@@ -1,27 +1,55 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 import json
 import os
+import re
 from datetime import datetime
+from pathlib import Path
 
 app = Flask(__name__)
-CORS(app)  # allows your HTML site to call this API
+CORS(app)
 
-# ── Storage file (acts as a simple database)
-DATA_FILE = "scores.json"
+# ── Storage file
+DATA_FILE = Path("scores.json")
+
+# ── Rate Limiter
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["60 per minute"],
+    storage_uri="memory://"
+)
 
 # ── Helpers ──────────────────────────────────────────────────────────────
+
+def sanitize_name(name):
+    """Remove dangerous characters, keep only safe ones."""
+    name = re.sub(r'[^\w\s\-\'\.]', '', str(name))
+    return name.strip()[:50]
+
 def load_scores():
     """Read all scores from the JSON file."""
-    if not os.path.exists(DATA_FILE):
+    if not DATA_FILE.exists():
         return []
-    with open(DATA_FILE, "r") as f:
-        return json.load(f)
+    try:
+        with open(DATA_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except (json.JSONDecodeError, IOError) as e:
+        print(f"❌ Error loading scores: {e}")
+        return []
 
 def save_scores(scores):
-    """Write all scores back to the JSON file."""
-    with open(DATA_FILE, "w") as f:
-        json.dump(scores, f, indent=2)
+    """Save scores atomically to prevent corruption."""
+    try:
+        temp_file = DATA_FILE.with_suffix('.tmp')
+        with open(temp_file, "w", encoding="utf-8") as f:
+            json.dump(scores, f, indent=2, ensure_ascii=False)
+        temp_file.replace(DATA_FILE)
+        print(f"✅ Successfully saved {len(scores)} records")
+    except Exception as e:
+        print(f"❌ Error saving scores: {e}")
 
 # ── Routes ───────────────────────────────────────────────────────────────
 
@@ -30,68 +58,64 @@ def home():
     return jsonify({"message": "Smart Budget Bhutan — Quiz API is running."})
 
 
-# POST /save  — save a new quiz result
-# Body (JSON): { "name": "Jubita", "score": 9, "total": 12, "points": 115, "streak": 4 }
+# POST /save — save a new quiz result
 @app.route("/save", methods=["POST"])
+@limiter.limit("10 per minute")
 def save_result():
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
 
-    # --- validate required fields
-    name   = str(data.get("name", "")).strip()[:30]
-    score  = data.get("score")
-    total  = data.get("total")
-    points = data.get("points", 0)
-    streak = data.get("streak", 0)
-
+    # ── Validate name
+    name = sanitize_name(data.get("name", ""))
     if not name:
-        return jsonify({"error": "Name is required."}), 400
-    if score is None or total is None:
-        return jsonify({"error": "score and total are required."}), 400
-    if not (0 <= int(score) <= int(total)):
-        return jsonify({"error": "score must be between 0 and total."}), 400
+        return jsonify({"error": "Valid name is required."}), 400
+    if len(name) > 50:
+        return jsonify({"error": "Name is too long (max 50 characters)."}), 400
 
-    pct = round(int(score) / int(total) * 100)
+    # ── Validate score fields
+    try:
+        score  = int(data.get("score"))
+        total  = int(data.get("total"))
+        points = int(data.get("points", 0))
+        streak = int(data.get("streak", 0))
+    except (TypeError, ValueError):
+        return jsonify({"error": "score and total must be valid integers."}), 400
+
+    if not (0 <= score <= total):
+        return jsonify({"error": "Score must be between 0 and total questions."}), 400
 
     entry = {
-        "name":    name,
-        "score":   int(score),
-        "total":   int(total),
-        "pct":     pct,
-        "points":  int(points),
-        "streak":  int(streak),
-        "date":    datetime.now().strftime("%d %b %Y"),
-        "time":    datetime.now().strftime("%H:%M")
+        "name":   name,
+        "score":  score,
+        "total":  total,
+        "pct":    round(score / total * 100),
+        "points": points,
+        "streak": streak,
+        "date":   datetime.now().strftime("%d %b %Y"),
+        "time":   datetime.now().strftime("%H:%M")
     }
 
     scores = load_scores()
     scores.append(entry)
     save_scores(scores)
 
-    return jsonify({"message": "Score saved!", "entry": entry}), 201
+    return jsonify({"message": "Score saved successfully!", "entry": entry}), 201
 
 
-# GET /history?name=Jubita  — get all results for one user
+# GET /history?name=Jubita — get all results for one user
 @app.route("/history", methods=["GET"])
 def get_history():
-    name = request.args.get("name", "").strip().lower()
+    name = sanitize_name(request.args.get("name", "")).lower()
 
     if not name:
         return jsonify({"error": "name query param is required."}), 400
 
     scores = load_scores()
-
-    # find entries matching this name (case-insensitive)
-    user_scores = [
-        s for s in scores
-        if s["name"].lower() == name
-    ]
+    user_scores = [s for s in scores if s["name"].lower() == name]
 
     if not user_scores:
         return jsonify({"found": False, "results": []}), 200
 
-    # sort newest first
     user_scores.reverse()
-
     best = max(user_scores, key=lambda x: x["points"])
 
     return jsonify({
@@ -103,7 +127,7 @@ def get_history():
     }), 200
 
 
-# GET /stats  — overall quiz statistics (no names exposed)
+# GET /stats — overall quiz statistics
 @app.route("/stats", methods=["GET"])
 def get_stats():
     scores = load_scores()
@@ -115,9 +139,9 @@ def get_stats():
             "perfect_scores": 0
         }), 200
 
-    total     = len(scores)
-    avg_pct   = round(sum(s["pct"] for s in scores) / total)
-    perfect   = sum(1 for s in scores if s["pct"] == 100)
+    total   = len(scores)
+    avg_pct = round(sum(s["pct"] for s in scores) / total)
+    perfect = sum(1 for s in scores if s["pct"] == 100)
 
     return jsonify({
         "total_attempts": total,
@@ -126,10 +150,10 @@ def get_stats():
     }), 200
 
 
-# DELETE /clear?name=Jubita  — let a user delete their own history
+# DELETE /clear?name=Jubita — delete a user's own history
 @app.route("/clear", methods=["DELETE"])
 def clear_history():
-    name = request.args.get("name", "").strip().lower()
+    name = sanitize_name(request.args.get("name", "")).lower()
 
     if not name:
         return jsonify({"error": "name query param is required."}), 400

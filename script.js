@@ -16,11 +16,10 @@ function showSection(id) {
 
   document.getElementById('nav-menu')?.classList.remove('open');
   const t = document.getElementById('nav-toggle');
-  if (t) { t.classList.remove('open'); t.setAttribute('aria-expanded', 'false'); }
-
-  const stepMap = { home: 1, quiz: 2, planner: 3 };
-  if (stepMap[id]) updateJourneyBar(stepMap[id]);
-
+  if (t) {
+    t.classList.remove('open');
+    t.setAttribute('aria-expanded', 'false');
+  }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -70,16 +69,6 @@ function showToastOnHome() {
   setTimeout(() => dismissToast(), 12000);
 }
 
-// ── JOURNEY BAR ──
-function updateJourneyBar(activeStep) {
-  const steps = document.querySelectorAll('.jg-step');
-  steps.forEach((s, i) => {
-    s.classList.remove('active-step', 'done-step');
-    if (i + 1 < activeStep) s.classList.add('done-step');
-    else if (i + 1 === activeStep) s.classList.add('active-step');
-  });
-}
-
 // ── CONFETTI ──
 function launchConfetti() {
   const wrap = document.getElementById('confetti-wrap');
@@ -98,29 +87,6 @@ function launchConfetti() {
     wrap.appendChild(c);
   }
   setTimeout(() => { wrap.style.display = 'none'; }, 5000);
-}
-
-// ── PLANNER PUSH BLOCK ──
-function setPlannnerPush(score, total) {
-  const pct = Math.round(score / total * 100);
-  const titleEl = document.getElementById('ppb-title');
-  const descEl  = document.getElementById('ppb-desc');
-  if (!titleEl || !descEl) return;
-
-  if (pct === 100) {
-    titleEl.textContent = 'Perfect Score! Put Your Expert Knowledge Into Action';
-    descEl.textContent  = 'You aced the quiz! Challenge yourself further — build a real budget with the SmartBudget Planner and watch your savings grow.';
-    launchConfetti();
-  } else if (pct >= 75) {
-    titleEl.textContent = 'Great Job! Now Apply It in Real Life';
-    descEl.textContent  = 'Your strong quiz score shows you understand the principles. Use the Budget Planner to put the 50/30/20 rule to work with your real income.';
-  } else if (pct >= 50) {
-    titleEl.textContent = 'Good Start! Strengthen Your Habits With a Real Budget';
-    descEl.textContent  = 'You\'ve got a solid foundation. The SmartBudget Planner will help you practice these principles daily and build lasting financial resilience.';
-  } else {
-    titleEl.textContent = 'Improve Your Financial Habits — Start With the Planner';
-    descEl.textContent  = 'The best way to grow financially is hands-on practice. The Budget Planner guides you step by step, no matter where you\'re starting from.';
-  }
 }
 
 // ── PLANNER WELCOME BANNER ──
@@ -291,7 +257,7 @@ let totalPoints = 0;
 let streak = 0;
 let bestStreak = 0;
 let answers = [];
-let answeredQuestions = [];
+let answeredQuestions;
 
 function startQuizWithName() {
   const input = document.getElementById('player-name-input');
@@ -318,9 +284,7 @@ function startQuiz() {
   document.getElementById('quiz-start').style.display = 'none';
   document.getElementById('quiz-question').style.display = 'block';
 
-  // Properly hide results when starting
- document.getElementById('quiz-results').classList.remove('visible');
-
+  document.getElementById('quiz-results').classList.remove('visible');
   document.getElementById('quiz-nav-buttons').style.display = 'none';
 
   const old = document.getElementById('q-prev-btn');
@@ -526,16 +490,13 @@ function nextQuestion() {
 
 // ── RESULTS ──
 function showResults() {
-  // Hide question screen and start screen
   document.getElementById('quiz-question').style.display = 'none';
   document.getElementById('quiz-start').style.display = 'none';
 
-  // Show results using setProperty with !important so CSS cannot override it
-const resultsEl = document.getElementById('quiz-results');
-resultsEl.removeAttribute('style');
-resultsEl.classList.add('visible');
+  const resultsEl = document.getElementById('quiz-results');
+  resultsEl.removeAttribute('style');
+  resultsEl.classList.add('visible');
 
-  // Show nav buttons
   document.getElementById('quiz-nav-buttons').style.display = 'flex';
 
   const total = QUESTIONS.length;
@@ -571,9 +532,6 @@ resultsEl.classList.add('visible');
   document.getElementById('result-title').textContent = title;
   document.getElementById('result-subtitle').textContent = subtitle;
 
-  setPlannnerPush(score, total);
-  setPlannerBanner(score, total);
-
   // ── QUESTION BREAKDOWN ──
   const breakdownEl = document.getElementById('breakdown-list');
   breakdownEl.innerHTML = '';
@@ -593,16 +551,6 @@ resultsEl.classList.add('visible');
     breakdownEl.appendChild(div);
   });
 
-  // ── SAVE TO LOCALSTORAGE ──
-  try {
-    localStorage.setItem('sbb_last_quiz', JSON.stringify({
-      score, total, percent: pct, points: totalPoints,
-      date: new Date().toLocaleDateString('en-BT', { day: 'numeric', month: 'short', year: 'numeric' })
-    }));
-  } catch (e) {
-    console.warn('Score could not be saved locally:', e);
-  }
-
   if (pct === 100) launchConfetti();
 
   // ── SAVE TO FLASK BACKEND ──
@@ -610,13 +558,14 @@ resultsEl.classList.add('visible');
   if (playerName) {
     saveQuizResult(playerName, score, QUESTIONS.length, totalPoints, bestStreak);
   }
+
+  // ── UPDATE PLANNER BANNER ──
+  setPlannerBanner(score, total);
 }
 
 // ── RESET QUIZ ──
 function resetQuiz() {
-  // Properly hide results
- document.getElementById('quiz-results').classList.remove('visible');
-
+  document.getElementById('quiz-results').classList.remove('visible');
   document.getElementById('quiz-start').style.display = 'block';
   document.getElementById('quiz-nav-buttons').style.display = 'none';
 
@@ -632,44 +581,14 @@ function resetQuiz() {
   answeredQuestions = new Array(QUESTIONS.length).fill(null);
 }
 
-// ── SONAM MODAL ──
-function openSonamModal() {
-  const overlay = document.getElementById('sonam-modal-overlay');
-  overlay.style.display = 'block';
-  document.body.style.overflow = 'hidden';
-}
-
-function closeSonamModal() {
-  const overlay = document.getElementById('sonam-modal-overlay');
-  overlay.style.display = 'none';
-  document.body.style.overflow = '';
-}
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    closeSonamModal();
-    closeSheetModal();
-  }
-});
-
-// ══════════════════════════════════════════════
-// ── SINGLE DOMContentLoaded — all init here ──
-// ══════════════════════════════════════════════
+// ── SINGLE DOMContentLoaded ──
 document.addEventListener('DOMContentLoaded', () => {
 
   // 1. Show quiz invite toast after 3s
   setTimeout(() => showToastOnHome(), 3000);
 
-  // 2. Welcome / Welcome Back toast
-  let hasVisited = false;
-  try { hasVisited = localStorage.getItem('sbb_visited'); } catch(e) { console.warn('localStorage unavailable'); }
-
-  const msg = hasVisited
-    ? '👋 Welcome Back to SmartBudget Bhutan!'
-    : '🎉 Welcome to SmartBudget Bhutan!';
-  const sub = hasVisited
-    ? 'Great to see you again. Keep building those financial habits!'
-    : 'Your journey to financial resilience starts here.';
+  const msg = '🎉 Welcome to SmartBudget Bhutan!';
+  const sub = 'Your journey to financial resilience starts here.';
 
   const welcomeToast = document.createElement('div');
   welcomeToast.id = 'welcome-toast';
@@ -701,46 +620,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById('welcome-toast');
     if (el) el.remove();
   }, 5000);
-
-  try { localStorage.setItem('sbb_visited', 'true'); } catch(e) {}
-
-  // 3. Last quiz result banner (bottom left)
-  let saved = null;
-  try { saved = localStorage.getItem('sbb_last_quiz'); } catch(e) { return; }
-  if (!saved) return;
-
-  let r;
-  try { r = JSON.parse(saved); } catch(e) { return; }
-
-  const banner = document.createElement('div');
-  banner.id = 'prev-score-banner';
-  banner.innerHTML = `
-    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
-      <span style="color:#c9a84c; font-family:'Cinzel',serif; font-size:12px; letter-spacing:1px;">LAST QUIZ RESULT</span>
-      <button onclick="document.getElementById('prev-score-banner').remove()" style="background:transparent; border:none; color:#a89e84; cursor:pointer; font-size:14px; padding:0;">✕</button>
-    </div>
-    <div>Score: <strong style="color:#c9a84c">${r.score}/${r.total} (${r.percent}%)</strong></div>
-    <div style="font-size:11px;">${r.date}</div>
-  `;
-  banner.style.cssText = `
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background: rgba(10,8,2,0.95);
-    border: 1px solid rgba(201,168,76,0.4);
-    border-left: 4px solid #c9a84c;
-    border-radius: 10px;
-    padding: 14px 18px;
-    font-size: 13px;
-    color: #a89e84;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-    max-width: 280px;
-  `;
-  document.body.appendChild(banner);
 
   if (window.innerWidth <= 768) {
     const hint = document.getElementById('mobile-scroll-hint');
@@ -998,7 +877,9 @@ function closeSheetModal() {
 }
 
 // ══ SBB BACKEND ══
-const SBB_API = "http://127.0.0.1:5000";
+const SBB_API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? "http://127.0.0.1:5000"
+  : "";
 
 async function saveQuizResult(name, score, total, points, streak) {
   try {
@@ -1048,7 +929,15 @@ async function loadUserHistory(name, containerId) {
           </div>
         </div>`).join('')}`;
   } catch (err) {
-    el.innerHTML = `<p style="color:#e25f0e;font-size:13px;">Cannot reach server. Is Flask running?</p>`;
+    el.innerHTML = `
+      <div style="
+        background:rgba(201,168,76,0.06);
+        border:1px solid rgba(201,168,76,0.2);
+        border-radius:10px; padding:16px 20px;
+        text-align:center; color:var(--muted); font-size:13px; line-height:1.7;">
+        📋 <strong style="color:var(--gold);">History unavailable</strong><br>
+        The score server is not running. Start Flask locally to track your history.
+      </div>`;
   }
 }
 

@@ -51,24 +51,6 @@
     <!-- CONFETTI -->
     <div class="confetti-wrap" id="confetti-wrap" style="display:none;"></div>
 
-    <!-- JOURNEY GAMIFICATION BAR -->
-    <div class="journey-gamify-bar">
-      <div class="jg-step active-step" onclick="showSection('home')" style="cursor:pointer;" title="Go to Home">
-        <div class="jg-num">1</div>
-        <div class="jg-lbl">Learn</div>
-      </div>
-      <div class="jg-line"></div>
-      <div class="jg-step" onclick="showSection('quiz')" style="cursor:pointer;" title="Go to Quiz">
-        <div class="jg-num">2</div>
-        <div class="jg-lbl">Quiz</div>
-      </div>
-      <div class="jg-line"></div>
-      <div class="jg-step" onclick="showSection('planner')" style="cursor:pointer;" title="Go to Budget Planner">
-        <div class="jg-num">3</div>
-        <div class="jg-lbl">Plan</div>
-      </div>
-    </div>
-
     <div class="home-unified-frame">
 
       <div class="huf-intro">
@@ -266,24 +248,23 @@
     <span id="planner-banner-text">Well done completing the quiz! Now let's turn your knowledge into action.</span>
   </div>
 
-  <!-- 3. DOWNLOAD CARD -->
-  <div class="pmb-section pmb-download">
-    <div class="pmb-download-left">
-      <div class="pmb-dl-icon">📊</div>
-      <div>
+ <!-- 3. DOWNLOAD CARD -->
+<div class="pmb-section pmb-download">
+  <div class="pmb-download-left">
+    <div class="pmb-dl-icon">📊</div>
+    <div>
       <div class="pmb-dl-title">SBB Planner</div>
-       <div class="pmb-dl-desc">Full Excel workbook with 6 sheets: Cover, Budget Planner, Dashboard, Expense
-          Tracker, Savings Goals, and Tips &amp; Principles</div>
+      <div class="pmb-dl-desc">Full Excel workbook with 6 sheets: Cover, Budget Planner, Dashboard, Expense Tracker, Savings Goals, and Tips & Principles.</div>
     </div>
-
-    <a class="planner-dl-btn" href="SmartBudget_Global_planner.xlsx" download>⬇ Download Free</a>
   </div>
+  <a class="planner-dl-btn" href="SmartBudget_Global_planner.xlsx" download>⬇ Download Free</a>
+</div>
 
   <!-- 4. SONAM STORY QUOTE -->
 <div class="pmb-section pmb-story">
   <span class="pmb-story-quote">"Why can't I save anything?"</span>
-  <span class="pmb-story-text"> A question that came up repeatedly in the survey. 
-    The SBB Planner was built specifically to answer it, with a simple, 
+  <span class="pmb-story-text">A question that came up repeatedly in the survey.
+    The SBB Planner was built specifically to answer it, with a simple,
     step-by-step framework anyone can follow from day one.
   </span>
 </div>
@@ -520,7 +501,7 @@
     </div>
 <div style="margin-top:32px;">
 
-<div id="quiz-nav-buttons" style="display:none; gap:12px; justify-content:center; margin-top:40px;">
+<div id="quiz-nav-buttons" style="gap:12px; justify-content:center; margin-top:40px;">
   <button class="nav-btn" onclick="showSection('planner')">← Previous</button>
   <button class="nav-btn" onclick="showSection('tools')">Next →</button>
 </div>
