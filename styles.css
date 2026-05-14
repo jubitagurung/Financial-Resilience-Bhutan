@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel...');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Lato:wght@300;400;700&display=swap');
 
 :root {
   --gold: #c9a84c;
-  --deep: #0d0a04;
-  --card-bg: rgba(20, 15, 4, 0.88);
+  --deep: #0d1526;
+  --card-bg: rgba(15, 25, 50, 0.88);
   --accent: #e25f0e;
   --text: #f0ead6;
   --muted: #a89e84;
@@ -17,10 +17,15 @@ body {
   background: var(--deep);
   color: var(--text);
   background-image: 
-    radial-gradient(ellipse at 20% 50%, rgba(30,20,5,0.95) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(15,10,2,0.9) 0%, transparent 50%),
-    linear-gradient(160deg, #0a0800 0%, #1a1204 40%, #0d0a04 70%, #080600 100%);
+radial-gradient(circle at 20% 30%, rgba(201, 168, 76, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(226, 95, 14, 0.08) 0%, transparent 50%),
+    linear-gradient(135deg, 
+      #0a0802 0%, 
+      #1a1208 30%, 
+      #0f0a04 60%, 
+      #050301 100%);
   background-attachment: fixed;
+  min-height: 100vh;
 }
 
 /* ── NAV ── */
@@ -179,11 +184,8 @@ section, .overlay { display: none; }
   justify-content: center;
   text-align: center;
   padding: 100px 20px 60px;
-  background:radial-gradient(ellipse at 50% 30%, rgba(201,168,76,0.12) 0%, transparent 55%),
-    radial-gradient(ellipse at 20% 70%, rgba(139,90,20,0.15) 0%, transparent 45%),
-    radial-gradient(ellipse at 80% 80%, rgba(100,60,10,0.10) 0%, transparent 40%),
-    linear-gradient(160deg, #1a1200 0%, #2a1e00 25%, #1f1500 50%, #150f00 75%, #0d0a04 100%);
-  background-attachment: fixed;
+ background: #1a2744;
+background-attachment: fixed;
 }
 
 #home h1 {
@@ -260,10 +262,8 @@ section, .overlay { display: none; }
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-  background:
-    linear-gradient(135deg, rgba(5,10,30,0.97) 0%, rgba(8,20,50,0.97) 100%),
-    repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(201,168,76,0.03) 40px, rgba(201,168,76,0.03) 41px),
-    repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(201,168,76,0.03) 40px, rgba(201,168,76,0.03) 41px);
+background: #1a2744;
+background-attachment: fixed;
 }
 
 
@@ -284,7 +284,7 @@ section, .overlay { display: none; }
 
 .dashboard-desc {
   max-width: 720px;
-  background: var(--card-bg);
+  background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(201,168,76,0.15);
   border-top: 3px solid var(--gold);
   padding: 20px 28px;
@@ -310,7 +310,7 @@ section, .overlay { display: none; }
 .tableau-container iframe {
   display: block;
   width: 100%;
-  height: 550px;
+  height: 750px;
   border: none;
 }
 
@@ -349,7 +349,8 @@ section, .overlay { display: none; }
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-  background: linear-gradient(160deg, #020f05 0%, #051a09 50%, #030d04 100%);
+background: #1a2744;
+background-attachment: fixed;
 }
 
 #budget h2 {
@@ -502,7 +503,8 @@ section, .overlay { display: none; }
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-  background:linear-gradient(135deg, #08051a 0%, #120b2e 50%, #0a0620 100%);
+background: #1a2744;
+background-attachment: fixed;
 }
 
 #quiz h2 {
@@ -802,7 +804,8 @@ section, .overlay { display: none; }
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-  background: linear-gradient(160deg, #030818 0%, #060f2a 50%, #040a1e 100%);
+background: #1a2744;
+background-attachment: fixed;
 }
 
 #about h2 {
@@ -895,7 +898,8 @@ footer span { color: var(--gold); }
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-  background: linear-gradient(160deg, #0f0800 0%, #1f1000 50%, #120a00 100%);
+background: #1a2744;
+background-attachment: fixed;
 }
 
 #planner h2 {
@@ -1640,7 +1644,8 @@ footer span { color: var(--gold); }
 #tools {
   flex-direction: column; align-items: center;
   min-height: 100vh; padding: 100px 20px 60px;
-  background: linear-gradient(135deg, #021210 0%, #04201c 50%, #011510 100%);
+background: #1a2744;
+background-attachment: fixed;
 }
 
 #tools h2 {

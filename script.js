@@ -489,14 +489,18 @@ function nextQuestion() {
 }
 
 // ── RESULTS ──
+// ── RESULTS ──
 function showResults() {
+  // Hide quiz screens
   document.getElementById('quiz-question').style.display = 'none';
   document.getElementById('quiz-start').style.display = 'none';
 
+  // Show results
   const resultsEl = document.getElementById('quiz-results');
-  resultsEl.removeAttribute('style');
+  resultsEl.style.display = 'flex';
   resultsEl.classList.add('visible');
 
+  // Show navigation buttons
   document.getElementById('quiz-nav-buttons').style.display = 'flex';
 
   const total = QUESTIONS.length;
@@ -505,7 +509,7 @@ function showResults() {
 
   document.getElementById('result-score').textContent = `${score}/${total}`;
 
-  // ── POINTS SUMMARY ──
+  // Points Summary
   let ptsSummary = document.getElementById('pts-summary');
   if (!ptsSummary) {
     ptsSummary = document.createElement('div');
@@ -522,7 +526,7 @@ function showResults() {
     </div>
   `;
 
-  // ── TITLE & SUBTITLE ──
+  // Title & Subtitle
   let title, subtitle;
   if (pct === 100)    { title = 'Financial Expert!';  subtitle = 'Perfect score: you are ready to teach others!'; }
   else if (pct >= 75) { title = 'Great Knowledge!';   subtitle = 'Strong foundation: a few areas to sharpen.'; }
@@ -532,7 +536,7 @@ function showResults() {
   document.getElementById('result-title').textContent = title;
   document.getElementById('result-subtitle').textContent = subtitle;
 
-  // ── QUESTION BREAKDOWN ──
+  // Breakdown
   const breakdownEl = document.getElementById('breakdown-list');
   breakdownEl.innerHTML = '';
   answers.forEach((a, i) => {
@@ -553,15 +557,13 @@ function showResults() {
 
   if (pct === 100) launchConfetti();
 
-  // ── SAVE TO FLASK BACKEND ──
+  // Save result
   const playerName = sessionStorage.getItem('sbb_player_name');
-  if (playerName) {
-    saveQuizResult(playerName, score, QUESTIONS.length, totalPoints, bestStreak);
-  }
+  if (playerName) saveQuizResult(playerName, score, total, totalPoints, bestStreak);
 
-  // ── UPDATE PLANNER BANNER ──
   setPlannerBanner(score, total);
 }
+
 
 // ── RESET QUIZ ──
 function resetQuiz() {
