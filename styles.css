@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel...');
+
 :root {
   --gold: #c9a84c;
   --deep: #0d0a04;
@@ -1373,7 +1375,7 @@ footer span { color: var(--gold); }
 
 .toast-btn:hover { opacity: 0.85; }
 
- PLANNER PUSH BLOCK/
+/* ── PLANNER PUSH BLOCK ── */
 .planner-push-block {
   background: linear-gradient(135deg, rgba(201,168,76,0.1) 0%, rgba(226,95,14,0.07) 100%);
   border: 1px solid rgba(201,168,76,0.3);

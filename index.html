@@ -436,7 +436,7 @@
         from urban Bhutanese households, including real-life scenarios you may recognise from your own life.</p>
         <div style="margin-bottom: 16px;">
  <div>
-<input type="text" id="player-name-input" maxlength="30" placeholder="Enter your name…" class="quiz-name-input">
+<input type="text" id="player-name-input" name="player-name" maxlength="30" placeholder="Enter your name…" class="quiz-name-input">
 </div>
 
   <div id="name-error" style="color:#e25f0e; font-size:12px; margin-top:6px; display:none;">
@@ -539,8 +539,8 @@
     <div class="tool-desc">Convert between Bhutanese Ngultrum (Nu.), USD, and INR using live exchange rates.</div>
 
     <div class="input-group">
-      <label class="tool-label">Amount</label>
-      <input type="number" id="nu-amount" placeholder="Enter amount e.g. 1000" min="0" style="width:100%;">
+      <label class="tool-label" for="nu-amount">Amount</label>
+      <input type="number" id="nu-amount" name="nu-amount" placeholder="Enter amount e.g. 1000" min="0" style="width:100%;">
     </div>
 
     <div class="input-group">
@@ -636,7 +636,7 @@
     <div class="input-group">
       <label class="tool-label">Savings Percentage (%)</label>
       <div class="tool-input-row">
-        <input type="number" id="savings-pct" placeholder="e.g. 20" min="1" max="100">
+        <input type="number" id="savings-pct" name="savings-pct" placeholder="e.g. 20" min="1" max="100">
         <select id="savings-preset" onchange="applyPreset()">
           <option value="">Quick Select</option>
           <option value="10">10% (Minimum)</option>
@@ -681,7 +681,7 @@
 
     <div class="input-group">
       <label class="tool-label" id="budget-income-label">Monthly Income (Nu.)</label>
-      <input type="number" id="budget-income" placeholder="Enter income e.g. 40000" min="0"
+      <input type="number" id="budget-income" name="budget-income" placeholder="Enter income e.g. 40000" min="0"
         oninput="calculateBudget()" style="width:100%;">
     </div>
 
