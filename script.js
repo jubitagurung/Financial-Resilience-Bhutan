@@ -5,6 +5,12 @@ function showSection(id) {
     el.style.display = '';
   });
 
+  // Protect results div from being wiped by the reset above
+  const results = document.getElementById('quiz-results');
+  if (results && results.classList.contains('visible')) {
+    results.style.display = 'flex';
+  }
+
   const target = document.getElementById(id);
   if (target) {
     target.classList.add('active');
@@ -493,14 +499,16 @@ function nextQuestion() {
 function showResults() {
   // Hide quiz screens
   document.getElementById('quiz-question').style.display = 'none';
-  document.getElementById('quiz-start').style.display = 'none';
+  document.getElementById('quiz-start').style.display    = 'none';
 
   // Show results
-  const resultsEl = document.getElementById('quiz-results');
-  resultsEl.style.display = 'flex';
-  resultsEl.classList.add('visible');
+const resultsEl = document.getElementById('quiz-results');
+resultsEl.classList.add('visible');
+resultsEl.style.display = 'flex';        // keep this too — belt and braces
+resultsEl.style.flexDirection = 'column';
+resultsEl.style.alignItems = 'center';
 
-  // Show navigation buttons
+  // Show nav buttons
   document.getElementById('quiz-nav-buttons').style.display = 'flex';
 
   const total = QUESTIONS.length;
@@ -567,9 +575,12 @@ function showResults() {
 
 // ── RESET QUIZ ──
 function resetQuiz() {
-  document.getElementById('quiz-results').classList.remove('visible');
-  document.getElementById('quiz-start').style.display = 'block';
-  document.getElementById('quiz-nav-buttons').style.display = 'none';
+const r = document.getElementById('quiz-results');
+r.classList.remove('visible');
+r.style.display = '';
+
+document.getElementById('quiz-start').style.display = 'block';
+document.getElementById('quiz-nav-buttons').style.display = 'none';
 
   const prevBtn = document.getElementById('q-prev-btn');
   if (prevBtn) prevBtn.remove();

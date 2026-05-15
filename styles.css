@@ -710,7 +710,9 @@ background-attachment: fixed;
 }
 
 #quiz-results.visible {
-  display: flex;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
 }
 
 .quiz-score-circle {
