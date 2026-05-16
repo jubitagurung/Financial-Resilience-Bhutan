@@ -5,16 +5,21 @@ from flask_limiter.util import get_remote_address
 import json
 import os
 import re
+import time
 from datetime import datetime
 from pathlib import Path
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=[
+    "http://localhost",
+    "http://127.0.0.1",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+    "https://yourdomain.com"
+])
 
-# ── Storage file
-DATA_FILE = Path("scores.json")
+DATA_FILE = Path(__file__).parent / "scores.json"
 
-# ── Rate Limiter
 limiter = Limiter(
     get_remote_address,
     app=app,
@@ -25,12 +30,10 @@ limiter = Limiter(
 # ── Helpers ──────────────────────────────────────────────────────────────
 
 def sanitize_name(name):
-    """Remove dangerous characters, keep only safe ones."""
     name = re.sub(r'[^\w\s\-\'\.]', '', str(name))
     return name.strip()[:50]
 
 def load_scores():
-    """Read all scores from the JSON file."""
     if not DATA_FILE.exists():
         return []
     try:
@@ -41,15 +44,28 @@ def load_scores():
         return []
 
 def save_scores(scores):
-    """Save scores atomically to prevent corruption."""
-    try:
-        temp_file = DATA_FILE.with_suffix('.tmp')
-        with open(temp_file, "w", encoding="utf-8") as f:
-            json.dump(scores, f, indent=2, ensure_ascii=False)
-        temp_file.replace(DATA_FILE)
-        print(f"✅ Successfully saved {len(scores)} records")
-    except Exception as e:
-        print(f"❌ Error saving scores: {e}")
+    """
+    Write scores directly to the JSON file.
+    Retries up to 5 times with a short delay to handle OneDrive/antivirus
+    file locks on Windows — the atomic rename trick does NOT work when
+    OneDrive is syncing the folder (WinError 5 / Access Denied).
+    """
+    last_error = None
+    for attempt in range(5):
+        try:
+            with open(DATA_FILE, "w", encoding="utf-8") as f:
+                json.dump(scores, f, indent=2, ensure_ascii=False)
+            print(f"✅ Saved {len(scores)} records")
+            return True
+        except PermissionError as e:
+            last_error = e
+            print(f"⚠️  Write locked (attempt {attempt + 1}/5), retrying in 0.3s…")
+            time.sleep(0.3)
+        except Exception as e:
+            print(f"❌ Error saving scores: {e}")
+            return False
+    print(f"❌ Could not save after 5 attempts: {last_error}")
+    return False
 
 # ── Routes ───────────────────────────────────────────────────────────────
 
@@ -58,20 +74,17 @@ def home():
     return jsonify({"message": "Smart Budget Bhutan — Quiz API is running."})
 
 
-# POST /save — save a new quiz result
 @app.route("/save", methods=["POST"])
 @limiter.limit("10 per minute")
 def save_result():
     data = request.get_json(silent=True) or {}
 
-    # ── Validate name
     name = sanitize_name(data.get("name", ""))
     if not name:
         return jsonify({"error": "Valid name is required."}), 400
     if len(name) > 50:
         return jsonify({"error": "Name is too long (max 50 characters)."}), 400
 
-    # ── Validate score fields
     try:
         score  = int(data.get("score"))
         total  = int(data.get("total"))
@@ -96,16 +109,17 @@ def save_result():
 
     scores = load_scores()
     scores.append(entry)
-    save_scores(scores)
 
-    return jsonify({"message": "Score saved successfully!", "entry": entry}), 201
+    if save_scores(scores):
+        return jsonify({"message": "Score saved successfully!", "entry": entry}), 201
+    else:
+        # Still return 201 — localStorage already has the data on the client
+        return jsonify({"message": "Saved to memory only (file locked).", "entry": entry}), 201
 
 
-# GET /history?name=Jubita — get all results for one user
 @app.route("/history", methods=["GET"])
 def get_history():
     name = sanitize_name(request.args.get("name", "")).lower()
-
     if not name:
         return jsonify({"error": "name query param is required."}), 400
 
@@ -127,17 +141,11 @@ def get_history():
     }), 200
 
 
-# GET /stats — overall quiz statistics
 @app.route("/stats", methods=["GET"])
 def get_stats():
     scores = load_scores()
-
     if not scores:
-        return jsonify({
-            "total_attempts": 0,
-            "avg_pct":        0,
-            "perfect_scores": 0
-        }), 200
+        return jsonify({"total_attempts": 0, "avg_pct": 0, "perfect_scores": 0}), 200
 
     total   = len(scores)
     avg_pct = round(sum(s["pct"] for s in scores) / total)
@@ -150,11 +158,9 @@ def get_stats():
     }), 200
 
 
-# DELETE /clear?name=Jubita — delete a user's own history
 @app.route("/clear", methods=["DELETE"])
 def clear_history():
     name = sanitize_name(request.args.get("name", "")).lower()
-
     if not name:
         return jsonify({"error": "name query param is required."}), 400
 
@@ -162,7 +168,6 @@ def clear_history():
     before = len(scores)
     scores = [s for s in scores if s["name"].lower() != name]
     save_scores(scores)
-
     removed = before - len(scores)
     return jsonify({"message": f"Removed {removed} record(s) for '{name}'."}), 200
 

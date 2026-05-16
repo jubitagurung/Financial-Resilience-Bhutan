@@ -2,17 +2,15 @@
 function showSection(id) {
   document.querySelectorAll('section, .overlay').forEach(el => {
     el.classList.remove('active');
-    el.style.display = '';
+    el.style.display = 'none';
   });
-
-  // Protect results div from being wiped by the reset above
-  const results = document.getElementById('quiz-results');
-  if (results && results.classList.contains('visible')) {
-    results.style.display = 'flex';
-  }
 
   const target = document.getElementById(id);
   if (target) {
+    // Must set explicit display — '' loses to the CSS `section { display: none }` rule
+    target.style.display = 'flex';
+    target.style.flexDirection = 'column';
+    target.style.alignItems = 'center';
     target.classList.add('active');
   }
 
@@ -26,6 +24,16 @@ function showSection(id) {
     t.classList.remove('open');
     t.setAttribute('aria-expanded', 'false');
   }
+
+  if (id === 'quiz') {
+    const isResultsVisible = document.getElementById('quiz-results')?.getAttribute('data-visible') === 'true';
+    if (isResultsVisible) {
+      showQuizScreen('results');
+    } else {
+      showQuizScreen('start');
+    }
+  }
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -115,6 +123,169 @@ function setPlannerBanner(score, total) {
   }
   banner.style.display = 'block';
 }
+
+
+// ══════════════════════════════════════════════════════════════════════
+// ── LOCAL HISTORY ENGINE
+// Stores all quiz attempts in localStorage immediately.
+// Also tries to sync to Flask in the background — silently, no errors shown.
+// ══════════════════════════════════════════════════════════════════════
+
+const LOCAL_KEY = 'sbb_quiz_history';
+
+// Save one attempt to localStorage (always works, no server needed)
+function localSaveResult(entry) {
+  try {
+    const existing = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]');
+    existing.push(entry);
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(existing));
+  } catch (e) {
+    console.warn('localStorage save failed:', e);
+  }
+}
+
+// Load all attempts for a given name from localStorage
+function localLoadHistory(name) {
+  try {
+    const all = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]');
+    return all.filter(r => r.name.toLowerCase() === name.toLowerCase());
+  } catch (e) {
+    return [];
+  }
+}
+
+// Clear one user's history from localStorage
+function localClearHistory(name) {
+  try {
+    const all = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]');
+    const filtered = all.filter(r => r.name.toLowerCase() !== name.toLowerCase());
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(filtered));
+  } catch (e) {
+    console.warn('localStorage clear failed:', e);
+  }
+}
+
+// Silent background sync to Flask — fire and forget, never blocks UI
+async function syncToFlask(entry) {
+  try {
+    await fetch(`${SBB_API}/save`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(entry),
+      signal: AbortSignal.timeout(3000)   // give up after 3 s
+    });
+  } catch (_) {
+    // Server not running — that's fine, localStorage has the data
+  }
+}
+
+// Main save: always saves locally, tries server silently in background
+function saveQuizResult(name, score, total, points, streak) {
+  const entry = {
+    name,
+    score,
+    total,
+    pct: Math.round(score / total * 100),
+    points,
+    streak,
+    date: new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }),
+    time: new Date().toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' })
+  };
+
+  // 1. Save to localStorage immediately
+  localSaveResult(entry);
+
+  // 2. Try to sync to Flask in background (no await — non-blocking)
+  syncToFlask(entry);
+
+  return entry;
+}
+
+// Render history into a container element
+function renderHistoryHTML(results, containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+
+  if (!results.length) {
+    el.innerHTML = `
+      <div style="background:rgba(201,168,76,0.06); border:1px solid rgba(201,168,76,0.2);
+        border-radius:10px; padding:16px 20px; text-align:center;
+        color:var(--muted); font-size:13px; line-height:1.7;">
+        No quiz history found yet. Complete the quiz to see your results here!
+      </div>`;
+    return;
+  }
+
+  const best = results.reduce((b, r) => r.points > b.points ? r : b, results[0]);
+  const reversed = [...results].reverse();   // newest first
+
+  el.innerHTML = `
+    <div class="pts-summary" style="margin-bottom:16px;">
+      <div class="pts-row">
+        <div class="pts-item"><div class="pts-val">${results.length}</div><div class="pts-lbl">Attempts</div></div>
+        <div class="pts-item"><div class="pts-val">${best.points}</div><div class="pts-lbl">Best Points</div></div>
+        <div class="pts-item"><div class="pts-val">${best.pct}%</div><div class="pts-lbl">Best Score</div></div>
+        <div class="pts-item"><div class="pts-val">🔥 ${best.streak ?? 0}</div><div class="pts-lbl">Best Streak</div></div>
+      </div>
+    </div>
+    ${reversed.map((r, i) => `
+      <div class="breakdown-item">
+        <div class="breakdown-icon">${r.pct === 100 ? '🏆' : r.pct >= 75 ? '⭐' : r.pct >= 50 ? '📈' : '📚'}</div>
+        <div class="breakdown-q">
+          <strong>Attempt ${results.length - i} · ${r.date} ${r.time}</strong>
+          <span style="color:var(--green)">${r.score}/${r.total} correct · ${r.points} pts · ${r.pct}%</span>
+          ${r.streak ? `<span class="bd-tip">🔥 Best streak: ${r.streak}</span>` : ''}
+        </div>
+      </div>`).join('')}
+    <div style="text-align:center; margin-top:14px;">
+      <button onclick="clearMyHistory()" style="
+        background:transparent; border:1px solid rgba(226,95,14,0.4);
+        color:#e25f0e; font-family:'Cinzel',serif; font-size:11px;
+        letter-spacing:1px; padding:7px 18px; border-radius:4px;
+        cursor:pointer; text-transform:uppercase; transition:background 0.2s, color 0.2s;"
+        onmouseover="this.style.background='rgba(226,95,14,0.12)'"
+        onmouseout="this.style.background='transparent'">
+        Clear My History
+      </button>
+    </div>`;
+}
+
+// Called by the "My History" button on the results screen
+function showMyHistory() {
+  const name = sessionStorage.getItem('sbb_player_name');
+  if (!name) {
+    alert('No name found. Please start the quiz first and enter your name.');
+    return;
+  }
+
+  const container = document.getElementById('history-container');
+  if (!container) return;
+
+  // Load from localStorage instantly — no waiting
+  const localResults = localLoadHistory(name);
+  renderHistoryHTML(localResults, 'history-container');
+}
+
+// Clear this user's history from localStorage (+ optional server sync)
+function clearMyHistory() {
+  const name = sessionStorage.getItem('sbb_player_name');
+  if (!name) return;
+  if (!confirm(`Clear all quiz history for "${name}"? This cannot be undone.`)) return;
+
+  localClearHistory(name);
+
+  // Also try to clear from Flask silently
+  try {
+    fetch(`${SBB_API}/clear?name=${encodeURIComponent(name)}`, {
+      method: 'DELETE',
+      signal: AbortSignal.timeout(3000)
+    }).catch(() => {});
+  } catch (_) {}
+
+  const container = document.getElementById('history-container');
+  if (container) renderHistoryHTML([], 'history-container');
+}
+
 
 // ══════════════════════════════════════════════
 // ── QUIZ ENGINE ──
@@ -265,6 +436,53 @@ let bestStreak = 0;
 let answers = [];
 let answeredQuestions;
 
+function showQuizScreen(screen) {
+  const startEl    = document.getElementById('quiz-start');
+  const questionEl = document.getElementById('quiz-question');
+  const resultsEl  = document.getElementById('quiz-results');
+  const navBtns    = document.getElementById('quiz-nav-buttons');
+
+  startEl.style.display    = 'none';
+  questionEl.style.display = 'none';
+  resultsEl.style.display  = 'none';
+  navBtns.style.display    = 'none';
+
+  if (screen === 'start') {
+    startEl.style.display = 'block';
+    resultsEl.setAttribute('data-visible', 'false');
+  } else if (screen === 'question') {
+    questionEl.style.display = 'block';
+    resultsEl.setAttribute('data-visible', 'false');
+  } else if (screen === 'results') {
+    resultsEl.style.display  = 'flex';
+    resultsEl.style.flexDirection = 'column';
+    resultsEl.style.alignItems    = 'center';
+    resultsEl.setAttribute('data-visible', 'true');
+    navBtns.style.display = 'flex';
+  }
+}
+
+function showQuizResults() {
+  document.querySelectorAll('section, .overlay').forEach(el => {
+    el.classList.remove('active');
+    el.style.display = 'none';
+  });
+  const quizSection = document.getElementById('quiz');
+  if (quizSection) {
+    quizSection.style.display = 'flex';
+    quizSection.style.flexDirection = 'column';
+    quizSection.style.alignItems = 'center';
+    quizSection.classList.add('active');
+  }
+
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active-link'));
+  const navLink = document.getElementById('nav-quiz');
+  if (navLink) navLink.classList.add('active-link');
+
+  showQuizScreen('results');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 function startQuizWithName() {
   const input = document.getElementById('player-name-input');
   const error = document.getElementById('name-error');
@@ -281,27 +499,26 @@ function startQuizWithName() {
   startQuiz();
 }
 
-// ── START ──
 function startQuiz() {
   currentQ = 0; score = 0; totalPoints = 0; streak = 0; bestStreak = 0;
   answers = [];
   answeredQuestions = new Array(QUESTIONS.length).fill(null);
 
-  document.getElementById('quiz-start').style.display = 'none';
-  document.getElementById('quiz-question').style.display = 'block';
-
-  document.getElementById('quiz-results').classList.remove('visible');
-  document.getElementById('quiz-nav-buttons').style.display = 'none';
-
   const old = document.getElementById('q-prev-btn');
   if (old) old.remove();
   const oldRow = document.getElementById('q-btn-row');
   if (oldRow) oldRow.remove();
+  const oldPts = document.getElementById('pts-summary');
+  if (oldPts) oldPts.remove();
 
+  // Clear history panel whenever a new quiz starts
+  const hc = document.getElementById('history-container');
+  if (hc) hc.innerHTML = '';
+
+  showQuizScreen('question');
   renderQuestion();
 }
 
-// ── RENDER QUESTION ──
 function renderQuestion() {
   const q = QUESTIONS[currentQ];
   const total = QUESTIONS.length;
@@ -366,7 +583,6 @@ function renderQuestion() {
   nextBtn.style.display = prevAnswer !== null ? 'inline-block' : 'none';
   nextBtn.textContent = currentQ < QUESTIONS.length - 1 ? 'Next Question →' : 'See My Results →';
 
-  // ── PREV BUTTON ──
   let prevBtn = document.getElementById('q-prev-btn');
   if (!prevBtn) {
     prevBtn = document.createElement('button');
@@ -377,7 +593,6 @@ function renderQuestion() {
   }
   prevBtn.style.display = currentQ > 0 ? 'inline-block' : 'none';
 
-  // ── BUTTON ROW ──
   let btnRow = document.getElementById('q-btn-row');
   if (!btnRow) {
     btnRow = document.createElement('div');
@@ -395,7 +610,6 @@ function renderQuestion() {
   card.classList.add('fade-in');
 }
 
-// ── SELECT ANSWER ──
 function selectAnswer(selectedIndex) {
   const q = QUESTIONS[currentQ];
   answeredQuestions[currentQ] = selectedIndex;
@@ -453,7 +667,6 @@ function selectAnswer(selectedIndex) {
   nextBtn.textContent = currentQ < QUESTIONS.length - 1 ? 'Next Question →' : 'See My Results →';
 }
 
-// ── STREAK TOAST ──
 function showStreakToast(n) {
   let t = document.getElementById('streak-toast');
   if (!t) {
@@ -494,30 +707,13 @@ function nextQuestion() {
   }
 }
 
-// ── RESULTS ──
-// ── RESULTS ──
 function showResults() {
-  // Hide quiz screens
-  document.getElementById('quiz-question').style.display = 'none';
-  document.getElementById('quiz-start').style.display    = 'none';
-
-  // Show results
-const resultsEl = document.getElementById('quiz-results');
-resultsEl.classList.add('visible');
-resultsEl.style.display = 'flex';        // keep this too — belt and braces
-resultsEl.style.flexDirection = 'column';
-resultsEl.style.alignItems = 'center';
-
-  // Show nav buttons
-  document.getElementById('quiz-nav-buttons').style.display = 'flex';
-
   const total = QUESTIONS.length;
   const maxPoints = QUESTIONS.reduce((s, q) => s + q.points, 0);
   const pct = Math.round(score / total * 100);
 
   document.getElementById('result-score').textContent = `${score}/${total}`;
 
-  // Points Summary
   let ptsSummary = document.getElementById('pts-summary');
   if (!ptsSummary) {
     ptsSummary = document.createElement('div');
@@ -534,7 +730,6 @@ resultsEl.style.alignItems = 'center';
     </div>
   `;
 
-  // Title & Subtitle
   let title, subtitle;
   if (pct === 100)    { title = 'Financial Expert!';  subtitle = 'Perfect score: you are ready to teach others!'; }
   else if (pct >= 75) { title = 'Great Knowledge!';   subtitle = 'Strong foundation: a few areas to sharpen.'; }
@@ -544,7 +739,6 @@ resultsEl.style.alignItems = 'center';
   document.getElementById('result-title').textContent = title;
   document.getElementById('result-subtitle').textContent = subtitle;
 
-  // Breakdown
   const breakdownEl = document.getElementById('breakdown-list');
   breakdownEl.innerHTML = '';
   answers.forEach((a, i) => {
@@ -565,23 +759,36 @@ resultsEl.style.alignItems = 'center';
 
   if (pct === 100) launchConfetti();
 
-  // Save result
+  // ── Save to localStorage immediately + background Flask sync
   const playerName = sessionStorage.getItem('sbb_player_name');
   if (playerName) saveQuizResult(playerName, score, total, totalPoints, bestStreak);
 
   setPlannerBanner(score, total);
+
+  // Hide all sections first
+  document.querySelectorAll('section, .overlay').forEach(el => {
+    el.classList.remove('active');
+    el.style.display = 'none';
+  });
+
+  // Show quiz section with explicit flex — NEVER use '' (empty string)
+  // because the CSS rule `section { display: none }` would immediately win
+  const quizEl = document.getElementById('quiz');
+  quizEl.style.display = 'flex';
+  quizEl.style.flexDirection = 'column';
+  quizEl.style.alignItems = 'center';
+  quizEl.classList.add('active');
+
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active-link'));
+  const navQuiz = document.getElementById('nav-quiz');
+  if (navQuiz) navQuiz.classList.add('active-link');
+
+  // Show results panel inside the now-visible quiz section
+  showQuizScreen('results');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-
-// ── RESET QUIZ ──
 function resetQuiz() {
-const r = document.getElementById('quiz-results');
-r.classList.remove('visible');
-r.style.display = '';
-
-document.getElementById('quiz-start').style.display = 'block';
-document.getElementById('quiz-nav-buttons').style.display = 'none';
-
   const prevBtn = document.getElementById('q-prev-btn');
   if (prevBtn) prevBtn.remove();
   const btnRow = document.getElementById('q-btn-row');
@@ -592,12 +799,26 @@ document.getElementById('quiz-nav-buttons').style.display = 'none';
   currentQ = 0; score = 0; totalPoints = 0; streak = 0; bestStreak = 0;
   answers = [];
   answeredQuestions = new Array(QUESTIONS.length).fill(null);
+
+  showQuizScreen('start');
 }
 
 // ── SINGLE DOMContentLoaded ──
 document.addEventListener('DOMContentLoaded', () => {
 
-  // 1. Show quiz invite toast after 3s
+  document.querySelectorAll('section, .overlay').forEach(el => {
+    el.classList.remove('active');
+    el.style.display = 'none';
+  });
+  const homeEl = document.getElementById('home');
+  if (homeEl) {
+    homeEl.style.display = 'flex';
+    homeEl.style.flexDirection = 'column';
+    homeEl.style.alignItems = 'center';
+    homeEl.classList.add('active');
+  }
+  showQuizScreen('start');
+
   setTimeout(() => showToastOnHome(), 3000);
 
   const msg = '🎉 Welcome to SmartBudget Bhutan!';
@@ -648,7 +869,6 @@ function switchTab(tab, btn) {
   btn.classList.add('active');
 }
 
-// ── SWAP CURRENCIES ──
 function swapCurrencies() {
   const fromEl = document.getElementById('currency-from');
   const toEl   = document.getElementById('currency-to');
@@ -657,7 +877,6 @@ function swapCurrencies() {
   toEl.value   = temp;
 }
 
-// ── CURRENCY CONVERTER ──
 async function convertCurrency() {
   const amount    = parseFloat(document.getElementById('nu-amount').value);
   const fromCur   = document.getElementById('currency-from').value;
@@ -753,7 +972,6 @@ async function convertCurrency() {
   }
 }
 
-// ── SAVINGS CURRENCY HELPERS ──
 function getSavingsCurrencySymbol() {
   const sel = document.getElementById('savings-currency');
   if (!sel) return 'Nu.';
@@ -809,7 +1027,6 @@ function calculateSavings() {
   resultBox.classList.add('show');
 }
 
-// ── BUDGET CURRENCY HELPERS ──
 function getBudgetCurrencySymbol() {
   const sel = document.getElementById('budget-currency');
   if (!sel) return 'Nu.';
@@ -860,7 +1077,6 @@ function calculateBudget() {
     : `🏆 Consider putting part of your ${fmt(income * 0.2)} into fixed deposits or investments.`;
 }
 
-// ── SHEET PREVIEW MODAL ──
 function openSheetModal(src, title) {
   const overlay = document.getElementById('sheet-modal-overlay');
   const img     = document.getElementById('sheet-modal-img');
@@ -889,77 +1105,9 @@ function closeSheetModal() {
   document.body.style.overflow = '';
 }
 
-// ══ SBB BACKEND ══
-const SBB_API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  ? "http://127.0.0.1:5000"
-  : "";
-
-async function saveQuizResult(name, score, total, points, streak) {
-  try {
-    const res = await fetch(`${SBB_API}/save`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, score, total, points, streak })
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error);
-    console.log("Score saved:", data.entry);
-    return data.entry;
-  } catch (err) {
-    console.warn("Could not save score:", err.message);
-    return null;
-  }
-}
-
-async function loadUserHistory(name, containerId) {
-  const el = document.getElementById(containerId);
-  if (!el) return;
-  el.innerHTML = `<p style="color:var(--muted);font-size:13px;">Loading…</p>`;
-  try {
-    const res  = await fetch(`${SBB_API}/history?name=${encodeURIComponent(name)}`);
-    const data = await res.json();
-    if (!data.found) {
-      el.innerHTML = `<p style="color:var(--muted);font-size:13px;">No results found for "${name}".</p>`;
-      return;
-    }
-    const best = data.best;
-    el.innerHTML = `
-      <div class="pts-summary" style="margin-bottom:16px;">
-        <div class="pts-row">
-          <div class="pts-item"><div class="pts-val">${data.attempts}</div><div class="pts-lbl">Attempts</div></div>
-          <div class="pts-item"><div class="pts-val">${best.points}</div><div class="pts-lbl">Best Points</div></div>
-          <div class="pts-item"><div class="pts-val">${best.pct}%</div><div class="pts-lbl">Best Score</div></div>
-          <div class="pts-item"><div class="pts-val">🔥 ${best.streak}</div><div class="pts-lbl">Best Streak</div></div>
-        </div>
-      </div>
-      ${data.results.map((r, i) => `
-        <div class="breakdown-item">
-          <div class="breakdown-icon">${r.pct === 100 ? '🏆' : r.pct >= 75 ? '⭐' : r.pct >= 50 ? '📈' : '📚'}</div>
-          <div class="breakdown-q">
-            <strong>Attempt ${i + 1} · ${r.date} ${r.time}</strong>
-            <span style="color:var(--green)">${r.score}/${r.total} correct · ${r.points} pts · ${r.pct}%</span>
-            ${r.streak ? `<span class="bd-tip">🔥 Best streak: ${r.streak}</span>` : ''}
-          </div>
-        </div>`).join('')}`;
-  } catch (err) {
-    el.innerHTML = `
-      <div style="
-        background:rgba(201,168,76,0.06);
-        border:1px solid rgba(201,168,76,0.2);
-        border-radius:10px; padding:16px 20px;
-        text-align:center; color:var(--muted); font-size:13px; line-height:1.7;">
-        📋 <strong style="color:var(--gold);">History unavailable</strong><br>
-        The score server is not running. Start Flask locally to track your history.
-      </div>`;
-  }
-}
-
-function showMyHistory() {
-  const name = sessionStorage.getItem("sbb_player_name");
-  if (!name) {
-    alert("No name found. Please start the quiz first and enter your name.");
-    return;
-  }
-  console.log("Loading history for:", name);
-  loadUserHistory(name, "history-container");
-}
+// ══ SBB BACKEND (kept for background sync only) ══
+const SBB_API = (() => {
+  const h = window.location.hostname;
+  if (h === 'localhost' || h === '127.0.0.1') return "http://127.0.0.1:5000";
+  return "https://yourdomain.com";
+})();
