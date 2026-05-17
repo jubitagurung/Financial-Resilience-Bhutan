@@ -25,12 +25,22 @@ function showSection(id) {
     t.setAttribute('aria-expanded', 'false');
   }
 
-  if (id === 'quiz') {
+ if (id === 'quiz') {
     const isResultsVisible = document.getElementById('quiz-results')?.getAttribute('data-visible') === 'true';
     if (isResultsVisible) {
       showQuizScreen('results');
     } else {
       showQuizScreen('start');
+    }
+    const name = sessionStorage.getItem('sbb_player_name');
+    const panel = document.getElementById('quiz-history-panel');
+    if (panel && name) {
+      const results = localLoadHistory(name);
+      if (results.length > 0) {
+        renderHistoryInPanel(results, name, panel);
+      } else {
+        panel.innerHTML = '';
+      }
     }
   }
 
@@ -155,6 +165,7 @@ function localLoadHistory(name) {
 }
 
 // Clear one user's history from localStorage
+// Clear one user's history from localStorage
 function localClearHistory(name) {
   try {
     const all = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]');
@@ -163,6 +174,27 @@ function localClearHistory(name) {
   } catch (e) {
     console.warn('localStorage clear failed:', e);
   }
+}
+
+function clearMyHistory() {
+  const name = sessionStorage.getItem('sbb_player_name');
+  if (!name) return;
+  if (!confirm(`Clear all quiz history for "${name}"? This cannot be undone.`)) return;
+
+  localClearHistory(name);
+
+  try {
+    fetch(`${SBB_API}/clear?name=${encodeURIComponent(name)}`, {
+      method: 'DELETE',
+      signal: AbortSignal.timeout(3000)
+    }).catch(() => {});
+  } catch (_) {}
+
+  const container = document.getElementById('history-container');
+  if (container) renderHistoryHTML([], 'history-container');
+
+  const panel = document.getElementById('quiz-history-panel');
+  if (panel) panel.innerHTML = '';
 }
 
 // Silent background sync to Flask — fire and forget, never blocks UI
@@ -261,9 +293,27 @@ function showMyHistory() {
   const container = document.getElementById('history-container');
   if (!container) return;
 
-  // Load from localStorage instantly — no waiting
   const localResults = localLoadHistory(name);
   renderHistoryHTML(localResults, 'history-container');
+}
+
+function renderHistoryInPanel(results, name, panel) {
+  if (!panel) return;
+  panel.innerHTML = `
+    <div style="
+      background:rgba(201,168,76,0.07);
+      border:1px solid rgba(201,168,76,0.28);
+      border-top:3px solid var(--gold);
+      border-radius:14px;
+      padding:22px 28px;
+      margin-bottom:4px;
+    ">
+      <div style="font-family:'Cinzel',serif; color:var(--gold); font-size:14px; letter-spacing:1px; margin-bottom:16px;">
+        📋 Your Quiz History — ${name}
+      </div>
+      <div id="quiz-history-panel-inner"></div>
+    </div>`;
+  renderHistoryHTML(results, 'quiz-history-panel-inner');
 }
 
 // Clear this user's history from localStorage (+ optional server sync)
@@ -284,6 +334,9 @@ function clearMyHistory() {
 
   const container = document.getElementById('history-container');
   if (container) renderHistoryHTML([], 'history-container');
+
+  const panel = document.getElementById('quiz-history-panel');
+  if (panel) panel.innerHTML = '';
 }
 
 
@@ -761,8 +814,11 @@ function showResults() {
 
   // ── Save to localStorage immediately + background Flask sync
   const playerName = sessionStorage.getItem('sbb_player_name');
-  if (playerName) saveQuizResult(playerName, score, total, totalPoints, bestStreak);
-
+if (playerName) {
+    saveQuizResult(playerName, score, total, totalPoints, bestStreak);
+    const panel = document.getElementById('quiz-history-panel');
+    if (panel) renderHistoryInPanel(localLoadHistory(playerName), playerName, panel);
+  }
   setPlannerBanner(score, total);
 
   // Hide all sections first
