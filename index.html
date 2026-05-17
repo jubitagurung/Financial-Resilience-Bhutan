@@ -486,7 +486,11 @@
     <span>🔄</span>
     Try Again
   </button>
-  <button class="quiz-circle-btn history" onclick="showMyHistory()">
+  <button class="quiz-circle-btn results" onclick="toggleResults()">
+    <span>📊</span>
+    Results
+  </button>
+  <button class="quiz-circle-btn history" onclick="toggleHistory()">
     <span>📋</span>
     My History
   </button>
@@ -494,11 +498,22 @@
 
 
 
-      <div class="quiz-result-breakdown" id="result-breakdown">
-        <h4> Question Breakdown</h4>
+     <div class="quiz-result-breakdown" id="result-breakdown" style="display:none;">
+        <h4>Question Breakdown</h4>
         <div id="breakdown-list"></div>
+        <div style="text-align:center; margin-top:14px;">
+          <button onclick="toggleResults()" style="
+            background:transparent; border:1px solid rgba(201,168,76,0.4);
+            color:var(--gold); font-family:'Cinzel',serif; font-size:11px;
+            letter-spacing:1px; padding:7px 18px; border-radius:4px;
+            cursor:pointer; text-transform:uppercase;"
+            onmouseover="this.style.background='rgba(201,168,76,0.12)'"
+            onmouseout="this.style.background='transparent'">
+            Close Results ✕
+          </button>
+        </div>
       </div>
-  <div id="history-container" style="width:100%; max-width:700px; margin-top:16px;"></div>  
+  <div id="history-container" style="display:none; width:100%; max-width:700px; margin-top:16px;"></div>
     </div>
 <div style="margin-top:32px;">
 
@@ -767,21 +782,44 @@
           <li>Make complex financial insights accessible to everyone</li>
         </ul>
       </div>
-      <div class="about-card">        <h3>Tools & Technology</h3>
-        <p style="margin-bottom:14px">This project uses a modern data-to-web pipeline to turn raw household data into
-          clear, actionable insights.</p>
-        <p style="color:var(--text); font-size:13px; margin-bottom:8px">Data & Visualization</p>
-        <div class="tech-row" style="margin-bottom:14px">
-          <span class="tech-tag">Tableau</span>
-          <span class="tech-tag">Data Analysis</span>
-        </div>
-        <p style="color:var(--text); font-size:13px; margin-bottom:8px">Website</p>
-        <div class="tech-row">
-          <span class="tech-tag">HTML</span>
-          <span class="tech-tag">CSS</span>
-          <span class="tech-tag">JavaScript</span>
-        </div>
-      </div>
+      
+<div class="about-card">
+  <h3>Tools & Technology</h3>
+  <p style="margin-bottom:14px">This project uses a modern data-to-web pipeline to turn raw household data into clear, actionable insights.</p>
+
+  <p style="color:var(--text); font-size:13px; margin-bottom:8px">Data & Visualization</p>
+  <div class="tech-row" style="margin-bottom:14px">
+    <span class="tech-tag">Tableau</span>
+    <span class="tech-tag">Data Analysis</span>
+  </div>
+
+  <p style="color:var(--text); font-size:13px; margin-bottom:8px">Survey & Data Collection</p>
+  <div class="tech-row" style="margin-bottom:14px">
+    <span class="tech-tag">Google Forms</span>
+    <span class="tech-tag">Google Sheets</span>
+    <span class="tech-tag">Google Docs</span>
+  </div>
+
+  <p style="color:var(--text); font-size:13px; margin-bottom:8px">Website</p>
+  <div class="tech-row" style="margin-bottom:14px">
+    <span class="tech-tag">HTML</span>
+    <span class="tech-tag">CSS</span>
+    <span class="tech-tag">JavaScript</span>
+  </div>
+
+  <p style="color:var(--text); font-size:13px; margin-bottom:8px">Backend & API</p>
+  <div class="tech-row" style="margin-bottom:14px">
+    <span class="tech-tag">Python</span>
+    <span class="tech-tag">Flask</span>
+    <span class="tech-tag">REST API</span>
+  </div>
+
+  <p style="color:var(--text); font-size:13px; margin-bottom:8px">Deployment</p>
+  <div class="tech-row">
+    <span class="tech-tag">Netlify</span>
+    <span class="tech-tag">Render.com</span>
+  </div>
+</div>
     </div>
     <!-- ══ FINANCIAL PLATFORMS SECTION ══ -->
     <div class="platforms-wrap">

@@ -823,6 +823,12 @@ background-attachment: fixed;
   gap: 24px; max-width: 1100px; margin-top: 28px;
 }
 
+.about-container {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 24px; max-width: 1100px; margin-top: 28px;
+  align-items: flex-start;
+}
+
 .about-card {
   background: var(--card-bg);
   backdrop-filter: blur(8px);
@@ -1794,6 +1800,16 @@ background-attachment: fixed;
 
 .quiz-circle-btn.retry:hover {
   background: var(--gold);
+  color: var(--deep);
+}
+
+.quiz-circle-btn.results {
+  border: 2px solid rgba(92,184,228,0.6);
+  color: #5cb8e4;
+}
+
+.quiz-circle-btn.results:hover {
+  background: #5cb8e4;
   color: var(--deep);
 }
 
