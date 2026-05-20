@@ -272,19 +272,43 @@ function renderHistoryHTML(results, containerId) {
     </div>`;
 }
 
-// Called by the "My History" button on the results screen
-function showMyHistory() {
-  const name = sessionStorage.getItem('sbb_player_name');
-  if (!name) {
-    alert('No name found. Please start the quiz first and enter your name.');
-    return;
+function toggleHistory() {
+  const historyEl  = document.getElementById('history-container');
+  const resultsEl  = document.getElementById('result-breakdown');
+  if (!historyEl) return;
+
+  const isOpen = historyEl.style.display === 'block';
+
+  // close both first
+  historyEl.style.display  = 'none';
+  resultsEl.style.display  = 'none';
+
+  if (!isOpen) {
+    const name = sessionStorage.getItem('sbb_player_name');
+    if (!name) {
+      alert('No name found. Please start the quiz first and enter your name.');
+      return;
+    }
+    const localResults = localLoadHistory(name);
+    renderHistoryHTML(localResults, 'history-container');
+    historyEl.style.display = 'block';
   }
+}
 
-  const container = document.getElementById('history-container');
-  if (!container) return;
+function toggleResults() {
+  const resultsEl  = document.getElementById('result-breakdown');
+  const historyEl  = document.getElementById('history-container');
+  if (!resultsEl) return;
 
-  const localResults = localLoadHistory(name);
-  renderHistoryHTML(localResults, 'history-container');
+  const isOpen = resultsEl.style.display === 'block';
+
+  // close both first
+  resultsEl.style.display  = 'none';
+  historyEl.style.display  = 'none';
+
+  if (!isOpen) {
+    resultsEl.style.display = 'block';
+  }
 }
 
 // Clear this user's history from localStorage (+ optional server sync)
