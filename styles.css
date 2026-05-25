@@ -184,8 +184,11 @@ section, .overlay { display: none; }
   justify-content: center;
   text-align: center;
   padding: 100px 20px 60px;
- background: #1a2744;
-background-attachment: fixed;
+   background:
+    radial-gradient(circle, rgba(201,168,76,0.08) 1px, transparent 1px),
+    linear-gradient(135deg, #0d1a2e 0%, #1a2744 50%, #0d1526 100%);
+  background-size: 28px 28px, 100% 100%;
+  background-attachment: fixed;
 }
 
 #home h1 {
@@ -262,8 +265,12 @@ background-attachment: fixed;
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-background: #1a2744;
-background-attachment: fixed;
+ background:
+    linear-gradient(rgba(76,175,175,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(76,175,175,0.05) 1px, transparent 1px),
+    linear-gradient(135deg, #0d1f1f 0%, #0f2535 50%, #1a2744 100%);
+  background-size: 40px 40px, 40px 40px, 100% 100%;
+  background-attachment: fixed;
 }
 
 
@@ -352,8 +359,16 @@ background-attachment: fixed;
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-background: #1a2744;
-background-attachment: fixed;
+background:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(150,80,220,0.04) 40px,
+      rgba(150,80,220,0.04) 41px
+    ),
+    linear-gradient(135deg, #0f0a1f 0%, #1a0f35 50%, #221040 100%);
+  background-attachment: fixed;
 }
 
 #budget h2 {
@@ -506,8 +521,16 @@ background-attachment: fixed;
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-background: #1a2744;
-background-attachment: fixed;
+background:
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 30px,
+      rgba(76,175,130,0.03) 30px,
+      rgba(76,175,130,0.03) 31px
+    ),
+    linear-gradient(135deg, #0a1f18 0%, #0f2520 50%, #1a2744 100%);
+  background-attachment: fixed;
 }
 
 #quiz h2 {
@@ -809,8 +832,23 @@ background-attachment: fixed;
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-background: #1a2744;
-background-attachment: fixed;
+ background:
+    repeating-linear-gradient(
+      60deg,
+      transparent,
+      transparent 50px,
+      rgba(201,168,76,0.03) 50px,
+      rgba(201,168,76,0.03) 51px
+    ),
+    repeating-linear-gradient(
+      -60deg,
+      transparent,
+      transparent 50px,
+      rgba(201,168,76,0.03) 50px,
+      rgba(201,168,76,0.03) 51px
+    ),
+    linear-gradient(135deg, #141c2a 0%, #1a2030 50%, #1a2744 100%);
+  background-attachment: fixed;
 }
 
 #about h2 {
@@ -909,8 +947,12 @@ footer span { color: var(--gold); }
   align-items: center;
   min-height: 100vh;
   padding: 100px 20px 60px;
-background: #1a2744;
-background-attachment: fixed;
+  background:
+    radial-gradient(circle, rgba(201,168,76,0.09) 1px, transparent 1px),
+    radial-gradient(circle, rgba(226,140,50,0.06) 1px, transparent 1px),
+    linear-gradient(135deg, #1f1500 0%, #2a1e08 50%, #1f1a08 100%);
+  background-size: 30px 30px, 15px 15px, 100% 100%;
+  background-attachment: fixed;
 }
 
 #planner h2 {
@@ -1655,8 +1697,11 @@ background-attachment: fixed;
 #tools {
   flex-direction: column; align-items: center;
   min-height: 100vh; padding: 100px 20px 60px;
-background: #1a2744;
-background-attachment: fixed;
+  background:
+    radial-gradient(circle, rgba(226,95,14,0.07) 1px, transparent 1px),
+    linear-gradient(135deg, #1f0d0a 0%, #251510 50%, #1a2744 100%);
+  background-size: 24px 24px, 100% 100%;
+  background-attachment: fixed;
 }
 
 #tools h2 {
