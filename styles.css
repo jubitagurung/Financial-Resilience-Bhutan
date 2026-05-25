@@ -1909,3 +1909,175 @@ footer span { color: var(--gold); }
   font-size: 14px;
   box-sizing: border-box;
 }
+
+#contact {
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 100px 20px 60px;
+  background:
+    radial-gradient(circle, rgba(201,168,76,0.07) 1px, transparent 1px),
+    linear-gradient(135deg, #0d1526 0%, #1a2744 50%, #0d1f2e 100%);
+  background-size: 28px 28px, 100% 100%;
+  background-attachment: fixed;
+}
+
+#contact h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 28px;
+  color: var(--gold);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+/* ══ FOUNDER / 50-30-20 ORIGIN SECTION ══ */
+.founder-section {
+  max-width: 860px;
+  width: 100%;
+  margin-bottom: 36px;
+}
+
+.founder-section-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-family: 'Cinzel', serif;
+  margin-bottom: 14px;
+}
+
+.founder-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.founder-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-top: 3px solid var(--gold);
+  border-radius: 12px;
+  padding: 24px 22px;
+}
+
+.founder-badge {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.3);
+  color: var(--gold);
+  border-radius: 20px;
+  padding: 3px 12px;
+  margin-bottom: 10px;
+  font-family: 'Cinzel', serif;
+}
+
+.founder-name {
+  font-family: 'Cinzel', serif;
+  font-size: 17px;
+  color: var(--text);
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.founder-sub {
+  font-size: 12px;
+  color: var(--gold);
+  margin-bottom: 14px;
+  letter-spacing: 0.5px;
+}
+
+.founder-card p {
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.75;
+  margin-bottom: 10px;
+  text-align: justify;
+}
+
+.founder-card p strong { color: var(--text); }
+
+.founder-book-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-top: 3px solid var(--gold);
+  border-radius: 12px;
+  padding: 24px 22px;
+  display: flex;
+  gap: 22px;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+
+.founder-book-cover {
+  width: 72px;
+  min-width: 72px;
+  height: 96px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.35);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+}
+
+.founder-book-title {
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  color: var(--gold);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.founder-book-author {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 14px;
+  letter-spacing: 0.5px;
+}
+
+.founder-book-meta p {
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.75;
+  margin-bottom: 10px;
+  text-align: justify;
+}
+
+.founder-book-meta p strong { color: var(--text); }
+
+.founder-importance-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.founder-imp-item {
+  background: var(--card-bg);
+  border-left: 3px solid var(--gold);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+.founder-imp-title {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.founder-imp-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+@media (max-width: 600px) {
+  .founder-grid { grid-template-columns: 1fr; }
+  .founder-book-card { flex-direction: column; }
+}

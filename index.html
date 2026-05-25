@@ -24,16 +24,16 @@
       <span class="hamburger-bar"></span>
     </button>
 
-    <div class="nav-menu" id="nav-menu">
+   <div class="nav-menu" id="nav-menu">
 <a href="#" onclick="showSection('home'); return false;" id="nav-home" class="active-link" role="button">Home</a>
+<a href="#" onclick="showSection('about'); return false;" id="nav-about" role="button">About</a>
 <a href="#" onclick="showSection('dashboard'); return false;" id="nav-dashboard" role="button">Dashboard</a>
 <a href="#" onclick="showSection('budget'); return false;" id="nav-budget" role="button">Budget</a>
 <a href="#" onclick="showSection('planner'); return false;" id="nav-planner" role="button">SBB Planner</a>
 <a href="#" onclick="showSection('quiz'); return false;" id="nav-quiz" role="button">Quiz</a>
 <a href="#" onclick="showSection('tools'); return false;" id="nav-tools" role="button">Tools</a>
-<a href="#" onclick="showSection('about'); return false;" id="nav-about" role="button">About</a>
-   
-    </div>
+<a href="#" onclick="showSection('contact'); return false;" id="nav-contact" role="button">Contact</a>
+</div>
   </nav>
 
   <!-- ══ HOME ══ -->
@@ -79,7 +79,7 @@
 
         <!-- HOME CTA BLOCK -->
         <div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
-            <button class="nav-btn" onclick="showSection('dashboard')">Next →</button>
+           <button class="nav-btn" onclick="showSection('about')">Next →</button>
         </div>
       </div>
     </div>
@@ -138,8 +138,8 @@
 
 <div style="margin-top:32px;">
   <div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
-     <button class="nav-btn" onclick="showSection('home')">← Previous</button>
-     <button class="nav-btn" onclick="showSection('budget')">Next →</button>
+    <button class="nav-btn" onclick="showSection('about')">← Previous</button>
+<button class="nav-btn" onclick="showSection('budget')">Next →</button>
   </div>
 </div>
 
@@ -163,6 +163,71 @@
     </p>
 
     <div class="budget-rule">Recommended Framework: 50% Needs, 30% Wants, 20% Savings</div>
+
+    <!-- ══ 50/30/20 FOUNDER SECTION ══ -->
+<div class="founder-section">
+
+  <p class="founder-section-label">Origin of the rule</p>
+
+  <div class="founder-grid">
+    <div class="founder-card">
+      <div class="founder-badge">Founder</div>
+      <div class="founder-name">Elizabeth Warren</div>
+      <div class="founder-sub">US Senator · Harvard Law Professor · Consumer Advocate</div>
+      <p>Elizabeth Warren now a US Senator from Massachusetts, first introduced the 50/30/20 rule in her 2005 book co-authored with her daughter Amelia Warren Tyagi. At the time, Warren was a Harvard bankruptcy law professor who had spent years studying why middle-class American families were going broke.</p>
+      <p>Her research found that people weren't failing because of overspending on luxuries they were failing because they had no framework to distinguish essential costs from optional ones. The 50/30/20 rule was her solution: a simple, memorable formula anyone could apply immediately.</p>
+    </div>
+
+    <div class="founder-card">
+      <div class="founder-badge">Co-author</div>
+      <div class="founder-name">Amelia Warren Tyagi</div>
+      <div class="founder-sub">Business consultant · Daughter of Elizabeth Warren</div>
+      <p>Amelia Warren Tyagi co-authored the book with her mother, bringing a business strategy perspective to complement Elizabeth's legal and academic research. Together they translated years of bankruptcy data and household financial research into an accessible, practical guide.</p>
+      <p>Amelia's contribution was key in making the book readable for everyday families not just policymakers or academics. The book became a bestseller and the 50/30/20 rule became one of the most cited personal finance frameworks in the world.</p>
+    </div>
+  </div>
+
+  <p class="founder-section-label" style="margin-top:28px;">The book</p>
+  <div class="founder-book-card">
+    <div class="founder-book-cover">📖</div>
+    <div class="founder-book-meta">
+      <div class="founder-book-title">All Your Worth: The Ultimate Lifetime Money Plan</div>
+      <div class="founder-book-author">Elizabeth Warren &amp; Amelia Warren Tyagi · Published 2005</div>
+      <p>This is the book that introduced the 50/30/20 rule to the world. Warren and Tyagi argued that financial failure isn't a willpower problem  it's a systems problem. Most people fail not because they buy too many coffees, but because they never build a structure to separate what they must spend, what they choose to spend, and what they keep.</p>
+      <p>The book reframes budgeting as a lifetime money plan not a monthly restriction. It became a foundational text in personal finance and is still widely recommended by financial advisors, universities, and consumer protection agencies worldwide. The rule it introduced has since been adopted by banks, budgeting apps, and financial educators globally including the framework used throughout this SBB platform.</p>
+    </div>
+  </div>
+
+  <p class="founder-section-label" style="margin-top:28px;">Why the rule matters</p>
+  <div class="founder-importance-grid">
+    <div class="founder-imp-item">
+      <div class="founder-imp-title">Easy to remember</div>
+      <div class="founder-imp-desc">Three numbers. No spreadsheet required. Anyone can apply it from day one without financial training.</div>
+    </div>
+    <div class="founder-imp-item">
+      <div class="founder-imp-title">Works at any income</div>
+      <div class="founder-imp-desc">Whether you earn Nu. 15,000 or Nu. 150,000 a month, the percentages scale proportionally to your situation.</div>
+    </div>
+    <div class="founder-imp-item">
+      <div class="founder-imp-title">Builds resilience</div>
+      <div class="founder-imp-desc">The 20% savings cushion creates an emergency fund and long-term security the foundation of financial resilience.</div>
+    </div>
+    <div class="founder-imp-item">
+      <div class="founder-imp-title">Reduces guilt</div>
+      <div class="founder-imp-desc">By deliberately allocating 30% to wants, you can spend on enjoyment without guilt it's already planned for.</div>
+    </div>
+    <div class="founder-imp-item">
+      <div class="founder-imp-title">Research-backed</div>
+      <div class="founder-imp-desc">Born from years of bankruptcy research across thousands of real households not theory, but observed financial reality.</div>
+    </div>
+    <div class="founder-imp-item">
+      <div class="founder-imp-title">Globally adopted</div>
+      <div class="founder-imp-desc">Used by banks, apps like YNAB and Mint, and financial educators in over 50 countries including right here in Bhutan.</div>
+    </div>
+  </div>
+
+</div>
+
     <div class="budget-container">
       <div class="budget-card low" onclick="showSection('planner')" style="cursor:pointer;" title="Open Budget Planner">
         <h3>Low Income</h3>
@@ -753,8 +818,8 @@
 
   <div style="margin-top:32px;">
     <div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
-      <button class="nav-btn" onclick="showSection('quiz')">← Previous</button>
-      <button class="nav-btn" onclick="showSection('about')">Next →</button>
+     <button class="nav-btn" onclick="showSection('quiz')">← Previous</button>
+<button class="nav-btn" onclick="showSection('contact')">Next →</button>
     </div>
   </div>
 </section>
@@ -960,12 +1025,26 @@
         interest rates and products directly on their official websites.
       </div>
 
-      <!-- ══ CONTACT SECTION ══ -->
-<div class="contact-wrap">
-  <h3 class="contact-title">Contact Info 📞</h3>
-  <p class="contact-sub"><strong>Have questions about this project or want to collaborate? Reach out directly.</strong></p>
+<div style="margin-top:32px;">
+<div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
+  <button class="nav-btn" onclick="showSection('home')">← Previous</button>
+  <button class="nav-btn" onclick="showSection('dashboard')">Next →</button>
+</div>
+  </div>
 
-  <div class="contact-grid">
+    </section>
+
+<!-- ══ CONTACT SECTION ══ -->
+<section id="contact">
+  <h2>Contact Info</h2>
+  <p class="section-tagline">Get In Touch 📞</p>
+
+  <div class="dashboard-desc">
+    Have questions about this project or want to collaborate? Reach out directly.
+  </div>
+
+  <div class="contact-wrap" style="margin-top:0;">
+    <div class="contact-grid">
 
     <!-- Your Card -->
 <div class="contact-card">
@@ -994,7 +1073,7 @@
 </div>
     </div>
     <div style="margin-top:32px;">
- <div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
+<div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
   <button class="nav-btn" onclick="showSection('tools')">← Previous</button>
 </div>
   </div>
