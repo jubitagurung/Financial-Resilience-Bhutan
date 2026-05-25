@@ -24,7 +24,7 @@ radial-gradient(circle at 20% 30%, rgba(201, 168, 76, 0.12) 0%, transparent 50%)
       #1a1208 30%, 
       #0f0a04 60%, 
       #050301 100%);
-  background-attachment: fixed;
+  background-attachment: scroll;
   min-height: 100vh;
 }
 
@@ -188,7 +188,7 @@ section, .overlay { display: none; }
     radial-gradient(circle, rgba(201,168,76,0.08) 1px, transparent 1px),
     linear-gradient(135deg, #0d1a2e 0%, #1a2744 50%, #0d1526 100%);
   background-size: 28px 28px, 100% 100%;
-  background-attachment: fixed;
+  background-attachment: Scroll;
 }
 
 #home h1 {
@@ -270,7 +270,7 @@ section, .overlay { display: none; }
     linear-gradient(90deg, rgba(76,175,175,0.05) 1px, transparent 1px),
     linear-gradient(135deg, #0d1f1f 0%, #0f2535 50%, #1a2744 100%);
   background-size: 40px 40px, 40px 40px, 100% 100%;
-  background-attachment: fixed;
+  background-attachment: scroll;
 }
 
 
@@ -368,7 +368,7 @@ background:
       rgba(150,80,220,0.04) 41px
     ),
     linear-gradient(135deg, #0f0a1f 0%, #1a0f35 50%, #221040 100%);
-  background-attachment: fixed;
+  background-attachment: scroll;
 }
 
 #budget h2 {
@@ -530,7 +530,7 @@ background:
       rgba(76,175,130,0.03) 31px
     ),
     linear-gradient(135deg, #0a1f18 0%, #0f2520 50%, #1a2744 100%);
-  background-attachment: fixed;
+  background-attachment: scroll;
 }
 
 #quiz h2 {
@@ -848,7 +848,7 @@ background:
       rgba(201,168,76,0.03) 51px
     ),
     linear-gradient(135deg, #141c2a 0%, #1a2030 50%, #1a2744 100%);
-  background-attachment: fixed;
+  background-attachment: scroll;
 }
 
 #about h2 {
@@ -952,7 +952,7 @@ footer span { color: var(--gold); }
     radial-gradient(circle, rgba(226,140,50,0.06) 1px, transparent 1px),
     linear-gradient(135deg, #1f1500 0%, #2a1e08 50%, #1f1a08 100%);
   background-size: 30px 30px, 15px 15px, 100% 100%;
-  background-attachment: fixed;
+  background-attachment: scroll;
 }
 
 #planner h2 {
@@ -1701,7 +1701,7 @@ footer span { color: var(--gold); }
     radial-gradient(circle, rgba(226,95,14,0.07) 1px, transparent 1px),
     linear-gradient(135deg, #1f0d0a 0%, #251510 50%, #1a2744 100%);
   background-size: 24px 24px, 100% 100%;
-  background-attachment: fixed;
+  background-attachment: scroll;
 }
 
 #tools h2 {
@@ -1919,7 +1919,7 @@ footer span { color: var(--gold); }
     radial-gradient(circle, rgba(201,168,76,0.07) 1px, transparent 1px),
     linear-gradient(135deg, #0d1526 0%, #1a2744 50%, #0d1f2e 100%);
   background-size: 28px 28px, 100% 100%;
-  background-attachment: fixed;
+  background-attachment: scroll;
 }
 
 #contact h2 {
