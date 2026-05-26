@@ -7,7 +7,6 @@ function showSection(id) {
 
   const target = document.getElementById(id);
   if (target) {
-    // Must set explicit display — '' loses to the CSS `section { display: none }` rule
     target.style.display = 'flex';
     target.style.flexDirection = 'column';
     target.style.alignItems = 'center';
@@ -25,7 +24,7 @@ function showSection(id) {
     t.setAttribute('aria-expanded', 'false');
   }
 
- if (id === 'quiz') {
+  if (id === 'quiz') {
     const isResultsVisible = document.getElementById('quiz-results')?.getAttribute('data-visible') === 'true';
     if (isResultsVisible) {
       showQuizScreen('results');
@@ -124,16 +123,12 @@ function setPlannerBanner(score, total) {
   banner.style.display = 'block';
 }
 
-
 // ══════════════════════════════════════════════════════════════════════
 // ── LOCAL HISTORY ENGINE
-// Stores all quiz attempts in localStorage immediately.
-// Also tries to sync to Flask in the background — silently, no errors shown.
 // ══════════════════════════════════════════════════════════════════════
 
 const LOCAL_KEY = 'sbb_quiz_history';
 
-// Save one attempt to localStorage (always works, no server needed)
 function localSaveResult(entry) {
   try {
     const existing = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]');
@@ -144,7 +139,6 @@ function localSaveResult(entry) {
   }
 }
 
-// Load all attempts for a given name from localStorage
 function localLoadHistory(name) {
   try {
     const all = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]');
@@ -154,8 +148,6 @@ function localLoadHistory(name) {
   }
 }
 
-// Clear one user's history from localStorage
-// Clear one user's history from localStorage
 function localClearHistory(name) {
   try {
     const all = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]');
@@ -166,27 +158,6 @@ function localClearHistory(name) {
   }
 }
 
-function clearMyHistory() {
-  const name = sessionStorage.getItem('sbb_player_name');
-  if (!name) return;
-  if (!confirm(`Clear all quiz history for "${name}"? This cannot be undone.`)) return;
-
-  localClearHistory(name);
-
-  try {
-    fetch(`${SBB_API}/clear?name=${encodeURIComponent(name)}`, {
-      method: 'DELETE',
-      signal: AbortSignal.timeout(3000)
-    }).catch(() => {});
-  } catch (_) {}
-
-  const container = document.getElementById('history-container');
-  if (container) renderHistoryHTML([], 'history-container');
-
-  const panel = document.getElementById('quiz-history-panel');
-  if (panel) panel.innerHTML = '';
-}
-
 // Silent background sync to Flask — fire and forget, never blocks UI
 async function syncToFlask(entry) {
   try {
@@ -194,10 +165,10 @@ async function syncToFlask(entry) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(entry),
-      signal: AbortSignal.timeout(3000)   // give up after 3 s
+      signal: AbortSignal.timeout(3000)
     });
   } catch (_) {
-    // Server not running — that's fine, localStorage has the data
+    // Server not running — localStorage has the data
   }
 }
 
@@ -213,17 +184,12 @@ function saveQuizResult(name, score, total, points, streak) {
     date: new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }),
     time: new Date().toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' })
   };
-
-  // 1. Save to localStorage immediately
   localSaveResult(entry);
-
-  // 2. Try to sync to Flask in background (no await — non-blocking)
   syncToFlask(entry);
-
   return entry;
 }
 
-// Render history into a container element
+// ── RENDER HISTORY (with individual delete buttons) ──
 function renderHistoryHTML(results, containerId) {
   const el = document.getElementById(containerId);
   if (!el) return;
@@ -251,9 +217,9 @@ function renderHistoryHTML(results, containerId) {
       </div>
     </div>
     ${reversed.map((r, i) => {
-      const actualIndex = results.length - 1 - i; // index in original array
+      const actualIndex = results.length - 1 - i;
       return `
-      <div class="breakdown-item" id="history-entry-${actualIndex}" style="position:relative;">
+      <div class="breakdown-item" id="history-entry-${actualIndex}" style="position:relative; padding-right:44px;">
         <div class="breakdown-icon">${r.pct === 100 ? '🏆' : r.pct >= 75 ? '⭐' : r.pct >= 50 ? '📈' : '📚'}</div>
         <div class="breakdown-q">
           <strong>Attempt ${results.length - i} · ${r.date} ${r.time}</strong>
@@ -276,6 +242,7 @@ function renderHistoryHTML(results, containerId) {
     }).join('')}`;
 }
 
+// ── DELETE A SINGLE HISTORY ENTRY ──
 function deleteSingleHistory(indexToDelete) {
   const name = sessionStorage.getItem('sbb_player_name');
   if (!name) return;
@@ -283,42 +250,56 @@ function deleteSingleHistory(indexToDelete) {
 
   try {
     const all = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]');
-    const userEntries = all.filter(r => r.name.toLowerCase() === name.toLowerCase());
+    const userEntries  = all.filter(r => r.name.toLowerCase() === name.toLowerCase());
     const otherEntries = all.filter(r => r.name.toLowerCase() !== name.toLowerCase());
 
-    // remove the specific entry by index
     userEntries.splice(indexToDelete, 1);
 
     const updated = [...otherEntries, ...userEntries];
     localStorage.setItem(LOCAL_KEY, JSON.stringify(updated));
 
-    // re-render
     renderHistoryHTML(userEntries, 'history-container');
   } catch (e) {
     console.warn('Delete failed:', e);
   }
 }
 
-// Clear this user's history from localStorage (+ optional server sync)
-function clearMyHistory() {
-  const name = sessionStorage.getItem('sbb_player_name');
-  if (!name) return;
-  if (!confirm(`Clear all quiz history for "${name}"? This cannot be undone.`)) return;
+function toggleHistory() {
+  const historyEl = document.getElementById('history-container');
+  const resultsEl = document.getElementById('result-breakdown');
+  if (!historyEl) return;
 
-  localClearHistory(name);
+  const isOpen = historyEl.style.display === 'block';
 
-  // Also try to clear from Flask silently
-  try {
-    fetch(`${SBB_API}/clear?name=${encodeURIComponent(name)}`, {
-      method: 'DELETE',
-      signal: AbortSignal.timeout(3000)
-    }).catch(() => {});
-  } catch (_) {}
+  historyEl.style.display = 'none';
+  resultsEl.style.display = 'none';
 
-const container = document.getElementById('history-container');
-  if (container) renderHistoryHTML([], 'history-container');
+  if (!isOpen) {
+    const name = sessionStorage.getItem('sbb_player_name');
+    if (!name) {
+      alert('No name found. Please start the quiz first and enter your name.');
+      return;
+    }
+    const localResults = localLoadHistory(name);
+    renderHistoryHTML(localResults, 'history-container');
+    historyEl.style.display = 'block';
+  }
 }
 
+function toggleResults() {
+  const resultsEl = document.getElementById('result-breakdown');
+  const historyEl = document.getElementById('history-container');
+  if (!resultsEl) return;
+
+  const isOpen = resultsEl.style.display === 'block';
+
+  resultsEl.style.display = 'none';
+  historyEl.style.display = 'none';
+
+  if (!isOpen) {
+    resultsEl.style.display = 'block';
+  }
+}
 
 // ══════════════════════════════════════════════
 // ── QUIZ ENGINE ──
@@ -544,7 +525,6 @@ function startQuiz() {
   const oldPts = document.getElementById('pts-summary');
   if (oldPts) oldPts.remove();
 
-  // Clear history panel whenever a new quiz starts
   const hc = document.getElementById('history-container');
   if (hc) hc.innerHTML = '';
 
@@ -792,19 +772,15 @@ function showResults() {
 
   if (pct === 100) launchConfetti();
 
-  // ── Save to localStorage immediately + background Flask sync
   const playerName = sessionStorage.getItem('sbb_player_name');
-if (playerName) saveQuizResult(playerName, score, total, totalPoints, bestStreak);
+  if (playerName) saveQuizResult(playerName, score, total, totalPoints, bestStreak);
   setPlannerBanner(score, total);
 
-  // Hide all sections first
   document.querySelectorAll('section, .overlay').forEach(el => {
     el.classList.remove('active');
     el.style.display = 'none';
   });
 
-  // Show quiz section with explicit flex — NEVER use '' (empty string)
-  // because the CSS rule `section { display: none }` would immediately win
   const quizEl = document.getElementById('quiz');
   quizEl.style.display = 'flex';
   quizEl.style.flexDirection = 'column';
@@ -815,7 +791,6 @@ if (playerName) saveQuizResult(playerName, score, total, totalPoints, bestStreak
   const navQuiz = document.getElementById('nav-quiz');
   if (navQuiz) navQuiz.classList.add('active-link');
 
-  // Show results panel inside the now-visible quiz section
   showQuizScreen('results');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -859,18 +834,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const welcomeToast = document.createElement('div');
   welcomeToast.id = 'welcome-toast';
   welcomeToast.style.cssText = `
-    position: fixed;
-    top: 70px;
-    left: 50%;
+    position: fixed; top: 70px; left: 50%;
     transform: translateX(-50%);
     background: rgba(12,9,2,0.97);
     border: 1px solid rgba(201,168,76,0.35);
     border-top: 3px solid #c9a84c;
     border-radius: 12px;
     padding: 16px 40px 16px 20px;
-    z-index: 9998;
-    min-width: 280px;
-    max-width: 360px;
+    z-index: 9998; min-width: 280px; max-width: 360px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.7);
   `;
   welcomeToast.innerHTML = `

@@ -399,89 +399,11 @@ background:
   letter-spacing: 1px;
 }
 
-.budget-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 24px;
-  max-width: 1100px;
-}
-
-.budget-card {
-  background: var(--card-bg);
-  border: 1px solid rgba(201,168,76,0.2);
-  padding: 28px 24px;
-  border-radius: 12px;
-  width: 280px;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.25s, box-shadow 0.25s;
-}
-
-.budget-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.5);
-}
-
-.budget-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-}
-
-.budget-card.low::before  { background: #5cb8e4; }
-.budget-card.mid::before  { background: var(--gold); }
-.budget-card.high::before { background: var(--green); }
-
-.budget-card h3 {
-  font-family: 'Cinzel', serif;
-  color: var(--gold);
-  font-size: 16px;
-  margin-bottom: 18px;
-  letter-spacing: 1px;
-}
-
-.budget-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 7px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  font-size: 14px;
-}
-
-.budget-row:last-child { border-bottom: none; }
-.budget-row .label { color: #b8ae96; }
-.budget-row .value { color: var(--text); font-weight: 700; }
-.budget-row.saving .value { color: var(--green); }
-.budget-row.saving .label { color: var(--green); }
-
-.budget-bar-wrap { margin-top: 16px; }
-
-.budget-bar-wrap p {
-  font-size: 11px;
-  color: var(--muted);
-  margin-bottom: 6px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-.budget-bar {
-  background: rgba(255,255,255,0.08);
-  border-radius: 20px;
-  height: 8px;
-  overflow: hidden;
-}
-
-.budget-bar-fill {
-  height: 100%;
-  border-radius: 20px;
-  background: var(--green);
-}
 
 .budget-tips-wrap {
   margin-top: 40px;
   max-width: 860px;
+  width: 100%; 
   background: var(--card-bg);
   border: 1px solid rgba(201,168,76,0.15);
   border-radius: 12px;
@@ -2141,4 +2063,21 @@ footer span { color: var(--gold); }
   background: rgba(201,168,76,0.04);
   border-top: 1px solid rgba(201,168,76,0.12);
   border-bottom: 1px solid rgba(201,168,76,0.12);
+}
+.budget-image-wrap {
+  max-width: 860px;
+  width: 100%;
+  margin: 0 auto 36px;
+  border: 1px solid rgba(201,168,76,0.25);
+  border-top: 4px solid var(--gold);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+}
+
+.budget-rule-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
 }
