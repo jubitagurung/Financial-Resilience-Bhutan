@@ -837,17 +837,17 @@ background:
       60deg,
       transparent,
       transparent 50px,
-      rgba(201,168,76,0.03) 50px,
-      rgba(201,168,76,0.03) 51px
+      rgba(180, 100, 40, 0.04) 50px,
+      rgba(180, 100, 40, 0.04) 51px
     ),
     repeating-linear-gradient(
       -60deg,
       transparent,
       transparent 50px,
-      rgba(201,168,76,0.03) 50px,
-      rgba(201,168,76,0.03) 51px
+      rgba(180, 100, 40, 0.04) 50px,
+      rgba(180, 100, 40, 0.04) 51px
     ),
-    linear-gradient(135deg, #141c2a 0%, #1a2030 50%, #1a2744 100%);
+    linear-gradient(135deg, #1a0f08 0%, #2a1a0e 50%, #1f1208 100%);
   background-attachment: scroll;
 }
 
@@ -2080,4 +2080,65 @@ footer span { color: var(--gold); }
 @media (max-width: 600px) {
   .founder-grid { grid-template-columns: 1fr; }
   .founder-book-card { flex-direction: column; }
+}
+
+/* ── SONAM STORY FRAME ── */
+.sonam-story-wrap {
+  max-width: 680px;
+  width: 100%;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.sonam-story-wrap h3 {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  font-size: 18px;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.sonam-story-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 24px;
+  letter-spacing: 0.5px;
+}
+
+.sonam-story-frame {
+  background: var(--card-bg);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-top: 4px solid var(--gold);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+}
+
+.sonam-story-frame img {
+  width: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.sonam-frame-label {
+  padding: 12px 20px;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: rgba(201,168,76,0.06);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+}
+
+.sonam-frame-divider {
+  padding: 10px;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: rgba(201,168,76,0.04);
+  border-top: 1px solid rgba(201,168,76,0.12);
+  border-bottom: 1px solid rgba(201,168,76,0.12);
 }
