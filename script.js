@@ -239,7 +239,7 @@ function renderHistoryHTML(results, containerId) {
   }
 
   const best = results.reduce((b, r) => r.points > b.points ? r : b, results[0]);
-  const reversed = [...results].reverse();   // newest first
+  const reversed = [...results].reverse();
 
   el.innerHTML = `
     <div class="pts-summary" style="margin-bottom:16px;">
@@ -250,64 +250,52 @@ function renderHistoryHTML(results, containerId) {
         <div class="pts-item"><div class="pts-val">🔥 ${best.streak ?? 0}</div><div class="pts-lbl">Best Streak</div></div>
       </div>
     </div>
-    ${reversed.map((r, i) => `
-      <div class="breakdown-item">
+    ${reversed.map((r, i) => {
+      const actualIndex = results.length - 1 - i; // index in original array
+      return `
+      <div class="breakdown-item" id="history-entry-${actualIndex}" style="position:relative;">
         <div class="breakdown-icon">${r.pct === 100 ? '🏆' : r.pct >= 75 ? '⭐' : r.pct >= 50 ? '📈' : '📚'}</div>
         <div class="breakdown-q">
           <strong>Attempt ${results.length - i} · ${r.date} ${r.time}</strong>
           <span style="color:var(--green)">${r.score}/${r.total} correct · ${r.points} pts · ${r.pct}%</span>
           ${r.streak ? `<span class="bd-tip">🔥 Best streak: ${r.streak}</span>` : ''}
         </div>
-      </div>`).join('')}
-    <div style="text-align:center; margin-top:14px;">
-      <button onclick="clearMyHistory()" style="
-        background:transparent; border:1px solid rgba(226,95,14,0.4);
-        color:#e25f0e; font-family:'Cinzel',serif; font-size:11px;
-        letter-spacing:1px; padding:7px 18px; border-radius:4px;
-        cursor:pointer; text-transform:uppercase; transition:background 0.2s, color 0.2s;"
-        onmouseover="this.style.background='rgba(226,95,14,0.12)'"
-        onmouseout="this.style.background='transparent'">
-        Clear My History
-      </button>
-    </div>`;
+        <button onclick="deleteSingleHistory(${actualIndex})" title="Delete this attempt" style="
+          position:absolute; top:50%; right:0;
+          transform:translateY(-50%);
+          background:transparent;
+          border:1px solid rgba(226,95,14,0.35);
+          color:#e25f0e; border-radius:6px;
+          width:32px; height:32px;
+          font-size:15px; cursor:pointer;
+          display:flex; align-items:center; justify-content:center;
+          transition:background 0.2s;"
+          onmouseover="this.style.background='rgba(226,95,14,0.15)'"
+          onmouseout="this.style.background='transparent'">🗑</button>
+      </div>`;
+    }).join('')}`;
 }
 
-function toggleHistory() {
-  const historyEl  = document.getElementById('history-container');
-  const resultsEl  = document.getElementById('result-breakdown');
-  if (!historyEl) return;
+function deleteSingleHistory(indexToDelete) {
+  const name = sessionStorage.getItem('sbb_player_name');
+  if (!name) return;
+  if (!confirm('Delete this attempt?')) return;
 
-  const isOpen = historyEl.style.display === 'block';
+  try {
+    const all = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]');
+    const userEntries = all.filter(r => r.name.toLowerCase() === name.toLowerCase());
+    const otherEntries = all.filter(r => r.name.toLowerCase() !== name.toLowerCase());
 
-  // close both first
-  historyEl.style.display  = 'none';
-  resultsEl.style.display  = 'none';
+    // remove the specific entry by index
+    userEntries.splice(indexToDelete, 1);
 
-  if (!isOpen) {
-    const name = sessionStorage.getItem('sbb_player_name');
-    if (!name) {
-      alert('No name found. Please start the quiz first and enter your name.');
-      return;
-    }
-    const localResults = localLoadHistory(name);
-    renderHistoryHTML(localResults, 'history-container');
-    historyEl.style.display = 'block';
-  }
-}
+    const updated = [...otherEntries, ...userEntries];
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(updated));
 
-function toggleResults() {
-  const resultsEl  = document.getElementById('result-breakdown');
-  const historyEl  = document.getElementById('history-container');
-  if (!resultsEl) return;
-
-  const isOpen = resultsEl.style.display === 'block';
-
-  // close both first
-  resultsEl.style.display  = 'none';
-  historyEl.style.display  = 'none';
-
-  if (!isOpen) {
-    resultsEl.style.display = 'block';
+    // re-render
+    renderHistoryHTML(userEntries, 'history-container');
+  } catch (e) {
+    console.warn('Delete failed:', e);
   }
 }
 
