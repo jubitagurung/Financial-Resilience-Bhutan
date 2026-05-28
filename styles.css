@@ -1054,9 +1054,22 @@ footer span { color: var(--gold); }
 
 .planner-sheets-visual {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   width: 100%;
+}
+
+@media (max-width: 900px) {
+  .planner-sheets-visual {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .planner-sheets-visual {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
 }
 
 .psv-card {
@@ -2004,66 +2017,7 @@ footer span { color: var(--gold); }
   .founder-book-card { flex-direction: column; }
 }
 
-/* ── SONAM STORY FRAME ── */
-.sonam-story-wrap {
-  max-width: 680px;
-  width: 100%;
-  margin-bottom: 40px;
-  text-align: center;
-}
 
-.sonam-story-wrap h3 {
-  font-family: 'Cinzel', serif;
-  color: var(--gold);
-  font-size: 18px;
-  letter-spacing: 1px;
-  margin-bottom: 8px;
-}
-
-.sonam-story-sub {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 24px;
-  letter-spacing: 0.5px;
-}
-
-.sonam-story-frame {
-  background: var(--card-bg);
-  border: 1px solid rgba(201,168,76,0.25);
-  border-top: 4px solid var(--gold);
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 16px 48px rgba(0,0,0,0.6);
-}
-
-.sonam-story-frame img {
-  width: 100%;
-  display: block;
-  object-fit: contain;
-}
-
-.sonam-frame-label {
-  padding: 12px 20px;
-  font-family: 'Cinzel', serif;
-  font-size: 11px;
-  color: var(--gold);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  background: rgba(201,168,76,0.06);
-  border-bottom: 1px solid rgba(201,168,76,0.15);
-}
-
-.sonam-frame-divider {
-  padding: 10px;
-  font-family: 'Cinzel', serif;
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  background: rgba(201,168,76,0.04);
-  border-top: 1px solid rgba(201,168,76,0.12);
-  border-bottom: 1px solid rgba(201,168,76,0.12);
-}
 .budget-image-wrap {
   max-width: 860px;
   width: 100%;

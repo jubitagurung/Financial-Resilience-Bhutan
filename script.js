@@ -592,35 +592,63 @@ function renderQuestion() {
     feedback.innerHTML = '';
   }
 
+ // ── Next button (always lives in the card HTML, never moved) ──
   const nextBtn = document.getElementById('q-next-btn');
   nextBtn.style.display = prevAnswer !== null ? 'inline-block' : 'none';
   nextBtn.textContent = currentQ < QUESTIONS.length - 1 ? 'Next Question →' : 'See My Results →';
 
+  // ── Prev button (dynamic, but always re-created fresh if missing) ──
   let prevBtn = document.getElementById('q-prev-btn');
   if (!prevBtn) {
     prevBtn = document.createElement('button');
     prevBtn.id = 'q-prev-btn';
     prevBtn.className = 'quiz-next-btn';
+    prevBtn.style.marginTop = '22px';
     prevBtn.textContent = '← Previous';
     prevBtn.onclick = prevQuestion;
+    // Insert it right before the next button so they sit side by side
+    nextBtn.parentNode.insertBefore(prevBtn, nextBtn);
   }
   prevBtn.style.display = currentQ > 0 ? 'inline-block' : 'none';
 
-  let btnRow = document.getElementById('q-btn-row');
-  if (!btnRow) {
-    btnRow = document.createElement('div');
-    btnRow.id = 'q-btn-row';
-    btnRow.style.cssText = 'display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:22px;';
-    const card = document.getElementById('quiz-q-card');
-    card.appendChild(btnRow);
-    btnRow.appendChild(prevBtn);
-    btnRow.appendChild(nextBtn);
-  }
 
   const card = document.getElementById('quiz-q-card');
   card.classList.remove('fade-in');
   void card.offsetWidth;
   card.classList.add('fade-in');
+}
+
+function resetQuiz() {
+  // Remove dynamically added elements
+  const prevBtn = document.getElementById('q-prev-btn');
+  if (prevBtn) prevBtn.remove();
+  const btnRow = document.getElementById('q-btn-row');
+  if (btnRow) btnRow.remove();
+  const ptsSummary = document.getElementById('pts-summary');
+  if (ptsSummary) ptsSummary.remove();
+  const ptsBadge = document.getElementById('q-points-badge');
+  if (ptsBadge) ptsBadge.remove();
+
+  // Reset all state
+  currentQ = 0; score = 0; totalPoints = 0; streak = 0; bestStreak = 0;
+  answers = [];
+  answeredQuestions = new Array(QUESTIONS.length).fill(null);
+
+  // Reset next button visibility
+  const nextBtn = document.getElementById('q-next-btn');
+  if (nextBtn) {
+    nextBtn.style.display = 'none';
+    nextBtn.textContent = 'Next Question →';
+  }
+
+  // Clear feedback
+  const feedback = document.getElementById('q-feedback');
+  if (feedback) {
+    feedback.style.display = 'none';
+    feedback.innerHTML = '';
+  }
+
+  showQuizScreen('start');
 }
 
 function selectAnswer(selectedIndex) {
@@ -802,10 +830,25 @@ function resetQuiz() {
   if (btnRow) btnRow.remove();
   const ptsSummary = document.getElementById('pts-summary');
   if (ptsSummary) ptsSummary.remove();
+  const ptsBadge = document.getElementById('q-points-badge');
+  if (ptsBadge) ptsBadge.remove();
 
   currentQ = 0; score = 0; totalPoints = 0; streak = 0; bestStreak = 0;
   answers = [];
   answeredQuestions = new Array(QUESTIONS.length).fill(null);
+
+  // Reset next button back to original hidden state
+  const nextBtn = document.getElementById('q-next-btn');
+  if (nextBtn) {
+    nextBtn.style.display = 'none';
+    nextBtn.textContent = 'Next Question →';
+  }
+
+  const feedback = document.getElementById('q-feedback');
+  if (feedback) {
+    feedback.style.display = 'none';
+    feedback.innerHTML = '';
+  }
 
   showQuizScreen('start');
 }

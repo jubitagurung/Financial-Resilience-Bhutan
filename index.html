@@ -78,6 +78,43 @@
             planner templates, basic budgeting methods, interactive quizzes, and simple learning resources.</p>
         </div>
 
+        <!-- SONAM STORY TEASER ON HOME -->
+        <div style="
+          background: linear-gradient(135deg, rgba(226,95,14,0.08) 0%, rgba(201,168,76,0.06) 100%);
+          border: 1px solid rgba(201,168,76,0.25);
+          border-left: 4px solid var(--accent);
+          border-radius: 12px;
+          padding: 20px 24px;
+          margin: 24px 0;
+          text-align: left;
+          max-width: 580px;
+          width: 100%;
+        ">
+          <div style="
+            font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+            color: var(--accent); font-family: 'Cinzel', serif; margin-bottom: 8px;
+          ">Featured Story</div>
+          <div style="
+            font-family: 'Cinzel', serif; font-size: 16px;
+            color: var(--text); letter-spacing: 0.5px; margin-bottom: 8px;
+          ">Sonam's Story: From Stress to Financial Control</div>
+          <p style="
+            font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 16px;
+          ">A 27-year-old in Thimphu had a job, a steady income — and still couldn't save anything. Sound familiar? Read how she turned it around.</p>
+          <a href="story.html" target="_blank" style="
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 11px 24px;
+            background: var(--gold); color: var(--deep);
+            font-family: 'Cinzel', serif; font-size: 12px;
+            font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+            border-radius: 6px; text-decoration: none;
+            transition: opacity 0.2s, transform 0.15s;
+          "
+          onmouseover="this.style.opacity='0.85'; this.style.transform='translateY(-2px)'"
+          onmouseout="this.style.opacity='1'; this.style.transform='translateY(0)'">
+            📖 Read Her Story →
+          </a>
+        </div>
 
         <!-- HOME CTA BLOCK -->
         <div style="display:flex; gap:12px; justify-content:center; margin-top:40px;">
@@ -160,8 +197,7 @@
       That is when I discovered the <strong>50/30/20 rule</strong> a proven budgeting method that 
       divides your monthly income into three clear categories: <strong>50% for needs</strong> such as 
       rent, food, and utilities, <strong>30% for wants</strong> such as dining out and entertainment, 
-      and <strong>20% for savings</strong>. The sample budgets below are based on real urban Bhutanese 
-      household data and show how this rule applies across different income levels.
+      and <strong>20% for savings</strong>. 
     </p>
 
     <div class="budget-rule">Recommended Framework: 50% Needs, 30% Wants, 20% Savings</div>
@@ -302,15 +338,6 @@
   <a class="planner-dl-btn" href="SmartBudget_Global_planner.xlsx" download>⬇ Download Free</a>
 </div>
 
-  <!-- 4. SONAM STORY QUOTE -->
-<div class="pmb-section pmb-story">
-  <span class="pmb-story-quote">"Why can't I save anything?"</span>
-  <span class="pmb-story-text">A question that came up repeatedly in the survey.
-    The SBB Planner was built specifically to answer it, with a simple,
-    step-by-step framework anyone can follow from day one.
-  </span>
-</div>
-
   <!-- 6. HOW TO USE -->
   <div class="pmb-section">
 <div class="pmb-how-title">How to Use the SBB Planner</div>
@@ -349,23 +376,27 @@
         <div class="pmb-step-num">7</div>
         <div><strong>Currency Converter</strong>: Need to check exchange rates? Head to the <a onclick="showSection('tools')" style="color:var(--gold); cursor:pointer; text-decoration:underline;">Tools section</a> on this website for a live currency converter, useful when planning expenses across borders.</div>
       </div>
+
+      <!-- 5-STEP SAVINGS PLAN — inside master box -->
+<div class="pmb-section">
+  <div class="pmb-how-title">5-Step Savings Starter Plan</div>
+  <div class="pmb-steps">
+    <div class="pmb-step"><div class="pmb-step-num">1</div>
+      <div>Calculate your real income and all monthly expenses, fixed and variable.</div></div>
+    <div class="pmb-step"><div class="pmb-step-num">2</div>
+      <div>Set a savings target of at least 10% — Nu. 20,000 = Nu. 2,000/month = Nu. 24,000/year.</div></div>
+    <div class="pmb-step"><div class="pmb-step-num">3</div>
+      <div>Open a dedicated savings account, keep it separate from spending money.</div></div>
+    <div class="pmb-step"><div class="pmb-step-num">4</div>
+      <div>Identify and cut your top 2 unnecessary expenses. Redirect to savings.</div></div>
+    <div class="pmb-step"><div class="pmb-step-num">5</div>
+      <div>Review your balance every month. Celebrate small wins — they build momentum!</div></div>
+  </div>
+</div>
 </div>
     </div>
   </div>
 
-</div>
-
-<!-- SONAM STORY IMAGES -->
-<div class="sonam-story-wrap">
-  <h3>Sonam's Story: From Stress to Financial Control</h3>
-  <p class="sonam-story-sub">A real story inspired by urban Bhutanese households from the SBB survey</p>
-  <div class="sonam-story-frame">
-    <div class="sonam-frame-label">Part 1 — The Problem</div>
-    <img src="sonam's story part 1.jpg" alt="Sonam's Story Part 1">
-    <div class="sonam-frame-divider">↓ Story Continues ↓</div>
-    <img src="sonam's story part 2.png" alt="Sonam's Story Part 2">
-    <div class="sonam-frame-label" style="border-top: 1px solid rgba(201,168,76,0.15); border-bottom: none; border-radius: 0 0 12px 12px;">Part 2 — The Change</div>
-  </div>
 </div>
 
     <!-- SHEET PREVIEWS -->
@@ -446,20 +477,7 @@
       </div>
     </div>
 
-    <!-- SONAM 5-STEP PLAN -->
-    <div class="planner-steps-wrap">
-    <h3>5-Step Savings Starter Plan</h3>
-      <div class="sonam-steps">
-        <div class="sonam-step"><span class="sonam-num">1</span><span>Calculate your real income and all monthly
-            expenses, fixed and variable.</span></div>
-        <div class="sonam-step"><span class="sonam-num">2</span><span>Set a savings target of at least 10% of Nu. 20,000 = Nu. 2,000/month = Nu. 24,000/year.</span></div>
-        <div class="sonam-step"><span class="sonam-num">3</span><span>Open a dedicated savings account, keep it separate
-            from spending money.</span></div>
-        <div class="sonam-step"><span class="sonam-num">4</span><span>Identify and cut your top 2 unnecessary expenses.
-            Redirect to savings.</span></div>
-        <div class="sonam-step"><span class="sonam-num">5</span><span>Review your balance every month. Celebrate small
-            wins, they build momentum!</span></div>
-      </div>
+
     </div>
 
 <div style="margin-top:32px;">

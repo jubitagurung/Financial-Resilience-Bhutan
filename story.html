@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sonam's Story : Smart Budget Bhutan</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --deep: #0d0a04;
+      --card-bg: rgba(15, 12, 4, 0.95);
+      --accent: #e25f0e;
+      --text: #f0ead6;
+      --muted: #a89e84;
+      --green: #4caf82;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: #080602;
+      color: var(--text);
+      min-height: 100vh;
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(201,168,76,0.07) 0%, transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(226,95,14,0.05) 0%, transparent 45%),
+        linear-gradient(160deg, #0a0802 0%, #12100a 50%, #080602 100%);
+    }
+
+    /* ── TOP NAV BAR ── */
+    .story-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(5,4,1,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 0 32px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .story-nav-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .story-nav-brand {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+
+    .story-nav-sep {
+      color: rgba(201,168,76,0.3);
+      font-size: 16px;
+    }
+
+    .story-nav-title {
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .story-nav-close {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: 1px solid rgba(201,168,76,0.4);
+      background: rgba(201,168,76,0.08);
+      color: var(--gold);
+      cursor: pointer;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .story-nav-close:hover {
+      background: var(--gold);
+      color: var(--deep);
+    }
+
+    /* ── HERO HEADER ── */
+    .story-hero {
+      margin-top: 56px;
+      padding: 60px 20px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .story-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(226,95,14,0.1);
+      border: 1px solid rgba(226,95,14,0.3);
+      border-radius: 50px;
+      padding: 5px 16px;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-family: 'Cinzel', serif;
+      margin-bottom: 20px;
+    }
+
+    .story-hero-badge::before {
+      content: '●';
+      font-size: 8px;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity:1; } 50% { opacity:0.3; }
+    }
+
+    .story-hero h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(26px, 4vw, 48px);
+      color: var(--gold);
+      letter-spacing: 2px;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .story-hero-sub {
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      margin-bottom: 28px;
+    }
+
+    .story-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .story-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    .story-meta-item span:first-child {
+      color: var(--gold);
+    }
+
+    /* ── DIVIDER ── */
+    .story-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      max-width: 600px;
+      margin: 0 auto 48px;
+      padding: 0 20px;
+    }
+
+    .story-divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+    }
+
+    .story-divider-icon {
+      color: var(--gold);
+      font-size: 16px;
+      opacity: 0.6;
+    }
+
+    /* ── CHAPTER LABELS ── */
+    .chapter-label {
+      max-width: 860px;
+      margin: 0 auto 20px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .chapter-number {
+      width: 36px; height: 36px; min-width: 36px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.1);
+      border: 1.5px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      color: var(--gold);
+    }
+
+    .chapter-info {
+      flex: 1;
+    }
+
+    .chapter-tag {
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-family: 'Cinzel', serif;
+      margin-bottom: 3px;
+    }
+
+    .chapter-title {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      color: var(--text);
+      letter-spacing: 1px;
+    }
+
+    /* ── IMAGE PANELS ── */
+    .story-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    .story-panel {
+      margin-bottom: 48px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(201,168,76,0.2);
+      border-top: 3px solid var(--gold);
+      box-shadow:
+        0 24px 64px rgba(0,0,0,0.7),
+        0 0 0 1px rgba(201,168,76,0.05),
+        inset 0 1px 0 rgba(201,168,76,0.1);
+      background: var(--card-bg);
+      position: relative;
+      animation: panelFadeIn 0.6s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .story-panel:nth-child(1) { animation-delay: 0.1s; }
+    .story-panel:nth-child(2) { animation-delay: 0.25s; }
+    .story-panel:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes panelFadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .story-panel img {
+      width: 100%;
+      display: block;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+    }
+
+    /* ── PANEL FOOTER CAPTION ── */
+    .panel-caption {
+      padding: 14px 20px;
+      background: rgba(201,168,76,0.04);
+      border-top: 1px solid rgba(201,168,76,0.12);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-caption-dot {
+      width: 6px; height: 6px; min-width: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0.6;
+    }
+
+    .panel-caption-text {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      font-style: italic;
+    }
+
+    /* ── CONNECTOR between panels ── */
+    .story-connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 32px;
+      margin-top: -16px;
+    }
+
+    .connector-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.35);
+    }
+
+    .connector-line {
+      width: 1px;
+      height: 28px;
+      background: linear-gradient(to bottom, rgba(201,168,76,0.3), transparent);
+    }
+
+    .connector-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ── CLOSING QUOTE ── */
+    .story-closing {
+      max-width: 680px;
+      margin: 0 auto 48px;
+      padding: 36px 36px;
+      background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(226,95,14,0.05) 100%);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-top: 3px solid var(--gold);
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .story-closing-quote {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(15px, 2.5vw, 20px);
+      color: var(--gold);
+      line-height: 1.6;
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+
+    .story-closing-attr {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    /* ── CTA FOOTER ── */
+    .story-cta {
+      text-align: center;
+      padding: 0 20px 80px;
+    }
+
+    .story-cta-title {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      color: var(--text);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .story-cta-sub {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      line-height: 1.65;
+    }
+
+    .story-cta-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-btn-primary {
+      padding: 13px 32px;
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: var(--deep);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 700;
+      transition: opacity 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .cta-btn-primary:hover {
+      opacity: 0.88;
+      transform: translateY(-2px);
+    }
+
+    .cta-btn-secondary {
+      padding: 13px 32px;
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.5);
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      display: inline-block;
+    }
+
+    .cta-btn-secondary:hover {
+      background: rgba(201,168,76,0.1);
+    }
+
+    /* ── SCROLL PROGRESS ── */
+    .scroll-progress {
+      position: fixed;
+      top: 56px;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--gold));
+      z-index: 99;
+      transition: width 0.1s linear;
+      width: 0%;
+    }
+
+    /* ── BACK TO TOP ── */
+    .back-to-top {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.15);
+      border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold);
+      font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, opacity 0.3s, transform 0.2s;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .back-to-top:hover {
+      background: rgba(201,168,76,0.3);
+      transform: translateY(-3px);
+    }
+
+    /* ── FOOTER ── */
+    .story-footer {
+      background: rgba(0,0,0,0.9);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    .story-footer a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 600px) {
+      .story-nav { padding: 0 16px; }
+      .story-nav-title { display: none; }
+      .story-nav-sep { display: none; }
+      .story-hero { padding: 44px 16px 28px; }
+      .story-container { padding: 0 12px 60px; }
+      .story-closing { padding: 24px 20px; }
+      .chapter-label { padding: 0 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCROLL PROGRESS BAR -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- NAV -->
+  <nav class="story-nav">
+    <div class="story-nav-left">
+      <a href="index.html" class="story-nav-brand">SBB</a>
+      <span class="story-nav-sep">·</span>
+      <span class="story-nav-title">Sonam's Story</span>
+    </div>
+    <a href="index.html" class="story-nav-close">← Back to SBB</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="story-hero">
+    <div class="story-hero-badge">A Real Story</div>
+    <h1>Sonam's Story:<br>From Stress to Financial Control</h1>
+    <p class="story-hero-sub">Inspired by real urban Bhutanese households from the SBB survey</p>
+    <div class="story-meta-row">
+      <div class="story-meta-item"><span>📍</span> Thimphu, Bhutan</div>
+      <div class="story-meta-item"><span>👤</span> Sonam Choden, 27</div>
+      <div class="story-meta-item"><span>📖</span> 3-part story</div>
+    </div>
+  </div>
+
+  <div class="story-divider">
+    <div class="story-divider-line"></div>
+    <div class="story-divider-icon">◆</div>
+    <div class="story-divider-line"></div>
+  </div>
+
+  <!-- STORY CONTENT -->
+  <div class="story-container">
+
+    <!-- PART 1 -->
+    <div class="chapter-label">
+      <div class="chapter-number">1</div>
+      <div class="chapter-info">
+        <div class="chapter-tag">Chapter One</div>
+        <div class="chapter-title">The Problem</div>
+      </div>
+    </div>
+
+    <div class="story-panel">
+      <img
+        src="sonam's story part 1.jpg"
+        alt="Sonam's Story Part 1 — The Problem"
+        loading="eager"
+      >
+      <div class="panel-caption">
+        <div class="panel-caption-dot"></div>
+        <div class="panel-caption-text">Sonam had a job, a steady income and still couldn't save a single Ngultrum.</div>
+      </div>
+    </div>
+
+    <!-- CONNECTOR -->
+    <div class="story-connector">
+      <div class="connector-dot"></div>
+      <div class="connector-line"></div>
+      <div class="connector-label">Story continues</div>
+      <div class="connector-line"></div>
+      <div class="connector-dot"></div>
+    </div>
+
+    <!-- PART 2 -->
+    <div class="chapter-label">
+      <div class="chapter-number">2</div>
+      <div class="chapter-info">
+        <div class="chapter-tag">Chapter Two</div>
+        <div class="chapter-title">The Discovery</div>
+      </div>
+    </div>
+
+    <div class="story-panel">
+      <img
+        src="part2.jpg"
+        alt="Sonam's Story Part 2: The Discovery"
+        loading="lazy"
+      >
+      <div class="panel-caption">
+        <div class="panel-caption-dot"></div>
+        <div class="panel-caption-text">A colleague's words and a small website changed everything for Sonam.</div>
+      </div>
+    </div>
+
+    <!-- CONNECTOR -->
+    <div class="story-connector">
+      <div class="connector-dot"></div>
+      <div class="connector-line"></div>
+      <div class="connector-label">Story continues</div>
+      <div class="connector-line"></div>
+      <div class="connector-dot"></div>
+    </div>
+
+    <!-- PART 3 -->
+    <div class="chapter-label">
+      <div class="chapter-number">3</div>
+      <div class="chapter-info">
+        <div class="chapter-tag">Chapter Three</div>
+        <div class="chapter-title">The Change</div>
+      </div>
+    </div>
+
+    <div class="story-panel">
+      <img
+        src="part3.jpg"
+        alt="Sonam's Story Part 3: The Change"
+        loading="lazy"
+      >
+      <div class="panel-caption">
+        <div class="panel-caption-dot"></div>
+        <div class="panel-caption-text">Three months later, Nu. 18,000 saved not because she earned more, but because she managed better.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CLOSING QUOTE -->
+  <div class="story-closing" style="margin: 0 auto 48px; max-width:680px; padding: 36px; text-align:center;">
+    <div class="story-closing-quote">
+      "SmartBudget Bhutan proves that small, simple tools can create big change. Because when people understand their money, they don't just survive, they begin to truly live."
+    </div>
+    <div class="story-closing-attr">— From the SBB Survey Findings</div>
+  </div>
+
+  <!-- CTA -->
+  <div class="story-cta">
+    <div class="story-cta-title">Ready to write your own story?</div>
+    <p class="story-cta-sub">Download the free SBB Planner and start your first budget today.</p>
+    <div class="story-cta-btns">
+      <a href="SmartBudget_Global_planner.xlsx" download class="cta-btn-primary">⬇ Download SBB Planner</a>
+      <a href="index.html" class="cta-btn-secondary">← Back to SBB</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="story-footer">
+    <p>© 2026 <a href="index.html">Smart Budget Bhutan</a> · Bhutan Data Scientist Pvt. Ltd. · All rights reserved</p>
+  </footer>
+
+  <!-- BACK TO TOP -->
+  <button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+  <script>
+    // Scroll progress bar
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('scroll-progress').style.width = pct + '%';
+
+      // Back to top visibility
+      const btn = document.getElementById('back-to-top');
+      if (scrollTop > 400) btn.classList.add('visible');
+      else btn.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>
