@@ -84,7 +84,7 @@ nav {
 }
 
 #nav-planner::after,
-#nav-quiz::after {
+#nav-planner::after {
   content: '★';
   font-size: 8px;
   color:  #ffffff;

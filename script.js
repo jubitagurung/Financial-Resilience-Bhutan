@@ -66,21 +66,31 @@ function showSection(id) {
 })();
 
 // ── TOAST ──
+
 function dismissToast() {
   const t = document.getElementById('quiz-toast');
   if (!t) return;
-  t.style.transition = 'opacity 0.3s, transform 0.3s';
+  t.style.transition = 'opacity 0.6s, transform 0.6s';
   t.style.opacity = '0';
   t.style.transform = 'translateX(60px)';
-  setTimeout(() => { t.style.display = 'none'; }, 300);
+  setTimeout(() => { t.style.display = 'none'; }, 600);
+}
+
+function reopenToast() {
+  const t = document.getElementById('quiz-toast');
+  if (!t) return;
+  t.style.display = 'block';
+  t.style.opacity = '1';
+  t.style.transform = 'translateX(0)';
 }
 
 function showToastOnHome() {
   const t = document.getElementById('quiz-toast');
   if (!t) return;
   t.style.display = 'block';
-  setTimeout(() => dismissToast(), 12000);
+  setTimeout(() => dismissToast(), 30000);
 }
+
 
 // ── CONFETTI ──
 function launchConfetti() {

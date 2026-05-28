@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Report · Smart Budget Bhutan</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --deep: #0d0a04;
+      --accent: #e25f0e;
+      --text: #f0ead6;
+      --muted: #a89e84;
+      --green: #4caf82;
+      --card-bg: rgba(15,12,4,0.95);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: #080602;
+      color: var(--text);
+      min-height: 100vh;
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(201,168,76,0.07) 0%, transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(226,95,14,0.05) 0%, transparent 45%),
+        linear-gradient(160deg, #0a0802 0%, #12100a 50%, #080602 100%);
+    }
+
+    /* ── NAV ── */
+    .report-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(5,4,1,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 0 32px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .report-nav-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .report-nav-brand {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+
+    .report-nav-sep { color: rgba(201,168,76,0.3); font-size: 16px; }
+
+    .report-nav-title {
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .report-nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: 1px solid rgba(201,168,76,0.4);
+      background: rgba(201,168,76,0.08);
+      color: var(--gold);
+      cursor: pointer;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .report-nav-back:hover { background: var(--gold); color: var(--deep); }
+
+    /* ── SCROLL PROGRESS ── */
+    .scroll-progress {
+      position: fixed;
+      top: 56px; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--gold));
+      z-index: 99;
+      transition: width 0.1s linear;
+      width: 0%;
+    }
+
+    /* ── PAGE WRAPPER ── */
+    .report-page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 80px 24px 80px;
+    }
+
+    /* ── HERO HEADER ── */
+    .report-hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      position: relative;
+    }
+
+    .report-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .report-badge {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-family: 'Cinzel', serif;
+      background: rgba(226,95,14,0.1);
+      border: 1px solid rgba(226,95,14,0.3);
+      border-radius: 50px;
+      padding: 4px 16px;
+      margin-bottom: 18px;
+    }
+
+    .report-hero h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(20px, 3.5vw, 36px);
+      color: var(--gold);
+      letter-spacing: 1.5px;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .report-hero-sub {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      letter-spacing: 0.5px;
+    }
+
+    .report-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .report-meta-pill {
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 50px;
+      padding: 5px 14px;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    /* ── DIVIDER ── */
+    .report-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+      margin: 36px 0;
+    }
+
+    /* ── ACCORDION SECTIONS ── */
+    .accordion-item {
+      background: var(--card-bg);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+
+    .accordion-item:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.5); }
+
+    .accordion-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 24px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.2s;
+    }
+
+    .accordion-header:hover { background: rgba(201,168,76,0.05); }
+
+    .accordion-header.active {
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      background: rgba(201,168,76,0.06);
+    }
+
+    .accordion-num {
+      width: 32px; height: 32px; min-width: 32px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.1);
+      border: 1.5px solid rgba(201,168,76,0.4);
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      color: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .accordion-title-wrap { flex: 1; }
+
+    .accordion-tag {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-family: 'Cinzel', serif;
+      margin-bottom: 3px;
+    }
+
+    .accordion-title {
+      font-family: 'Cinzel', serif;
+      font-size: 15px;
+      color: var(--text);
+      letter-spacing: 0.5px;
+    }
+
+    .accordion-chevron {
+      color: var(--gold);
+      font-size: 12px;
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .accordion-chevron.open { transform: rotate(180deg); }
+
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .accordion-body.open { max-height: 3000px; }
+
+    .accordion-content { padding: 24px 28px 28px; }
+
+    /* ── TYPOGRAPHY ── */
+    .rpt-body {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.82;
+      text-align: justify;
+      margin-bottom: 14px;
+    }
+
+    .rpt-body strong { color: var(--text); }
+    .rpt-body:last-child { margin-bottom: 0; }
+
+    .rpt-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .rpt-list {
+      list-style: none;
+      padding: 0; margin: 0 0 14px;
+    }
+
+    .rpt-list li {
+      font-size: 13.5px;
+      color: var(--muted);
+      padding: 6px 0 6px 22px;
+      position: relative;
+      line-height: 1.6;
+      border-bottom: 1px solid rgba(201,168,76,0.06);
+    }
+
+    .rpt-list li:last-child { border-bottom: none; }
+
+    .rpt-list li::before {
+      content: '→';
+      position: absolute; left: 0;
+      color: var(--gold); font-size: 12px;
+    }
+
+    /* ── FINDINGS GRID ── */
+    .findings-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 4px;
+    }
+
+    .finding-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-top: 3px solid var(--gold);
+      border-radius: 10px;
+      padding: 18px 16px;
+      transition: transform 0.2s;
+    }
+
+    .finding-card:hover { transform: translateY(-4px); }
+
+    .finding-num {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+
+    .finding-title {
+      font-family: 'Cinzel', serif;
+      font-size: 12.5px;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .finding-stat {
+      font-family: 'Cinzel', serif;
+      font-size: 30px;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .finding-body {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.7;
+      text-align: justify;
+    }
+
+    /* ── DUAL BLOCK ── */
+    .dual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .dual-item {
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+
+    .dual-item.structural {
+      background: rgba(226,95,14,0.07);
+      border-left: 3px solid var(--accent);
+    }
+
+    .dual-item.behavioral {
+      background: rgba(76,175,130,0.07);
+      border-left: 3px solid var(--green);
+    }
+
+    .dual-label {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    /* ── RECS GRID ── */
+    .recs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .rec-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 10px;
+      padding: 16px 14px;
+    }
+
+    .rec-icon { font-size: 20px; margin-bottom: 8px; }
+
+    .rec-title {
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      color: var(--gold);
+      letter-spacing: 0.5px;
+      margin-bottom: 7px;
+    }
+
+    .rec-body {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.65;
+      text-align: justify;
+    }
+
+    /* ── QUOTE ── */
+    .rpt-quote {
+      background: rgba(201,168,76,0.07);
+      border-left: 4px solid var(--gold);
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      color: var(--gold);
+      line-height: 1.65;
+      font-style: italic;
+      margin-top: 16px;
+    }
+
+    /* ── TWO COL ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    /* ── BACK TO TOP ── */
+    .back-to-top {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.15);
+      border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold);
+      font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, opacity 0.3s;
+      opacity: 0; pointer-events: none; z-index: 99;
+    }
+
+    .back-to-top.visible { opacity: 1; pointer-events: all; }
+    .back-to-top:hover { background: rgba(201,168,76,0.3); }
+
+    /* ── FOOTER ── */
+    .report-footer {
+      background: rgba(0,0,0,0.9);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    .report-footer a { color: var(--gold); text-decoration: none; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .report-nav { padding: 0 16px; }
+      .report-nav-title, .report-nav-sep { display: none; }
+      .report-page { padding: 72px 14px 60px; }
+      .accordion-content { padding: 18px 16px 22px; }
+      .findings-grid { grid-template-columns: 1fr 1fr; }
+      .recs-grid { grid-template-columns: 1fr 1fr; }
+      .dual-grid { grid-template-columns: 1fr; }
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .findings-grid { grid-template-columns: 1fr; }
+      .recs-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCROLL PROGRESS -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- NAV -->
+  <nav class="report-nav">
+    <div class="report-nav-left">
+      <a href="index.html" class="report-nav-brand">SBB</a>
+      <span class="report-nav-sep">·</span>
+      <span class="report-nav-title">Project Report</span>
+    </div>
+    <a href="index.html" class="report-nav-back">← Back to SBB</a>
+  </nav>
+
+  <div class="report-page">
+
+    <!-- HERO -->
+    <div class="report-hero">
+      <div class="report-badge">Project Report · 2026</div>
+      <h1>Financial Resilience at the<br>Household Level in Urban Bhutan</h1>
+      <p class="report-hero-sub">Primary data collected from 173 urban households · Bhutan Data Scientist Pvt. Ltd.</p>
+      <div class="report-meta-row">
+        <span class="report-meta-pill">📍 Urban Bhutan</span>
+        <span class="report-meta-pill">👥 173 Respondents</span>
+        <span class="report-meta-pill">📊 6 Key Findings</span>
+        <span class="report-meta-pill">🎓 Gedu College of Business Studies</span>
+      </div>
+    </div>
+
+    <div class="report-divider"></div>
+
+    <!-- ── ACCORDION SECTIONS ── -->
+
+    <!-- 1. ABSTRACT -->
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-num">1</div>
+        <div class="accordion-title-wrap">
+          <div class="accordion-tag">Overview</div>
+          <div class="accordion-title">Abstract</div>
+        </div>
+        <span class="accordion-chevron">▼</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <p class="rpt-body">This project focused on financial resilience at the household level in urban Bhutan, exploring income, expenditure, housing costs, saving behavior, and financial challenges. Using a cross-sectional descriptive approach, primary data was collected via a Google survey, cleaned in Google Sheets, and visualized in Tableau.</p>
+          <p class="rpt-body">Key findings show that many urban households earn low incomes and spend a large share on rent and loan repayments, severely limiting savings capacity. High living costs and low income were found as the main barriers to saving, while poor budgeting and financial planning skills add to this vulnerability.</p>
+          <p class="rpt-body">The project concludes that financial resilience in urban Bhutan depends on both structural factors (income, housing costs) and behavioral factors (saving habits, financial planning). Recommendations include improving affordable housing, promoting financial literacy, and providing practical digital tools.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. BACKGROUND -->
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-num">2</div>
+        <div class="accordion-title-wrap">
+          <div class="accordion-tag">Context</div>
+          <div class="accordion-title">Background & Objectives</div>
+        </div>
+        <span class="accordion-chevron">▼</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <p class="rpt-body">Bhutan is experiencing steady urbanization as people migrate from rural areas in search of better employment, education, and services. While opportunities have increased, the cost of urban living has risen significantly creating a dual challenge for households who face high rental costs, rising goods and services prices, limited income growth, and increased financial obligations.</p>
+          <p class="rpt-body">Financial resilience the ability to manage expenses, absorb financial shocks, and maintain stability is becoming increasingly critical. Limited existing research on how Bhutanese households manage finances makes this project important for providing data-driven insights.</p>
+          <div class="rpt-label" style="margin-top:20px;">Project Objectives</div>
+          <ul class="rpt-list">
+            <li>Analyze income levels and income stability of urban households</li>
+            <li>Examine household expenditure patterns on essential goods and services</li>
+            <li>Evaluate the impact of housing costs on household financial well-being</li>
+            <li>Assess savings behavior and financial management practices</li>
+            <li>Identify key financial challenges and support preferences</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. METHODOLOGY -->
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-num">3</div>
+        <div class="accordion-title-wrap">
+          <div class="accordion-tag">Approach</div>
+          <div class="accordion-title">Methodology</div>
+        </div>
+        <span class="accordion-chevron">▼</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <p class="rpt-body">This project follows an exploratory and descriptive design to understand trends and patterns related to financial resilience in urban Bhutan. It is non-experimental and cross-sectional, with data collected at a single point in time without manipulating any variables.</p>
+          <p class="rpt-body">Primary survey data was collected from 173 urban households using Google Forms. Data was cleaned and prepared in Google Sheets inconsistencies checked, missing values handled, and categorical data converted to numerical where necessary. Cleaned data was then analyzed in Tableau to create interactive charts and visualizations.</p>
+          <div class="rpt-label" style="margin-top:20px;">Visualizations Used</div>
+          <ul class="rpt-list">
+            <li>Bar charts — income distribution and largest household expenses</li>
+            <li>Bubble chart — budgeting difficulties (saving, planning, debt management)</li>
+            <li>Pie chart — reasons for not saving</li>
+            <li>Tree map — preferred financial support types</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. KEY FINDINGS -->
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-num">4</div>
+        <div class="accordion-title-wrap">
+          <div class="accordion-tag">Results</div>
+          <div class="accordion-title">Key Findings</div>
+        </div>
+        <span class="accordion-chevron">▼</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <div class="findings-grid">
+
+            <div class="finding-card">
+              <div class="finding-num">FINDING 01</div>
+              <div class="finding-title">Young Urban Population</div>
+              <div class="finding-stat">78%</div>
+              <p class="finding-body">78.03% of respondents are aged 21–35  young adults in early career stages with the highest financial vulnerability due to lower income and higher living costs.</p>
+            </div>
+
+            <div class="finding-card">
+              <div class="finding-num">FINDING 02</div>
+              <div class="finding-title">Low Income Households</div>
+              <div class="finding-stat">50%+</div>
+              <p class="finding-body">More than half earn Nu. 30,000 or less per month. The largest group earns below Nu. 20,000, leaving very limited capacity for savings a clear "missing middle" income gap.</p>
+            </div>
+
+            <div class="finding-card">
+              <div class="finding-num">FINDING 03</div>
+              <div class="finding-title">Rent Dominates Expenses</div>
+              <div class="finding-stat">37.8%</div>
+              <p class="finding-body">Rent alone is 37.76% of total household expenses. Combined with loan repayments, over 55% of income goes to fixed, non-negotiable costs leaving almost nothing to save.</p>
+            </div>
+
+            <div class="finding-card">
+              <div class="finding-num">FINDING 04</div>
+              <div class="finding-title">Why Households Cannot Save</div>
+              <div class="finding-stat">61%</div>
+              <p class="finding-body">High expenses (36.11%) and low income (25%) account for 61.11% of reasons. A further 23.61% have no regular saving habit, and 11.11% cited unexpected expenses.</p>
+            </div>
+
+            <div class="finding-card">
+              <div class="finding-num">FINDING 05</div>
+              <div class="finding-title">Budgeting Challenges</div>
+              <div class="finding-stat">37.5%</div>
+              <p class="finding-body">Inability to save is the top financial difficulty (37.54%), followed by financial planning (28.67%) and daily budgeting (20.48%) three deeply interconnected challenges.</p>
+            </div>
+
+            <div class="finding-card">
+              <div class="finding-num">FINDING 06</div>
+              <div class="finding-title">Demand for Digital Tools</div>
+              <div class="finding-stat">61.4%</div>
+              <p class="finding-body">61.44% of households want either savings/investment products or mobile digital budgeting tools showing strong demand for practical, accessible financial tools over advice alone.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. CORE INSIGHT -->
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-num">5</div>
+        <div class="accordion-title-wrap">
+          <div class="accordion-tag">Analysis</div>
+          <div class="accordion-title">Core Insight: A Dual System Problem</div>
+        </div>
+        <span class="accordion-chevron">▼</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <p class="rpt-body">Financial resilience in urban Bhutan depends on two interconnected systems. When both break down simultaneously, households face a cycle of financial vulnerability that is very hard to escape.</p>
+          <div class="dual-grid">
+            <div class="dual-item structural">
+              <div class="dual-label">Structural Factors</div>
+              <ul class="rpt-list">
+                <li>Low and unstable income</li>
+                <li>High housing and rent costs</li>
+                <li>Rising cost of living (GST)</li>
+                <li>Limited access to financial services</li>
+              </ul>
+            </div>
+            <div class="dual-item behavioral">
+              <div class="dual-label">Behavioral Factors</div>
+              <ul class="rpt-list">
+                <li>Weak saving habits</li>
+                <li>Poor budgeting practices</li>
+                <li>Lack of financial planning</li>
+                <li>No emergency fund strategy</li>
+              </ul>
+            </div>
+          </div>
+          <p class="rpt-body">When these structural and behavioral factors combine, households face a lack of financial buffer, increased stress managing daily needs, and high vulnerability to emergencies medical expenses, job loss, or sudden economic shocks.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. RECOMMENDATIONS -->
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-num">6</div>
+        <div class="accordion-title-wrap">
+          <div class="accordion-tag">Action Plan</div>
+          <div class="accordion-title">Recommendations</div>
+        </div>
+        <span class="accordion-chevron">▼</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <div class="recs-grid">
+            <div class="rec-card">
+              <div class="rec-icon">🏠</div>
+              <div class="rec-title">Affordable Housing</div>
+              <p class="rec-body">The government and private sector should increase supply of affordable housing in urban areas to reduce the rent burden that consumes over a third of household income.</p>
+            </div>
+            <div class="rec-card">
+              <div class="rec-icon">📚</div>
+              <div class="rec-title">Financial Literacy</div>
+              <p class="rec-body">Run programs educating households on budgeting, saving, debt management, and financial planning to build practical money management skills.</p>
+            </div>
+            <div class="rec-card">
+              <div class="rec-icon">📱</div>
+              <div class="rec-title">Digital Budgeting Tools</div>
+              <p class="rec-body">Banks and institutions should introduce mobile budgeting apps that help households track income, expenses, and savings directly addressing the top demand identified in the project.</p>
+            </div>
+            <div class="rec-card">
+              <div class="rec-icon">💰</div>
+              <div class="rec-title">Emergency Fund Products</div>
+              <p class="rec-body">Promote savings accounts designed for emergency funds with flexible deposit options to help households build a financial cushion for unexpected expenses.</p>
+            </div>
+            <div class="rec-card">
+              <div class="rec-icon">🏦</div>
+              <div class="rec-title">Access to Financial Services</div>
+              <p class="rec-body">Expand microfinance, low-interest loans, and investment products to give households more options for managing shocks and building long-term stability.</p>
+            </div>
+            <div class="rec-card">
+              <div class="rec-icon">📊</div>
+              <div class="rec-title">Control Urban Living Costs</div>
+              <p class="rec-body">Policymakers should focus on controlling rising urban costs, especially housing and utilities, and develop policies that directly support urban household financial stability.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. CONCLUSION -->
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-num">7</div>
+        <div class="accordion-title-wrap">
+          <div class="accordion-tag">Summary</div>
+          <div class="accordion-title">Conclusion</div>
+        </div>
+        <span class="accordion-chevron">▼</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <p class="rpt-body">The findings of this project highlight that financial resilience in urban Bhutan is shaped by both structural factors income levels, housing costs, and rising expenses and behavioral factors such as saving habits, budgeting, and financial planning.</p>
+          <p class="rpt-body">Visualization results confirm that many urban households earn low incomes and spend the majority on rent and loan repayments, leaving little capacity to save or absorb financial shocks. The absence of adequate savings creates a critical vulnerability any unexpected expense becomes a crisis.</p>
+          <p class="rpt-body">Addressing financial resilience requires a combined approach: improving access to affordable housing and financial services, promoting financial literacy, and providing practical digital tools that help households plan, save, and build long-term stability. The SBB platform including its budget planner, quiz, and financial tools is a direct response to these findings.</p>
+          <div class="rpt-quote">
+            "Financial resilience in urban Bhutan depends on the combined effect of income, housing costs, expenditure patterns, and financial management practices."
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end report-page -->
+
+  <!-- FOOTER -->
+  <footer class="report-footer">
+    <p>© 2026 <a href="index.html">Smart Budget Bhutan</a> · Bhutan Data Scientist Pvt. Ltd. · All rights reserved</p>
+  </footer>
+
+  <!-- BACK TO TOP -->
+  <button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+  <script>
+    // Accordion
+    function toggleAccordion(btn) {
+      const body    = btn.nextElementSibling;
+      const chevron = btn.querySelector('.accordion-chevron');
+      const isOpen  = body.classList.contains('open');
+
+      // Close all
+      document.querySelectorAll('.accordion-body').forEach(b => b.classList.remove('open'));
+      document.querySelectorAll('.accordion-header').forEach(h => {
+        h.classList.remove('active');
+        h.querySelector('.accordion-chevron').classList.remove('open');
+      });
+
+      // Open clicked (if it was closed)
+      if (!isOpen) {
+        body.classList.add('open');
+        btn.classList.add('active');
+        chevron.classList.add('open');
+      }
+    }
+
+    // Scroll progress + back to top
+    window.addEventListener('scroll', () => {
+      const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      document.getElementById('scroll-progress').style.width = pct + '%';
+      const btn = document.getElementById('back-to-top');
+      btn.classList.toggle('visible', window.scrollY > 400);
+    });
+  </script>
+
+</body>
+</html>
