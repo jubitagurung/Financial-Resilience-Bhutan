@@ -1161,9 +1161,9 @@ function closeSheetModal() {
   document.body.style.overflow = '';
 }
 
-// ══ SBB BACKEND (kept for background sync only) ══
+// ══ SBB BACKEND ══
 const SBB_API = (() => {
   const h = window.location.hostname;
   if (h === 'localhost' || h === '127.0.0.1') return "http://127.0.0.1:5000";
-  return "https://yourdomain.com";
+  return "https://financial-resilience-bhutan-1.onrender.com";
 })();
