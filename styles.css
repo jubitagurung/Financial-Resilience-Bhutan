@@ -135,10 +135,6 @@ nav {
 .nav-toggle.open .hamburger-bar:nth-child(2) { opacity: 0; width: 0; }
 .nav-toggle.open .hamburger-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-@keyframes menuSlideDown {
-  from { opacity: 0; transform: translateY(-8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
 
 @media (max-width: 768px) {
   nav { padding: 12px 18px; height: auto; }
@@ -152,16 +148,41 @@ nav {
     padding: 10px 0 6px;
     border-top: 1px solid rgba(201,168,76,0.15);
     margin-top: 10px;
-    animation: menuSlideDown 0.25s ease forwards;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
   }
-  .nav-menu.open { display: flex; }
+  .nav-menu.open {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+    animation: none;
+  }
   .nav-menu a {
     font-size: 13px;
     padding: 13px 16px;
     border-radius: 8px;
     text-align: left;
     border: 1px solid transparent;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.25s ease, transform 0.25s ease,
+                background 0.2s, color 0.2s, border-color 0.2s;
   }
+  .nav-menu.open a {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .nav-menu.open a:nth-child(1) { transition-delay: 0.03s; }
+  .nav-menu.open a:nth-child(2) { transition-delay: 0.06s; }
+  .nav-menu.open a:nth-child(3) { transition-delay: 0.09s; }
+  .nav-menu.open a:nth-child(4) { transition-delay: 0.12s; }
+  .nav-menu.open a:nth-child(5) { transition-delay: 0.15s; }
+  .nav-menu.open a:nth-child(6) { transition-delay: 0.18s; }
+  .nav-menu.open a:nth-child(7) { transition-delay: 0.21s; }
+  .nav-menu.open a:nth-child(8) { transition-delay: 0.24s; }
   .nav-menu a:hover,
   .nav-menu a.active-link {
     background: rgba(201,168,76,0.1);

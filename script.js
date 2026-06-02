@@ -459,6 +459,9 @@ let streak = 0;
 let bestStreak = 0;
 let answers = [];
 let answeredQuestions;
+let timerDuration = 0;
+let timerInterval = null;
+let timeLeft = 0;
 
 function showQuizScreen(screen) {
   const startEl    = document.getElementById('quiz-start');
@@ -520,6 +523,7 @@ function startQuizWithName() {
 
   error.style.display = 'none';
   sessionStorage.setItem('sbb_player_name', name);
+  timerDuration = parseInt(document.getElementById('timer-select').value) || 0;
   startQuiz();
 }
 
@@ -662,6 +666,7 @@ function resetQuiz() {
 }
 
 function selectAnswer(selectedIndex) {
+  stopQuestionTimer()
   const q = QUESTIONS[currentQ];
   answeredQuestions[currentQ] = selectedIndex;
   const opts = document.querySelectorAll('.quiz-option');
@@ -736,6 +741,7 @@ function prevQuestion() {
 }
 
 function nextQuestion() {
+   stopQuestionTimer(); 
   if (currentQ < QUESTIONS.length - 1) {
     currentQ++;
     renderQuestion();
@@ -834,6 +840,7 @@ function showResults() {
 }
 
 function resetQuiz() {
+  stopQuestionTimer();
   const prevBtn = document.getElementById('q-prev-btn');
   if (prevBtn) prevBtn.remove();
   const btnRow = document.getElementById('q-btn-row');
@@ -862,6 +869,65 @@ function resetQuiz() {
 
   showQuizScreen('start');
 }
+
+// ── TIMER FUNCTIONS ──
+function startQuestionTimer() {
+  clearInterval(timerInterval);
+  if (!timerDuration) return;
+
+  timeLeft = timerDuration;
+  let timerEl = document.getElementById('q-timer');
+  if (!timerEl) {
+    timerEl = document.createElement('div');
+    timerEl.id = 'q-timer';
+    timerEl.style.cssText = `
+      text-align:center; font-family:'Cinzel',serif;
+      font-size:13px; color:var(--gold);
+      letter-spacing:1px; margin-bottom:10px;
+      transition: color 0.3s;
+    `;
+    document.getElementById('quiz-q-card').prepend(timerEl);
+  }
+
+  function tick() {
+    timerEl.textContent = `⏱ ${timeLeft}s remaining`;
+    timerEl.style.color = timeLeft <= 10 ? '#e25f0e' : 'var(--gold)';
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      timerEl.textContent = '⏱ Time\'s up!';
+      timerEl.style.color = '#e25f0e';
+      if (answeredQuestions[currentQ] === null) {
+        answeredQuestions[currentQ] = -1;
+        const opts = document.querySelectorAll('.quiz-option');
+        opts.forEach(o => o.classList.add('disabled'));
+        opts[QUESTIONS[currentQ].correct].classList.add('correct');
+        streak = 0;
+        const q = QUESTIONS[currentQ];
+        const feedback = document.getElementById('q-feedback');
+        feedback.className = 'quiz-feedback wrong-fb';
+        feedback.innerHTML = `
+          <div class="fb-main">⏱ Time's up! ${q.explanation}</div>
+          <div class="fb-example">📌 <strong>Example:</strong> ${q.example}</div>
+          <div class="fb-tip">${q.tip}</div>`;
+        feedback.style.display = 'block';
+        const nextBtn = document.getElementById('q-next-btn');
+        nextBtn.style.display = 'inline-block';
+        nextBtn.textContent = currentQ < QUESTIONS.length - 1 ? 'Next Question →' : 'See My Results →';
+      }
+    }
+    timeLeft--;
+  }
+  tick();
+  timerInterval = setInterval(tick, 1000);
+}
+
+function stopQuestionTimer() {
+  clearInterval(timerInterval);
+  const timerEl = document.getElementById('q-timer');
+  if (timerEl) timerEl.remove();
+}
+
+// ── SINGLE DOMContentLoaded ──   ← this line was already there
 
 // ── SINGLE DOMContentLoaded ──
 document.addEventListener('DOMContentLoaded', () => {
@@ -1167,3 +1233,17 @@ const SBB_API = (() => {
   if (h === 'localhost' || h === '127.0.0.1') return "http://127.0.0.1:5000";
   return "https://financial-resilience-bhutan-1.onrender.com";
 })();
+
+function handlePlannerDownload(btn) {
+  btn.textContent = '⏳ Preparing…';
+  btn.style.pointerEvents = 'none';
+  btn.style.opacity = '0.7';
+  setTimeout(() => {
+    btn.textContent = '✅ Download Started!';
+    setTimeout(() => {
+      btn.textContent = '⬇ Download Free';
+      btn.style.pointerEvents = '';
+      btn.style.opacity = '';
+    }, 2500);
+  }, 800);
+}
