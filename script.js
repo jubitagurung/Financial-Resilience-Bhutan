@@ -66,7 +66,6 @@ function showSection(id) {
 })();
 
 // ── TOAST ──
-
 function dismissToast() {
   const t = document.getElementById('quiz-toast');
   if (!t) return;
@@ -90,7 +89,6 @@ function showToastOnHome() {
   t.style.display = 'block';
   setTimeout(() => dismissToast(), 30000);
 }
-
 
 // ── CONFETTI ──
 function launchConfetti() {
@@ -199,7 +197,7 @@ function saveQuizResult(name, score, total, points, streak) {
   return entry;
 }
 
-// ── RENDER HISTORY (with individual delete buttons) ──
+// ── RENDER HISTORY ──
 function renderHistoryHTML(results, containerId) {
   const el = document.getElementById(containerId);
   if (!el) return;
@@ -262,12 +260,9 @@ function deleteSingleHistory(indexToDelete) {
     const all = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]');
     const userEntries  = all.filter(r => r.name.toLowerCase() === name.toLowerCase());
     const otherEntries = all.filter(r => r.name.toLowerCase() !== name.toLowerCase());
-
     userEntries.splice(indexToDelete, 1);
-
     const updated = [...otherEntries, ...userEntries];
     localStorage.setItem(LOCAL_KEY, JSON.stringify(updated));
-
     renderHistoryHTML(userEntries, 'history-container');
   } catch (e) {
     console.warn('Delete failed:', e);
@@ -280,7 +275,6 @@ function toggleHistory() {
   if (!historyEl) return;
 
   const isOpen = historyEl.style.display === 'block';
-
   historyEl.style.display = 'none';
   resultsEl.style.display = 'none';
 
@@ -302,7 +296,6 @@ function toggleResults() {
   if (!resultsEl) return;
 
   const isOpen = resultsEl.style.display === 'block';
-
   resultsEl.style.display = 'none';
   historyEl.style.display = 'none';
 
@@ -510,6 +503,7 @@ function showQuizResults() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// ── FIX: single clean startQuizWithName — no timer-select reference ──
 function startQuizWithName() {
   const input = document.getElementById('player-name-input');
   const error = document.getElementById('name-error');
@@ -523,7 +517,7 @@ function startQuizWithName() {
 
   error.style.display = 'none';
   sessionStorage.setItem('sbb_player_name', name);
-  timerDuration = parseInt(document.getElementById('timer-select').value) || 0;
+  timerDuration = 0;
   startQuiz();
 }
 
@@ -606,12 +600,10 @@ function renderQuestion() {
     feedback.innerHTML = '';
   }
 
- // ── Next button (always lives in the card HTML, never moved) ──
   const nextBtn = document.getElementById('q-next-btn');
   nextBtn.style.display = prevAnswer !== null ? 'inline-block' : 'none';
   nextBtn.textContent = currentQ < QUESTIONS.length - 1 ? 'Next Question →' : 'See My Results →';
 
-  // ── Prev button (dynamic, but always re-created fresh if missing) ──
   let prevBtn = document.getElementById('q-prev-btn');
   if (!prevBtn) {
     prevBtn = document.createElement('button');
@@ -620,11 +612,9 @@ function renderQuestion() {
     prevBtn.style.marginTop = '22px';
     prevBtn.textContent = '← Previous';
     prevBtn.onclick = prevQuestion;
-    // Insert it right before the next button so they sit side by side
     nextBtn.parentNode.insertBefore(prevBtn, nextBtn);
   }
   prevBtn.style.display = currentQ > 0 ? 'inline-block' : 'none';
-
 
   const card = document.getElementById('quiz-q-card');
   card.classList.remove('fade-in');
@@ -632,8 +622,10 @@ function renderQuestion() {
   card.classList.add('fade-in');
 }
 
+// ── FIX: single resetQuiz — duplicate removed ──
 function resetQuiz() {
-  // Remove dynamically added elements
+  stopQuestionTimer();
+
   const prevBtn = document.getElementById('q-prev-btn');
   if (prevBtn) prevBtn.remove();
   const btnRow = document.getElementById('q-btn-row');
@@ -643,19 +635,16 @@ function resetQuiz() {
   const ptsBadge = document.getElementById('q-points-badge');
   if (ptsBadge) ptsBadge.remove();
 
-  // Reset all state
   currentQ = 0; score = 0; totalPoints = 0; streak = 0; bestStreak = 0;
   answers = [];
   answeredQuestions = new Array(QUESTIONS.length).fill(null);
 
-  // Reset next button visibility
   const nextBtn = document.getElementById('q-next-btn');
   if (nextBtn) {
     nextBtn.style.display = 'none';
     nextBtn.textContent = 'Next Question →';
   }
 
-  // Clear feedback
   const feedback = document.getElementById('q-feedback');
   if (feedback) {
     feedback.style.display = 'none';
@@ -666,7 +655,7 @@ function resetQuiz() {
 }
 
 function selectAnswer(selectedIndex) {
-  stopQuestionTimer()
+  stopQuestionTimer();
   const q = QUESTIONS[currentQ];
   answeredQuestions[currentQ] = selectedIndex;
   const opts = document.querySelectorAll('.quiz-option');
@@ -741,7 +730,7 @@ function prevQuestion() {
 }
 
 function nextQuestion() {
-   stopQuestionTimer(); 
+  stopQuestionTimer();
   if (currentQ < QUESTIONS.length - 1) {
     currentQ++;
     renderQuestion();
@@ -839,37 +828,6 @@ function showResults() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function resetQuiz() {
-  stopQuestionTimer();
-  const prevBtn = document.getElementById('q-prev-btn');
-  if (prevBtn) prevBtn.remove();
-  const btnRow = document.getElementById('q-btn-row');
-  if (btnRow) btnRow.remove();
-  const ptsSummary = document.getElementById('pts-summary');
-  if (ptsSummary) ptsSummary.remove();
-  const ptsBadge = document.getElementById('q-points-badge');
-  if (ptsBadge) ptsBadge.remove();
-
-  currentQ = 0; score = 0; totalPoints = 0; streak = 0; bestStreak = 0;
-  answers = [];
-  answeredQuestions = new Array(QUESTIONS.length).fill(null);
-
-  // Reset next button back to original hidden state
-  const nextBtn = document.getElementById('q-next-btn');
-  if (nextBtn) {
-    nextBtn.style.display = 'none';
-    nextBtn.textContent = 'Next Question →';
-  }
-
-  const feedback = document.getElementById('q-feedback');
-  if (feedback) {
-    feedback.style.display = 'none';
-    feedback.innerHTML = '';
-  }
-
-  showQuizScreen('start');
-}
-
 // ── TIMER FUNCTIONS ──
 function startQuestionTimer() {
   clearInterval(timerInterval);
@@ -926,8 +884,6 @@ function stopQuestionTimer() {
   const timerEl = document.getElementById('q-timer');
   if (timerEl) timerEl.remove();
 }
-
-// ── SINGLE DOMContentLoaded ──   ← this line was already there
 
 // ── SINGLE DOMContentLoaded ──
 document.addEventListener('DOMContentLoaded', () => {
